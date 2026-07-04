@@ -1,8 +1,9 @@
-import type { PageServerLoad } from './$types';
+import type { PageServerLoad, Actions } from './$types';
 import { db } from '$lib/server/db';
 import { investments, users, plans, payouts } from '$lib/server/db/schema';
 import { eq, desc } from 'drizzle-orm';
-import { error } from '@sveltejs/kit';
+import { error, fail } from '@sveltejs/kit';
+import { updateInvestmentStatusSchema } from '$lib/server/validation/admin';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const investmentId = params.id;
@@ -67,4 +68,39 @@ export const load: PageServerLoad = async ({ params }) => {
 		investment,
 		payouts: investmentPayouts
 	};
+};
+
+export const actions: Actions = {
+	updateStatus: async ({ request, params }) => {
+		const formData = await request.formData();
+		const status = formData.get('status');
+		const notes = formData.get('notes');
+		
+		const result = updateInvestmentStatusSchema.safeParse({ status, notes });
+		
+		if (!result.success) {
+			return fail(400, {
+				errors: result.error.flatten().fieldErrors
+			});
+		}
+		
+		try {
+			await db
+				.update(investments)
+				.set({
+					status: result.data.status,
+					updatedAt: new Date()
+				})
+				.where(eq(investments.id, params.id));
+			
+			return {
+				success: true,
+				message: `Investment ${result.data.status}`
+			};
+		} catch (error) {
+			return fail(500, {
+				error: 'Failed to update investment status'
+			});
+		}
+	}
 };

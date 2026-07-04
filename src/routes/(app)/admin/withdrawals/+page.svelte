@@ -3,9 +3,19 @@
 	import { Button } from '$lib/components/ui/button';
 	import { formatCurrency } from '$lib/utils';
 	import { CheckCircle, XCircle, Clock } from 'lucide-svelte';
-	import type { PageData } from './$types';
+	import { toast } from 'svelte-sonner';
+	import type { PageData, ActionData } from './$types';
 
-	let { data }: { data: PageData } = $props();
+	let { data, form }: { data: PageData, form?: ActionData } = $props();
+
+	// Show toast on form response
+	$effect(() => {
+		if (form?.success) {
+			toast.success(form.message || 'Action completed successfully');
+		} else if (form?.error) {
+			toast.error(form.error || 'Action failed');
+		}
+	});
 
 	function formatDate(date: Date | null) {
 		if (!date) return 'N/A';

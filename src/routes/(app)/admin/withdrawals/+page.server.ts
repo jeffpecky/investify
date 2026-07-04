@@ -1,7 +1,9 @@
-import type { PageServerLoad } from './$types';
+import type { PageServerLoad, Actions } from './$types';
 import { db } from '$lib/server/db';
 import { withdrawals, users, wallets } from '$lib/server/db/schema';
 import { desc, eq } from 'drizzle-orm';
+import { fail } from '@sveltejs/kit';
+import { updateWithdrawalSchema } from '$lib/server/validation/admin';
 
 export const load: PageServerLoad = async () => {
 	const withdrawalsList = await db
@@ -41,4 +43,58 @@ export const load: PageServerLoad = async () => {
 		],
 		withdrawals: withdrawalsList
 	};
+};
+
+export const actions: Actions = {
+	approve: async ({ request }) => {
+		const formData = await request.formData();
+		const id = formData.get('id');
+		const transactionHash = formData.get('transactionHash');
+		
+		try {
+			await db
+				.update(withdrawals)
+				.set({
+					status: 'completed',
+					transactionHash: transactionHash?.toString(),
+					processedAt: new Date(),
+					updatedAt: new Date()
+				})
+				.where(eq(withdrawals.id, id as string));
+			
+			return {
+				success: true,
+				message: 'Withdrawal approved'
+			};
+		} catch (error) {
+			return fail(500, {
+				error: 'Failed to approve withdrawal'
+			});
+		}
+	},
+	
+	reject: async ({ request }) => {
+		const formData = await request.formData();
+		const id = formData.get('id');
+		const notes = formData.get('notes');
+		
+		try {
+			await db
+				.update(withdrawals)
+				.set({
+					status: 'rejected',
+					updatedAt: new Date()
+				})
+				.where(eq(withdrawals.id, id as string));
+			
+			return {
+				success: true,
+				message: 'Withdrawal rejected'
+			};
+		} catch (error) {
+			return fail(500, {
+				error: 'Failed to reject withdrawal'
+			});
+		}
+	}
 };

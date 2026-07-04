@@ -4,9 +4,19 @@
 	import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
 	import { formatCurrency, formatNumber } from '$lib/utils';
 	import { User, TrendingUp, Calendar, DollarSign, ArrowUpRight } from 'lucide-svelte';
-	import type { PageData } from './$types';
+	import { toast } from 'svelte-sonner';
+	import type { PageData, ActionData } from './$types';
 
-	let { data }: { data: PageData } = $props();
+	let { data, form }: { data: PageData, form?: ActionData } = $props();
+
+	// Show toast on form response
+	$effect(() => {
+		if (form?.success) {
+			toast.success(form.message || 'Action completed successfully');
+		} else if (form?.error) {
+			toast.error(form.error || 'Action failed');
+		}
+	});
 
 	function formatDate(date: Date | string | null) {
 		if (!date) return 'N/A';

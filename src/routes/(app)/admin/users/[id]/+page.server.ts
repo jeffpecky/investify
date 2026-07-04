@@ -1,8 +1,9 @@
-import type { PageServerLoad } from './$types';
+import type { PageServerLoad, Actions } from './$types';
 import { db } from '$lib/server/db';
 import { users, investments, wallets, withdrawals, kycDocuments, plans } from '$lib/server/db/schema';
 import { eq, desc } from 'drizzle-orm';
-import { error } from '@sveltejs/kit';
+import { error, fail } from '@sveltejs/kit';
+import { updateUserSchema } from '$lib/server/validation/admin';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const userId = params.id;
@@ -71,4 +72,66 @@ export const load: PageServerLoad = async ({ params }) => {
 		withdrawals: userWithdrawals,
 		kycDocuments: userKycDocuments
 	};
+};
+
+export const actions: Actions = {
+	updateProfile: async ({ request, params }) => {
+		const formData = await request.formData();
+		const data = Object.fromEntries(formData);
+		
+		const result = updateUserSchema.safeParse(data);
+		
+		if (!result.success) {
+			return fail(400, {
+				errors: result.error.flatten().fieldErrors,
+				data
+			});
+		}
+		
+		try {
+			await db
+				.update(users)
+				.set({
+					...result.data,
+					updatedAt: new Date()
+				})
+				.where(eq(users.id, params.id));
+			
+			return {
+				success: true,
+				message: 'User updated successfully'
+			};
+		} catch (error) {
+			return fail(500, {
+				error: 'Failed to update user',
+				data
+			});
+		}
+	},
+	
+	updateBalances: async ({ request, params }) => {
+		const formData = await request.formData();
+		const walletBalance = formData.get('walletBalance');
+		const tokenBalance = formData.get('tokenBalance');
+		
+		try {
+			await db
+				.update(users)
+				.set({
+					walletBalance: walletBalance?.toString() || '0',
+					tokenBalance: tokenBalance?.toString() || '0',
+					updatedAt: new Date()
+				})
+				.where(eq(users.id, params.id));
+			
+			return {
+				success: true,
+				message: 'Balances updated successfully'
+			};
+		} catch (error) {
+			return fail(500, {
+				error: 'Failed to update balances'
+			});
+		}
+	}
 };
