@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
 	import { Button } from '$lib/components/ui/button';
 	import type { PageData } from './$types';
 
@@ -11,14 +10,15 @@
 </script>
 
 <svelte:head>
-	<title>Admin Dashboard</title>
+	<title>Admin Dashboard - Investify</title>
 </svelte:head>
 
-<div class="p-6">
-	<h1 class="text-2xl font-bold mb-4">Admin Dashboard</h1>
-	<p class="mb-4">Welcome back, Admin {data.user?.firstName || 'User'}!</p>
+<div class="p-8">
+	<h1 class="text-3xl font-bold">Admin Dashboard</h1>
+	<p class="mt-2 text-muted-foreground">Welcome, {data.user?.firstName || 'Admin'}!</p>
+	<p class="mt-1 text-muted-foreground">Plan 1 Complete - Ready for Plan 2</p>
 
-	<form method="post" action="/logout" use:enhance>
-		<Button type="submit">Log Out</Button>
+	<form method="POST" action="/logout" class="mt-8">
+		<Button type="submit" variant="destructive">Logout</Button>
 	</form>
 </div>

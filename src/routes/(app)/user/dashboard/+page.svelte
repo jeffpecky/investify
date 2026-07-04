@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
 	import { Button } from '$lib/components/ui/button';
 	import type { PageData } from './$types';
 
@@ -11,14 +10,20 @@
 </script>
 
 <svelte:head>
-	<title>User Dashboard</title>
+	<title>Dashboard - Investify</title>
 </svelte:head>
 
-<div class="p-6">
-	<h1 class="text-2xl font-bold mb-4">User Dashboard</h1>
-	<p class="mb-4">Welcome back, {data.user?.firstName || 'User'}!</p>
+<div class="p-8">
+	<h1 class="text-3xl font-bold">Welcome back, {data.user?.firstName || 'User'}!</h1>
+	<p class="mt-2 text-muted-foreground">Email: {data.user?.email}</p>
 
-	<form method="post" action="/logout" use:enhance>
-		<Button type="submit">Log Out</Button>
+	<div class="mt-8">
+		<p class="text-sm text-muted-foreground">
+			Plan 1 Complete: Auth scaffolding, database, and authentication flows are ready.
+		</p>
+	</div>
+
+	<form method="POST" action="/logout" class="mt-8">
+		<Button type="submit" variant="destructive">Logout</Button>
 	</form>
 </div>
