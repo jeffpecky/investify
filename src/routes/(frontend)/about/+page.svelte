@@ -96,7 +96,7 @@
             ] as person}
                 <div>
                     <div class="aspect-[3/4] overflow-hidden">
-                        <img src={person.img} alt={person.name} class="h-full w-full object-cover opacity-80 grayscale" />
+                        <img src={person.img} alt={person.name} class="h-full w-full object-cover opacity-80 grayscale" width="400" height="533" loading="lazy" />
                     </div>
                     <p class="mt-4 text-sm font-medium text-primary-foreground">{person.name}</p>
                     <p class="mt-0.5 text-xs text-primary-foreground/50">{person.title}</p>

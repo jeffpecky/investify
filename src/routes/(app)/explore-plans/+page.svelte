@@ -3,6 +3,7 @@
     import { Button } from '$lib/components/ui/button';
     import { formatCurrency } from '$lib/utils';
     import CalculatorModal from '$lib/components/user/CalculatorModal.svelte';
+    import BuyPlanModal from '$lib/components/user/BuyPlanModal.svelte';
     import type { PageData } from './$types';
 
     let { data }: { data: PageData } = $props();
@@ -111,9 +112,10 @@
                     </div>
                 </div>
                 <div class="mt-auto">
-                    <Button href="/login" variant="outline" class="w-full h-12 text-sm font-bold rounded-xl">
-                        Login to Invest
-                    </Button>
+                    <BuyPlanModal
+                        data={plan}
+                        class="w-full h-12 text-sm font-bold rounded-xl shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                    />
                 </div>
             </div>
         {:else}

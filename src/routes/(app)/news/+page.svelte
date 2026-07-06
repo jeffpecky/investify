@@ -145,7 +145,7 @@
         {#if selectedArticle}
             <div class="relative h-64 sm:h-96 w-full overflow-hidden">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10"></div>
-                <img src={selectedArticle.imageUrl} alt={selectedArticle.title} class="h-full w-full object-cover" />
+                <img src={selectedArticle.imageUrl} alt={selectedArticle.title} class="h-full w-full object-cover" width="960" height="384" loading="lazy" />
                 <div class="absolute top-4 right-4 z-20">
                     <Button
                         variant="secondary"

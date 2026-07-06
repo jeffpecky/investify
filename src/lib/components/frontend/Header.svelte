@@ -1,7 +1,7 @@
 <script lang="ts">
     import { SYSTEM } from '$lib/store.svelte';
     import type { User } from '$lib/types';
-    import { ArrowRight } from 'lucide-svelte';
+    import { ArrowRight, ChevronDown, Menu, X } from 'lucide-svelte';
 
     let { user }: { user?: User } = $props();
 
@@ -37,8 +37,17 @@
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
             <!-- Logo -->
-            <a href="/" class="text-base font-semibold tracking-tight text-foreground" onclick={closeMenu}>
-                {$SYSTEM.siteName}
+            <a href="/" class="inline-flex items-center gap-3" onclick={closeMenu}>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 140" class="h-11 w-auto text-primary">
+                    <g fill="currentColor">
+                        <path d="M 36,28 L 46,28 L 46,108 L 36,108 A 6,6 0 0 1 30,102 L 30,34 A 6,6 0 0 1 36,28 Z"/>
+                        <path d="M 46,60 L 72,60 A 6,6 0 0 1 78,66 L 78,70 A 6,6 0 0 1 72,76 L 46,76 Z"/>
+                        <path d="M 46,92 L 84,92 A 6,6 0 0 1 90,98 L 90,102 A 6,6 0 0 1 84,108 L 46,108 Z"/>
+                        <path d="M 46,28 L 76.43,18.11 L 74.58,12.41 L 99.83,18.92 L 83.23,39.03 L 81.38,33.33 L 50.94,43.22 L 46,44 Z"/>
+                    </g>
+                    <circle cx="45" cy="84" r="8" fill="#C9A24A"/>
+                </svg>
+                <span class="text-lg font-bold tracking-tight text-foreground">{$SYSTEM.siteName}</span>
             </a>
 
             <!-- Desktop Navigation — centered -->
@@ -46,8 +55,8 @@
                 <!-- Solutions Dropdown -->
                 <div class="group relative">
                     <button class="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground">
-                        Verticals
-                        <span class="material-icons text-sm transition-transform group-hover:rotate-180">expand_more</span>
+                        Solutions
+                        <ChevronDown class="h-4 w-4 transition-transform group-hover:rotate-180" />
                     </button>
                     <div class="mega-menu absolute left-1/2 top-full mt-px w-[480px] -translate-x-1/2 border border-border bg-background shadow-lg">
                         <div class="grid grid-cols-2 gap-0 divide-x divide-border">
@@ -71,7 +80,7 @@
                 <div class="group relative">
                     <button class="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground">
                         Portfolio
-                        <span class="material-icons text-sm transition-transform group-hover:rotate-180">expand_more</span>
+                        <ChevronDown class="h-4 w-4 transition-transform group-hover:rotate-180" />
                     </button>
                     <div class="mega-menu absolute left-1/2 top-full mt-px w-[480px] -translate-x-1/2 border border-border bg-background shadow-lg">
                         <div class="grid grid-cols-2 gap-0 divide-x divide-border">
@@ -119,7 +128,11 @@
                 onclick={() => (isMenuOpen = !isMenuOpen)}
                 aria-label="Toggle menu"
             >
-                <span class="material-icons text-xl">{isMenuOpen ? 'close' : 'menu'}</span>
+                {#if isMenuOpen}
+                    <X class="h-5 w-5" />
+                {:else}
+                    <Menu class="h-5 w-5" />
+                {/if}
             </button>
         </div>
     </div>
@@ -133,8 +146,8 @@
                     class="flex w-full items-center justify-between py-4 text-sm font-medium text-foreground"
                     onclick={() => toggleDropdown('solutions')}
                 >
-                    Verticals
-                    <span class="material-icons text-base text-muted-foreground transition-transform {activeDropdown === 'solutions' ? 'rotate-180' : ''}">expand_more</span>
+                    Solutions
+                    <ChevronDown class="h-4 w-4 text-muted-foreground transition-transform {activeDropdown === 'solutions' ? 'rotate-180' : ''}" />
                 </button>
                 {#if activeDropdown === 'solutions'}
                     <div class="pb-3 pl-4">
@@ -152,7 +165,7 @@
                     onclick={() => toggleDropdown('markets')}
                 >
                     Portfolio
-                    <span class="material-icons text-base text-muted-foreground transition-transform {activeDropdown === 'markets' ? 'rotate-180' : ''}">expand_more</span>
+                    <ChevronDown class="h-4 w-4 text-muted-foreground transition-transform {activeDropdown === 'markets' ? 'rotate-180' : ''}" />
                 </button>
                 {#if activeDropdown === 'markets'}
                     <div class="pb-3 pl-4">

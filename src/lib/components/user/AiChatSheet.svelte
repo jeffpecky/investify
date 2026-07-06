@@ -5,7 +5,6 @@
     import { page } from '$app/stores';
     import { tick } from 'svelte';
     import { Sparkles } from 'lucide-svelte';
-    import axios from 'axios';
 
     interface Props {
         open: boolean;
@@ -51,14 +50,19 @@
         await scrollToBottom();
 
         try {
-            const response = await axios.post(route('user.ai-chat'), {
-                message: trimmed,
-                history: messages.slice(0, -1), // exclude the message we just added
+            const response = await fetch(route('user.ai-chat'), {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    message: trimmed,
+                    history: messages.slice(0, -1),
+                }),
             });
+            const data = await response.json();
 
             const assistantMessage: ChatMessage = {
                 role: 'assistant',
-                content: response.data.message ?? 'Sorry, I could not process your request.',
+                content: data.message ?? 'Sorry, I could not process your request.',
             };
             messages = [...messages, assistantMessage];
         } catch (error) {

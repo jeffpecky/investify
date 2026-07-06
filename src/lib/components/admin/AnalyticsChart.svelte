@@ -1,6 +1,27 @@
 <script lang="ts">
     import { onMount, onDestroy } from 'svelte';
-    import Chart from 'chart.js/auto';
+    import {
+        Chart,
+        LineController,
+        BarController,
+        DoughnutController,
+        PieController,
+        LineElement,
+        BarElement,
+        PointElement,
+        ArcElement,
+        LinearScale,
+        CategoryScale,
+        Filler,
+        Tooltip,
+        Legend,
+    } from 'chart.js';
+
+    Chart.register(
+        LineController, BarController, DoughnutController, PieController,
+        LineElement, BarElement, PointElement, ArcElement,
+        LinearScale, CategoryScale, Filler, Tooltip, Legend
+    );
 
     interface Props {
         type: 'line' | 'bar' | 'doughnut' | 'pie';

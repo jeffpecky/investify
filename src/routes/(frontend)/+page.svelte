@@ -241,7 +241,7 @@
             </div>
 
             <div use:animate={{ type: 'reveal', delay: 0.2 }} class="relative overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1464082354059-27db6ce50048?auto=format&fit=crop&q=80&w=800" alt="London office building" class="h-full w-full object-cover" style="min-height: 320px;" />
+                <img src="https://images.unsplash.com/photo-1464082354059-27db6ce50048?auto=format&fit=crop&q=80&w=800" alt="London office building" class="h-full w-full object-cover" style="min-height: 320px;" width="800" height="600" loading="lazy" />
                 <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary/60 to-transparent p-6">
                     <p class="text-xs text-primary-foreground/50 uppercase tracking-[0.15em]">Let's build the next big thing together</p>
                 </div>

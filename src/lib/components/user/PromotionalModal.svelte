@@ -55,7 +55,7 @@
             <!-- Image Area -->
             {#if image}
                 <div class="relative h-56 w-full shrink-0 overflow-hidden sm:h-auto sm:w-2/5">
-                    <img src={image} alt={title} class="h-full w-full object-cover transition-transform duration-700 hover:scale-105" />
+                    <img src={image} alt={title} class="h-full w-full object-cover transition-transform duration-700 hover:scale-105" loading="lazy" />
                     <!-- Creative Gradient Overlay -->
                     <div
                         class="absolute inset-0 bg-linear-to-tr from-primary/80 to-transparent mix-blend-multiply transition-opacity duration-300 pointer-events-none"

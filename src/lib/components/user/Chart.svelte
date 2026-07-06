@@ -1,6 +1,17 @@
 <script lang="ts">
     import { onMount, onDestroy } from 'svelte';
-    import Chart from 'chart.js/auto';
+    import {
+        Chart,
+        LineController,
+        LineElement,
+        PointElement,
+        LinearScale,
+        CategoryScale,
+        Filler,
+        Tooltip,
+    } from 'chart.js';
+
+    Chart.register(LineController, LineElement, PointElement, LinearScale, CategoryScale, Filler, Tooltip);
     import * as Card from '$lib/components/ui/card';
 
     let chartCanvas: HTMLCanvasElement;

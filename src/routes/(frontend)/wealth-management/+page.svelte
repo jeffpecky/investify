@@ -52,7 +52,7 @@
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:items-center">
             <div use:animate={{ type: 'reveal' }} class="aspect-[4/3] overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=800" alt="Client meeting" class="h-full w-full object-cover" />
+                <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=800" alt="Client meeting" class="h-full w-full object-cover" width="800" height="600" loading="lazy" />
             </div>
             <div use:animate={{ type: 'fadeRight', delay: 0.2 }}>
                 <p class="editorial-label mb-6">Our Philosophy</p>

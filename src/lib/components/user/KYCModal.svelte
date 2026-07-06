@@ -71,8 +71,11 @@
 
         isSubmitting = true;
 
-        // Simulate upload delay
-        await new Promise((resolve) => setTimeout(resolve, 1500));
+        // TODO: Replace with actual file upload API call
+        // const formData = new FormData();
+        // formData.append('document', selectedFile);
+        // formData.append('documentType', documentType);
+        // await fetch('/api/kyc/upload', { method: 'POST', body: formData });
 
         toast.success('Document uploaded successfully!');
         isSubmitting = false;

@@ -107,7 +107,7 @@
 					<!-- Author Card -->
 					<div use:animate={{ type: 'fadeUp', delay: 0.2 }} class="border border-border/40 p-8">
 						{#if article.author_image}
-							<img src={article.author_image} alt={article.author} class="w-16 h-16 rounded-full object-cover mb-5" />
+							<img src={article.author_image} alt={article.author} class="w-16 h-16 rounded-full object-cover mb-5" width="64" height="64" loading="lazy" />
 						{:else}
 							<div class="w-12 h-12 rounded-full bg-muted flex items-center justify-center mb-5">
 								<span class="text-sm font-semibold text-muted-foreground">{article.author.charAt(0)}</span>

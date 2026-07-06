@@ -65,7 +65,7 @@
             items: [
                 {
                     title: 'Explore Plans',
-                    href: '/plans',
+                    href: '/explore-plans',
                     icon: Sparkles,
                 },
                 {

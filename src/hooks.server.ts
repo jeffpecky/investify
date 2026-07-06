@@ -11,7 +11,19 @@ const handleAuth: Handle = async ({ event, resolve }) => {
 		return resolve(event);
 	}
 
-	const { session, user } = await lucia.validateSession(sessionId);
+	let session, user;
+	try {
+		({ session, user } = await lucia.validateSession(sessionId));
+	} catch {
+		event.locals.user = null;
+		event.locals.session = null;
+		const blankCookie = lucia.createBlankSessionCookie();
+		event.cookies.set(blankCookie.name, blankCookie.value, {
+			path: '/',
+			...blankCookie.attributes
+		});
+		return resolve(event);
+	}
 
 	if (session && session.fresh) {
 		const sessionCookie = lucia.createSessionCookie(session.id);

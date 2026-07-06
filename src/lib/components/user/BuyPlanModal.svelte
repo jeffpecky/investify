@@ -108,26 +108,23 @@
         const wallet = $CRYPTO_WALLETS.find((w) => w.name === cryptoInfo?.name) || $CRYPTO_WALLETS[0];
         selectedWalletAddress = wallet?.address || '0x0000000000000000000000000000000000000000';
 
-        // Simulate transaction delay
-        setTimeout(async () => {
-            try {
-                // Perform Currency Conversion FIRST
-                isLoadingConversion = true;
-                const result = await convertUSDToCrypto(form.amount, form.crypto || 'BTC');
-                cryptoConversion = result;
+        try {
+            // Perform Currency Conversion FIRST
+            isLoadingConversion = true;
+            const result = await convertUSDToCrypto(form.amount, form.crypto || 'BTC');
+            cryptoConversion = result;
 
-                // Construct Payment URI
-                let paymentURI = selectedWalletAddress;
-                if (result?.amount && cryptoInfo) {
-                    const scheme = cryptoInfo.name.toLowerCase();
-                    if (scheme === 'bitcoin') {
-                        paymentURI = `bitcoin:${selectedWalletAddress}?amount=${result.amount}`;
-                    } else if (scheme === 'ethereum') {
-                        paymentURI = `ethereum:${selectedWalletAddress}?value=${result.amount}`; // keeping simple, standardized EIP-681 usually requires wei/exponential
-                    } else {
-                        // Generic fallback for others
-                        paymentURI = `${scheme}:${selectedWalletAddress}?amount=${result.amount}`;
-                    }
+            // Construct Payment URI
+            let paymentURI = selectedWalletAddress;
+            if (result?.amount && cryptoInfo) {
+                const scheme = cryptoInfo.name.toLowerCase();
+                if (scheme === 'bitcoin') {
+                    paymentURI = `bitcoin:${selectedWalletAddress}?amount=${result.amount}`;
+                } else if (scheme === 'ethereum') {
+                    paymentURI = `ethereum:${selectedWalletAddress}?value=${result.amount}`; // keeping simple, standardized EIP-681 usually requires wei/exponential
+                } else {
+                    // Generic fallback for others
+                    paymentURI = `${scheme}:${selectedWalletAddress}?amount=${result.amount}`;
                 }
 
                 // Generate QR Code with URI
@@ -142,14 +139,14 @@
 
                 showQrCode = true;
                 toast.success('Order initiated! Please complete payment.');
-            } catch (err) {
-                console.error(err);
-                toast.error('Failed to initiate order');
-            } finally {
-                isSubmitting = false;
-                isLoadingConversion = false;
             }
-        }, 2000);
+        } catch (err) {
+            console.error(err);
+            toast.error('Failed to initiate order');
+        } finally {
+            isSubmitting = false;
+            isLoadingConversion = false;
+        }
     }
 
     async function handlePaymentSubmit(e: Event) {
@@ -157,12 +154,10 @@
         if (isSubmittingPayment) return;
 
         isSubmittingPayment = true;
-        // fake delay
-        setTimeout(() => {
-            toast.success('Payment submitted for verification!');
-            isSubmittingPayment = false;
-            handleClose();
-        }, 1500);
+        // TODO: Replace with actual payment verification API call
+        toast.success('Payment submitted for verification!');
+        isSubmittingPayment = false;
+        handleClose();
     }
 
     function handleClose() {

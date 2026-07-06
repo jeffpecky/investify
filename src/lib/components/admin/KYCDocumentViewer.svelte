@@ -91,7 +91,7 @@
 			<!-- Document Preview (if image) -->
 			{#if document.filePath.match(/\.(jpg|jpeg|png|gif|webp)$/i)}
 				<div class="rounded-lg border border-border overflow-hidden">
-					<img src={document.filePath} alt="KYC Document" class="w-full h-auto" />
+					<img src={document.filePath} alt="KYC Document" class="w-full h-auto" loading="lazy" />
 				</div>
 			{:else}
 				<div class="rounded-lg border border-border bg-muted/30 p-12 text-center">

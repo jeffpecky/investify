@@ -86,13 +86,17 @@ export const apiRateLimiter = createRateLimiter({
 });
 
 // Clean up expired entries periodically (in production, use Redis TTL)
+let cleanupInterval: ReturnType<typeof setInterval> | undefined;
+
 if (dev) {
-	setInterval(() => {
-		const now = Date.now();
-		for (const [key, value] of rateLimitStore.entries()) {
-			if (now > value.resetAt) {
-				rateLimitStore.delete(key);
-			}
-		}
-	}, 60 * 1000); // Clean up every minute
+    // Clear any existing interval from previous HMR reloads
+    if (cleanupInterval) clearInterval(cleanupInterval);
+    cleanupInterval = setInterval(() => {
+        const now = Date.now();
+        for (const [key, value] of rateLimitStore.entries()) {
+            if (now > value.resetAt) {
+                rateLimitStore.delete(key);
+            }
+        }
+    }, 60 * 1000); // Clean up every minute
 }
