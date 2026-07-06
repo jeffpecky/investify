@@ -41,7 +41,12 @@ const handleAuthorization: Handle = async ({ event, resolve }) => {
 	// Admin routes require admin role
 	if (event.url.pathname.startsWith('/admin')) {
 		if (!user || user.role !== 'admin') {
-			return new Response('Forbidden', { status: 403 });
+			return new Response('Redirect', {
+				status: 303,
+				headers: {
+					Location: `/login?returnUrl=${encodeURIComponent(event.url.pathname)}`
+				}
+			});
 		}
 	}
 
