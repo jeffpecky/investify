@@ -2,16 +2,33 @@
 	import { Badge } from '$lib/components/ui/badge';
 	import { Button } from '$lib/components/ui/button';
 	import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
+	import { Input } from '$lib/components/ui/input';
+	import { Label } from '$lib/components/ui/label';
 	import { formatCurrency, formatNumber } from '$lib/utils';
-	import { Mail, Phone, MapPin, Calendar, TrendingUp, Wallet, ArrowDownToLine, Shield, ArrowLeft } from 'lucide-svelte';
+	import { Mail, Phone, MapPin, Calendar, TrendingUp, Wallet, ArrowDownToLine, Shield, ArrowLeft, Pencil, Check, X } from 'lucide-svelte';
 	import { toast } from 'svelte-sonner';
+	import { enhance } from '$app/forms';
+	import { invalidateAll } from '$app/navigation';
 	import type { PageData, ActionData } from './$types';
 
 	let { data, form }: { data: PageData, form?: ActionData } = $props();
 
+	let editingWallet = $state(false);
+	let editingToken = $state(false);
+	let walletValue = $state(data.user.walletBalance?.toString() || '0');
+	let tokenValue = $state(data.user.tokenBalance?.toString() || '0');
+
+	$effect(() => {
+		walletValue = data.user.walletBalance?.toString() || '0';
+		tokenValue = data.user.tokenBalance?.toString() || '0';
+	});
+
 	$effect(() => {
 		if (form?.success) {
 			toast.success(form.message || 'Action completed successfully');
+			editingWallet = false;
+			editingToken = false;
+			invalidateAll();
 		} else if (form?.error) {
 			toast.error(form.error || 'Action failed');
 		}
@@ -58,14 +75,72 @@
 	<div class="grid gap-3 md:grid-cols-3">
 		<Card class="border-border/50">
 			<CardContent class="p-3">
-				<p class="text-xs text-muted-foreground">Wallet Balance</p>
-				<p class="text-xl font-bold tabular-nums">{formatCurrency(Number(data.user.walletBalance))}</p>
+				{#if editingWallet}
+					<form method="POST" action="?/updateBalances" use:enhance class="space-y-2">
+						<input type="hidden" name="tokenBalance" value={data.user.tokenBalance?.toString() || '0'} />
+						<Label class="text-xs">Wallet Balance ($)</Label>
+						<div class="flex gap-1.5">
+							<Input
+								name="walletBalance"
+								type="number"
+								step="0.01"
+								bind:value={walletValue}
+								class="h-7 text-sm tabular-nums"
+							/>
+							<Button variant="default" size="icon" class="h-7 w-7 shrink-0" type="submit">
+								<Check class="h-3 w-3" />
+							</Button>
+							<Button variant="ghost" size="icon" class="h-7 w-7 shrink-0" type="button" onclick={() => { editingWallet = false; walletValue = data.user.walletBalance?.toString() || '0'; }}>
+								<X class="h-3 w-3" />
+							</Button>
+						</div>
+					</form>
+				{:else}
+					<div class="flex items-start justify-between">
+						<div>
+							<p class="text-xs text-muted-foreground">Wallet Balance</p>
+							<p class="text-xl font-bold tabular-nums">{formatCurrency(Number(data.user.walletBalance))}</p>
+						</div>
+						<button class="text-muted-foreground hover:text-foreground mt-0.5" onclick={() => editingWallet = true}>
+							<Pencil class="h-3.5 w-3.5" />
+						</button>
+					</div>
+				{/if}
 			</CardContent>
 		</Card>
 		<Card class="border-border/50">
 			<CardContent class="p-3">
-				<p class="text-xs text-muted-foreground">Token Balance</p>
-				<p class="text-xl font-bold tabular-nums">{formatNumber(Number(data.user.tokenBalance))} TKN</p>
+				{#if editingToken}
+					<form method="POST" action="?/updateBalances" use:enhance class="space-y-2">
+						<input type="hidden" name="walletBalance" value={data.user.walletBalance?.toString() || '0'} />
+						<Label class="text-xs">Token Balance</Label>
+						<div class="flex gap-1.5">
+							<Input
+								name="tokenBalance"
+								type="number"
+								step="0.01"
+								bind:value={tokenValue}
+								class="h-7 text-sm tabular-nums"
+							/>
+							<Button variant="default" size="icon" class="h-7 w-7 shrink-0" type="submit">
+								<Check class="h-3 w-3" />
+							</Button>
+							<Button variant="ghost" size="icon" class="h-7 w-7 shrink-0" type="button" onclick={() => { editingToken = false; tokenValue = data.user.tokenBalance?.toString() || '0'; }}>
+								<X class="h-3 w-3" />
+							</Button>
+						</div>
+					</form>
+				{:else}
+					<div class="flex items-start justify-between">
+						<div>
+							<p class="text-xs text-muted-foreground">Token Balance</p>
+							<p class="text-xl font-bold tabular-nums">{formatNumber(Number(data.user.tokenBalance))} TKN</p>
+						</div>
+						<button class="text-muted-foreground hover:text-foreground mt-0.5" onclick={() => editingToken = true}>
+							<Pencil class="h-3.5 w-3.5" />
+						</button>
+					</div>
+				{/if}
 			</CardContent>
 		</Card>
 		<Card class="border-border/50">

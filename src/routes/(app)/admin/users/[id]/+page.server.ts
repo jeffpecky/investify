@@ -4,6 +4,8 @@ import { users, investments, wallets, withdrawals, kycDocuments, plans } from '$
 import { eq, desc } from 'drizzle-orm';
 import { error, fail } from '@sveltejs/kit';
 import { updateUserSchema } from '$lib/server/validation/admin';
+import { logAuditEvent, AuditActions } from '$lib/server/audit';
+import { createUserSnapshot } from '$lib/server/services/snapshot-service';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const userId = params.id;
@@ -109,12 +111,18 @@ export const actions: Actions = {
 		}
 	},
 	
-	updateBalances: async ({ request, params }) => {
+	updateBalances: async ({ request, params, locals }) => {
 		const formData = await request.formData();
 		const walletBalance = formData.get('walletBalance');
 		const tokenBalance = formData.get('tokenBalance');
 		
 		try {
+			const [before] = await db
+				.select({ walletBalance: users.walletBalance, tokenBalance: users.tokenBalance })
+				.from(users)
+				.where(eq(users.id, params.id))
+				.limit(1);
+
 			await db
 				.update(users)
 				.set({
@@ -123,6 +131,23 @@ export const actions: Actions = {
 					updatedAt: new Date()
 				})
 				.where(eq(users.id, params.id));
+
+			await logAuditEvent({
+				userId: locals.user?.id || '',
+				action: AuditActions.ADMIN_UPDATE_BALANCE,
+				resourceType: 'user',
+				resourceId: params.id,
+				details: {
+					oldWalletBalance: before?.walletBalance,
+					newWalletBalance: walletBalance?.toString() || '0',
+					oldTokenBalance: before?.tokenBalance,
+					newTokenBalance: tokenBalance?.toString() || '0'
+				},
+				ipAddress: request.headers.get('x-forwarded-for') || 'unknown',
+				userAgent: request.headers.get('user-agent') || 'unknown'
+			});
+
+			await createUserSnapshot(params.id);
 			
 			return {
 				success: true,
