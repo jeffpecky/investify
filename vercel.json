@@ -3,6 +3,10 @@
     {
       "path": "/api/cron/calculate-interest",
       "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/cron/snapshot-stats",
+      "schedule": "5 0 * * *"
     }
   ]
 }
