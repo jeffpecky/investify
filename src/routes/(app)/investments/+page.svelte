@@ -51,23 +51,23 @@
     <title>My Investments | Ethercore</title>
 </svelte:head>
 
-<div class="mx-auto w-full max-w-[1440px] space-y-8 px-4 py-6 sm:px-6 lg:px-8">
+<div class="mx-auto w-full max-w-[1440px] space-y-4 px-4 py-4 sm:px-5 lg:px-6">
     <!-- Page Header -->
-    <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+    <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
         <div>
-            <h2 class="text-3xl font-bold tracking-tight text-primary">My Investments</h2>
-            <p class="mt-1 text-base text-muted-foreground">Manage and view your investment performance.</p>
+            <h2 class="text-2xl font-bold tracking-tight text-primary">My Investments</h2>
+            <p class="mt-1 text-sm text-muted-foreground">Manage and view your investment performance.</p>
         </div>
         <a href="/explore-plans">
-            <Button class="h-12 gap-2 rounded-xl px-6 font-bold shadow-sm">
-                <Plus class="h-5 w-5" />
+            <Button class="h-9 gap-2 rounded-lg px-4 font-bold text-sm shadow-sm">
+                <Plus class="h-4 w-4" />
                 New Investment
             </Button>
         </a>
     </div>
 
     <!-- Stats Bar (Bento Grid Style) -->
-    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <!-- Total Invested -->
         <div class="rounded-xl border border-border/60 bg-card p-4">
             <div class="mb-2 flex items-center justify-between">
@@ -152,43 +152,43 @@
         </div>
 
         <!-- Investment Cards Container -->
-        <div class="space-y-4 p-4">
+        <div class="space-y-3 p-4">
             {#each filteredInvestments as investment (investment.id)}
-                <div class="group relative overflow-hidden rounded-xl border border-border/60 bg-white p-6 transition-all hover:border-primary/30">
+                <div class="group relative overflow-hidden rounded-xl border border-border/60 bg-white p-4 transition-all hover:border-primary/30">
                     <!-- Background Accent -->
-                    <div class="absolute right-0 top-0 h-32 w-32 rounded-bl-full bg-primary/5 transition-colors group-hover:bg-primary/10 -mr-16 -mt-16"></div>
+                    <div class="absolute right-0 top-0 h-24 w-24 rounded-bl-full bg-primary/5 transition-colors group-hover:bg-primary/10 -mr-12 -mt-12"></div>
                     
-                    <div class="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-start">
+                    <div class="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-start">
                         <!-- Icon & Title Section -->
-                        <div class="flex flex-1 gap-4">
-                            <div class="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl border border-primary/10 bg-primary/5 text-primary transition-transform group-hover:scale-110">
-                                <TrendingUp class="h-7 w-7" />
+                        <div class="flex flex-1 gap-3">
+                            <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-primary/10 bg-primary/5 text-primary transition-transform group-hover:scale-110">
+                                <TrendingUp class="h-5 w-5" />
                             </div>
                             <div class="flex-1">
                                 <div class="mb-1 flex items-center gap-2">
-                                    <h3 class="text-lg font-bold text-foreground">{investment.planName}</h3>
-                                    <span class="flex items-center gap-1 rounded-full bg-success/10 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-success">
+                                    <h3 class="text-base font-bold text-foreground">{investment.planName}</h3>
+                                    <span class="flex items-center gap-1 rounded-full bg-success/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-success">
                                         <span class="h-1.5 w-1.5 rounded-full bg-success animate-pulse"></span>
                                         {investment.status}
                                     </span>
                                 </div>
-                                <p class="mb-4 font-mono text-xs tracking-tight text-muted-foreground">ID: {investment.id}</p>
-                                <div class="grid max-w-md grid-cols-2 gap-6">
+                                <p class="mb-3 font-mono text-[11px] tracking-tight text-muted-foreground">ID: {investment.id}</p>
+                                <div class="grid max-w-md grid-cols-2 gap-4">
                                     <div>
-                                        <p class="mb-1 text-xs font-bold uppercase tracking-widest text-muted-foreground">Invested</p>
-                                        <p class="text-2xl font-bold text-primary">{formatCurrency(investment.amount)}</p>
+                                        <p class="mb-0.5 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Invested</p>
+                                        <p class="text-lg font-bold text-primary">{formatCurrency(investment.amount)}</p>
                                     </div>
                                     <div>
-                                        <p class="mb-1 text-xs font-bold uppercase tracking-widest text-muted-foreground">Profit Accrued</p>
-                                        <p class="text-2xl font-bold text-success">{formatCurrency(investment.profitAccrued)}</p>
+                                        <p class="mb-0.5 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Profit Accrued</p>
+                                        <p class="text-lg font-bold text-success">{formatCurrency(investment.profitAccrued)}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Details & Action Section -->
-                        <div class="flex min-w-[280px] flex-col items-end gap-4">
-                            <div class="w-full space-y-2 rounded-xl bg-muted/50 p-4">
+                        <div class="flex min-w-[260px] flex-col items-end gap-3">
+                            <div class="w-full space-y-1.5 rounded-xl bg-muted/50 p-3">
                                 <div class="flex items-center justify-between text-sm">
                                     <span class="text-muted-foreground">Start Date</span>
                                     <span class="font-bold text-foreground">{formatDateExt(investment.startDate)}</span>
@@ -207,12 +207,12 @@
                             </div>
                             <div class="flex w-full gap-2">
                                 <a href="/investments/{investment.id}" class="flex-1">
-                                    <Button variant="outline" class="w-full">
+                                    <Button variant="outline" class="w-full h-8 text-xs">
                                         View Details
                                     </Button>
                                 </a>
                                 <a href="/investments/{investment.id}" class="flex-1">
-                                    <Button class="w-full shadow-sm">
+                                    <Button class="w-full h-8 text-xs shadow-sm">
                                         Manage Plan
                                     </Button>
                                 </a>
