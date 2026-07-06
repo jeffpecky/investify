@@ -130,6 +130,7 @@
     </SidebarContent>
 
     <SidebarFooter>
+        <SidebarSeparator />
         <NavUser />
     </SidebarFooter>
 </Sidebar>
