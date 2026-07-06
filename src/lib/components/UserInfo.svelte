@@ -10,9 +10,10 @@
         user: User;
         showEmail?: boolean;
         showGroup?: boolean;
+        showText?: boolean;
     }
 
-    let { user, showEmail = false, showGroup = false }: Props = $props();
+    let { user, showEmail = false, showGroup = false, showText = true }: Props = $props();
 
     const { getInitials } = useInitials();
 
@@ -33,6 +34,7 @@
     </AvatarFallback>
 </Avatar>
 
+{#if showText}
 <div class="grid flex-1 text-left text-sm leading-tight">
     <div class="flex items-center gap-2">
         <span class="truncate font-medium">{user.firstName || user.first_name} {user.lastName || user.last_name}</span>
@@ -45,3 +47,4 @@
         <span class="truncate text-xs text-muted-foreground">{user.email}</span>
     {/if}
 </div>
+{/if}

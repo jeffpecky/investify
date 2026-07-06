@@ -13,7 +13,7 @@
         <DropdownMenu>
             <DropdownMenuTrigger>
                 <SidebarMenuButton size="lg" class="text-sidebar-accent-foreground data-[state=open]:bg-sidebar-accent group">
-                    <UserInfo {user} />
+                    <UserInfo {user} showText={false} />
                 </SidebarMenuButton>
             </DropdownMenuTrigger>
             <DropdownMenuContent class="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg" side="bottom" align="end" sideOffset={4}>
