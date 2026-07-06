@@ -41,21 +41,6 @@
             ],
         },
         {
-            menuGroup: 'Invest',
-            items: [
-                {
-                    title: 'Explore Plans',
-                    href: '/plans',
-                    icon: Sparkles,
-                },
-                {
-                    title: 'Invite & Earn',
-                    href: '/referrals',
-                    icon: Users,
-                },
-            ],
-        },
-        {
             menuGroup: 'Finance',
             items: [
                 {
@@ -72,6 +57,21 @@
                     title: 'Wallets',
                     href: '/wallets',
                     icon: Wallet,
+                },
+            ],
+        },
+        {
+            menuGroup: 'Invest',
+            items: [
+                {
+                    title: 'Explore Plans',
+                    href: '/plans',
+                    icon: Sparkles,
+                },
+                {
+                    title: 'Invite & Earn',
+                    href: '/referrals',
+                    icon: Users,
                 },
             ],
         },
