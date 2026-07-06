@@ -1,7 +1,7 @@
 import type { PageServerLoad } from './$types';
 import { db } from '$lib/server/db';
 import { investments, users, plans } from '$lib/server/db/schema';
-import { desc, eq, like, or, sql } from 'drizzle-orm';
+import { desc, eq, like, or, and, sql } from 'drizzle-orm';
 import { safeQuery, formatPagination } from '$lib/server/db/utils';
 
 export const load: PageServerLoad = async ({ url }) => {
@@ -25,7 +25,7 @@ export const load: PageServerLoad = async ({ url }) => {
 		conditions.push(eq(investments.status, status));
 	}
 
-	const whereClause = conditions.length > 0 ? (conditions.length === 1 ? conditions[0] : sql`${conditions.join(' AND ')}`) : undefined;
+	const whereClause = conditions.length > 0 ? and(...conditions) : undefined;
 
 	const investmentsList = await safeQuery(
 		() =>
@@ -64,7 +64,12 @@ export const load: PageServerLoad = async ({ url }) => {
 	);
 
 	const totalResult = await safeQuery(
-		() => db.select({ count: sql<number>`count(*)::int` }).from(investments).where(whereClause),
+		() =>
+			db
+				.select({ count: sql<number>`count(*)::int` })
+				.from(investments)
+				.leftJoin(users, eq(investments.userId, users.id))
+				.where(whereClause),
 		'Failed to count investments'
 	);
 	const total = totalResult?.[0]?.count || 0;
