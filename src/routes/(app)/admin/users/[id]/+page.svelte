@@ -5,7 +5,7 @@
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
 	import { formatCurrency, formatNumber } from '$lib/utils';
-	import { Mail, Phone, MapPin, Calendar, TrendingUp, Wallet, ArrowDownToLine, Shield, ArrowLeft, Pencil, Check, X } from 'lucide-svelte';
+	import { Mail, Phone, MapPin, Calendar, TrendingUp, Wallet, ArrowDownToLine, Shield, ArrowLeft, Pencil, Check, X, UserX, UserCheck } from 'lucide-svelte';
 	import { toast } from 'svelte-sonner';
 	import { enhance } from '$app/forms';
 	import { invalidateAll } from '$app/navigation';
@@ -13,21 +13,37 @@
 
 	let { data, form }: { data: PageData, form?: ActionData } = $props();
 
+	let editingProfile = $state(false);
 	let editingWallet = $state(false);
 	let editingToken = $state(false);
+	let confirmingSuspend = $state(false);
 	let walletValue = $state(data.viewedUser.walletBalance?.toString() || '0');
 	let tokenValue = $state(data.viewedUser.tokenBalance?.toString() || '0');
+
+	// Profile form values
+	let profileFirstName = $state(data.viewedUser.firstName || '');
+	let profileLastName = $state(data.viewedUser.lastName || '');
+	let profileEmail = $state(data.viewedUser.email || '');
+	let profileRole = $state(data.viewedUser.role || 'user');
+	let profileKycStatus = $state(data.viewedUser.kycStatus || 'pending');
 
 	$effect(() => {
 		walletValue = data.viewedUser.walletBalance?.toString() || '0';
 		tokenValue = data.viewedUser.tokenBalance?.toString() || '0';
+		profileFirstName = data.viewedUser.firstName || '';
+		profileLastName = data.viewedUser.lastName || '';
+		profileEmail = data.viewedUser.email || '';
+		profileRole = data.viewedUser.role || 'user';
+		profileKycStatus = data.viewedUser.kycStatus || 'pending';
 	});
 
 	$effect(() => {
 		if (form?.success) {
 			toast.success(form.message || 'Action completed successfully');
+			editingProfile = false;
 			editingWallet = false;
 			editingToken = false;
+			confirmingSuspend = false;
 			invalidateAll();
 		} else if (form?.error) {
 			toast.error(form.error || 'Action failed');
@@ -67,8 +83,48 @@
 			</div>
 		</div>
 		<div class="flex gap-1.5">
-			<Button variant="outline" size="sm">Edit User</Button>
-			<Button variant="destructive" size="sm">Suspend</Button>
+			{#if data.viewedUser.role !== 'admin'}
+				{#if confirmingSuspend}
+					<form method="POST" action="?/suspend" use:enhance class="flex items-center gap-1.5">
+						<Button variant="destructive" size="sm" type="submit" class="gap-1">
+							<UserX class="h-3 w-3" />
+							Confirm Suspend
+						</Button>
+						<Button variant="ghost" size="sm" type="button" onclick={() => confirmingSuspend = false}>Cancel</Button>
+					</form>
+				{:else if data.viewedUser.role === 'suspended'}
+					<form method="POST" action="?/reactivate" use:enhance>
+						<Button variant="default" size="sm" type="submit" class="gap-1">
+							<UserCheck class="h-3 w-3" />
+							Reactivate
+						</Button>
+					</form>
+				{:else}
+					<Button variant="destructive" size="sm" class="gap-1" onclick={() => confirmingSuspend = true}>
+						<UserX class="h-3 w-3" />
+						Suspend
+					</Button>
+				{/if}
+			{/if}
+			{#if editingProfile}
+				<form method="POST" action="?/updateProfile" use:enhance class="flex items-center gap-1.5">
+					<input type="hidden" name="firstName" value={profileFirstName} />
+					<input type="hidden" name="lastName" value={profileLastName} />
+					<input type="hidden" name="email" value={profileEmail} />
+					<input type="hidden" name="role" value={profileRole} />
+					<input type="hidden" name="kycStatus" value={profileKycStatus} />
+					<Button variant="default" size="sm" type="submit" class="gap-1">
+						<Check class="h-3 w-3" />
+						Save Changes
+					</Button>
+					<Button variant="ghost" size="sm" type="button" onclick={() => editingProfile = false}>Cancel</Button>
+				</form>
+			{:else}
+				<Button variant="outline" size="sm" class="gap-1" onclick={() => editingProfile = true}>
+					<Pencil class="h-3 w-3" />
+					Edit User
+				</Button>
+			{/if}
 		</div>
 	</div>
 
@@ -151,65 +207,126 @@
 		</Card>
 	</div>
 
-	<Card class="border-border/50">
-		<CardHeader class="pb-2">
-			<CardTitle class="text-base">User Information</CardTitle>
-		</CardHeader>
-		<CardContent class="space-y-2.5 p-3 pt-0">
-			<div class="grid gap-3 md:grid-cols-2">
-				<div class="space-y-2">
-					<div class="flex items-center gap-2">
-						<Mail class="h-3.5 w-3.5 text-muted-foreground" />
-						<span class="text-xs text-muted-foreground">Email:</span>
-						<span class="text-sm font-medium">{data.viewedUser.email}</span>
-					</div>
-					{#if data.viewedUser.phone}
-						<div class="flex items-center gap-2">
-							<Phone class="h-3.5 w-3.5 text-muted-foreground" />
-							<span class="text-xs text-muted-foreground">Phone:</span>
-							<span class="text-sm font-medium">{data.viewedUser.phone}</span>
+	{#if editingProfile}
+		<Card class="border-border/50">
+			<CardHeader class="pb-2">
+				<CardTitle class="text-base">Edit User Profile</CardTitle>
+			</CardHeader>
+			<CardContent class="p-3 pt-0">
+				<form method="POST" action="?/updateProfile" use:enhance class="space-y-3">
+					<div class="grid gap-3 md:grid-cols-2">
+						<div class="space-y-1.5">
+							<Label class="text-xs">First Name</Label>
+							<Input name="firstName" bind:value={profileFirstName} class="h-7 text-sm" />
 						</div>
-					{/if}
-					<div class="flex items-center gap-2">
-						<Calendar class="h-3.5 w-3.5 text-muted-foreground" />
-						<span class="text-xs text-muted-foreground">Joined:</span>
-						<span class="text-sm font-medium">{formatDate(data.viewedUser.createdAt)}</span>
-					</div>
-				</div>
-				<div class="space-y-2">
-					<div class="flex items-center gap-2">
-						<span class="text-xs text-muted-foreground">Role:</span>
-						<Badge class="text-xs">{data.viewedUser.role}</Badge>
-					</div>
-					<div class="flex items-center gap-2">
-						<span class="text-xs text-muted-foreground">KYC Status:</span>
-						<Badge variant={getStatusBadgeVariant(data.viewedUser.kycStatus)} class="text-xs">{data.viewedUser.kycStatus}</Badge>
-					</div>
-					{#if data.viewedUser.group}
-						<div class="flex items-center gap-2">
-							<span class="text-xs text-muted-foreground">Group:</span>
-							<Badge variant="outline" class="text-xs">{data.viewedUser.group}</Badge>
+						<div class="space-y-1.5">
+							<Label class="text-xs">Last Name</Label>
+							<Input name="lastName" bind:value={profileLastName} class="h-7 text-sm" />
 						</div>
-					{/if}
+					</div>
+					<div class="space-y-1.5">
+						<Label class="text-xs">Email</Label>
+						<Input name="email" type="email" bind:value={profileEmail} class="h-7 text-sm" />
+					</div>
+					<div class="grid gap-3 md:grid-cols-2">
+						<div class="space-y-1.5">
+							<Label class="text-xs">Role</Label>
+							<select name="role" bind:value={profileRole} class="flex h-7 w-full rounded-md border border-input bg-background px-2 text-sm">
+								<option value="user">User</option>
+								<option value="admin">Admin</option>
+								<option value="company">Company</option>
+							</select>
+						</div>
+						<div class="space-y-1.5">
+							<Label class="text-xs">KYC Status</Label>
+							<select name="kycStatus" bind:value={profileKycStatus} class="flex h-7 w-full rounded-md border border-input bg-background px-2 text-sm">
+								<option value="pending">Pending</option>
+								<option value="submitted">Submitted</option>
+								<option value="approved">Approved</option>
+								<option value="rejected">Rejected</option>
+							</select>
+						</div>
+					</div>
+					<div class="flex gap-1.5 border-t border-border/30 pt-3">
+						<Button variant="default" size="sm" type="submit" class="gap-1">
+							<Check class="h-3 w-3" />
+							Save Changes
+						</Button>
+						<Button variant="ghost" size="sm" type="button" onclick={() => editingProfile = false}>Cancel</Button>
+					</div>
+				</form>
+			</CardContent>
+		</Card>
+	{:else}
+		<Card class="border-border/50">
+			<CardHeader class="pb-2">
+				<div class="flex items-center justify-between">
+					<CardTitle class="text-base">User Information</CardTitle>
+					<button class="text-muted-foreground hover:text-foreground" onclick={() => editingProfile = true}>
+						<Pencil class="h-3.5 w-3.5" />
+					</button>
 				</div>
-			</div>
-			{#if data.viewedUser.address}
-				<div class="flex items-start gap-2 border-t border-border/30 pt-2.5">
-					<MapPin class="h-3.5 w-3.5 text-muted-foreground mt-0.5 shrink-0" />
-					<div>
-						<span class="text-xs text-muted-foreground">Address:</span>
-						<p class="text-sm font-medium">
-							{data.viewedUser.address}
-							{#if data.viewedUser.city}, {data.viewedUser.city}{/if}
-							{#if data.viewedUser.state}, {data.viewedUser.state}{/if}
-							{#if data.viewedUser.zipCode} {data.viewedUser.zipCode}{/if}
-							{#if data.viewedUser.country}, {data.viewedUser.country}{/if}
-						</p>
+			</CardHeader>
+			<CardContent class="space-y-2.5 p-3 pt-0">
+				<div class="grid gap-3 md:grid-cols-2">
+					<div class="space-y-2">
+						<div class="flex items-center gap-2">
+							<Mail class="h-3.5 w-3.5 text-muted-foreground" />
+							<span class="text-xs text-muted-foreground">Email:</span>
+							<span class="text-sm font-medium">{data.viewedUser.email}</span>
+						</div>
+						{#if data.viewedUser.phone}
+							<div class="flex items-center gap-2">
+								<Phone class="h-3.5 w-3.5 text-muted-foreground" />
+								<span class="text-xs text-muted-foreground">Phone:</span>
+								<span class="text-sm font-medium">{data.viewedUser.phone}</span>
+							</div>
+						{/if}
+						<div class="flex items-center gap-2">
+							<Calendar class="h-3.5 w-3.5 text-muted-foreground" />
+							<span class="text-xs text-muted-foreground">Joined:</span>
+							<span class="text-sm font-medium">{formatDate(data.viewedUser.createdAt)}</span>
+						</div>
+					</div>
+					<div class="space-y-2">
+						<div class="flex items-center gap-2">
+							<span class="text-xs text-muted-foreground">Role:</span>
+							{#if data.viewedUser.role === 'suspended'}
+								<Badge variant="destructive" class="text-xs">suspended</Badge>
+							{:else}
+								<Badge class="text-xs">{data.viewedUser.role}</Badge>
+							{/if}
+						</div>
+						<div class="flex items-center gap-2">
+							<span class="text-xs text-muted-foreground">KYC Status:</span>
+							<Badge variant={getStatusBadgeVariant(data.viewedUser.kycStatus)} class="text-xs">{data.viewedUser.kycStatus}</Badge>
+						</div>
+						{#if data.viewedUser.group}
+							<div class="flex items-center gap-2">
+								<span class="text-xs text-muted-foreground">Group:</span>
+								<Badge variant="outline" class="text-xs">{data.viewedUser.group}</Badge>
+							</div>
+						{/if}
 					</div>
 				</div>
-			{/if}
-		</CardContent>
-	</Card>
+				{#if data.viewedUser.address}
+					<div class="flex items-start gap-2 border-t border-border/30 pt-2.5">
+						<MapPin class="h-3.5 w-3.5 text-muted-foreground mt-0.5 shrink-0" />
+						<div>
+							<span class="text-xs text-muted-foreground">Address:</span>
+							<p class="text-sm font-medium">
+								{data.viewedUser.address}
+								{#if data.viewedUser.city}, {data.viewedUser.city}{/if}
+								{#if data.viewedUser.state}, {data.viewedUser.state}{/if}
+								{#if data.viewedUser.zipCode} {data.viewedUser.zipCode}{/if}
+								{#if data.viewedUser.country}, {data.viewedUser.country}{/if}
+							</p>
+						</div>
+					</div>
+				{/if}
+			</CardContent>
+		</Card>
+	{/if}
 
 	<div class="grid gap-4 lg:grid-cols-2">
 		<Card class="border-border/50">

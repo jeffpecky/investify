@@ -77,7 +77,7 @@ export const load: PageServerLoad = async ({ params }) => {
 };
 
 export const actions: Actions = {
-	updateProfile: async ({ request, params }) => {
+	updateProfile: async ({ request, params, locals }) => {
 		const formData = await request.formData();
 		const data = Object.fromEntries(formData);
 		
@@ -91,6 +91,12 @@ export const actions: Actions = {
 		}
 		
 		try {
+			const [before] = await db
+				.select({ firstName: users.firstName, lastName: users.lastName, email: users.email, role: users.role, kycStatus: users.kycStatus })
+				.from(users)
+				.where(eq(users.id, params.id))
+				.limit(1);
+
 			await db
 				.update(users)
 				.set({
@@ -98,6 +104,19 @@ export const actions: Actions = {
 					updatedAt: new Date()
 				})
 				.where(eq(users.id, params.id));
+
+			await logAuditEvent({
+				userId: locals.user?.id || '',
+				action: AuditActions.ADMIN_UPDATE_USER,
+				resourceType: 'user',
+				resourceId: params.id,
+				details: {
+					before: { firstName: before?.firstName, lastName: before?.lastName, role: before?.role, kycStatus: before?.kycStatus },
+					after: result.data
+				},
+				ipAddress: request.headers.get('x-forwarded-for') || 'unknown',
+				userAgent: request.headers.get('user-agent') || 'unknown'
+			});
 			
 			return {
 				success: true,
@@ -157,6 +176,83 @@ export const actions: Actions = {
 			return fail(500, {
 				error: 'Failed to update balances'
 			});
+		}
+	},
+
+	suspend: async ({ request, params, locals }) => {
+		const formData = await request.formData();
+		const userId = params.id;
+
+		try {
+			const [user] = await db
+				.select({ role: users.role })
+				.from(users)
+				.where(eq(users.id, userId))
+				.limit(1);
+
+			if (!user) {
+				return fail(404, { error: 'User not found' });
+			}
+
+			if (user.role === 'admin') {
+				return fail(400, { error: 'Cannot suspend admin users' });
+			}
+
+			await db
+				.update(users)
+				.set({
+					role: 'suspended',
+					updatedAt: new Date()
+				})
+				.where(eq(users.id, userId));
+
+			await logAuditEvent({
+				userId: locals.user?.id || '',
+				action: 'admin.suspend_user',
+				resourceType: 'user',
+				resourceId: userId,
+				details: { previousRole: user.role },
+				ipAddress: request.headers.get('x-forwarded-for') || 'unknown',
+				userAgent: request.headers.get('user-agent') || 'unknown'
+			});
+
+			return {
+				success: true,
+				message: 'User suspended successfully'
+			};
+		} catch (error) {
+			return fail(500, { error: 'Failed to suspend user' });
+		}
+	},
+
+	reactivate: async ({ request, params, locals }) => {
+		const userId = params.id;
+
+		try {
+			await db
+				.update(users)
+				.set({
+					role: 'user',
+					updatedAt: new Date()
+				})
+				.where(eq(users.id, userId));
+
+			await logAuditEvent({
+				userId: locals.user?.id || '',
+				action: 'admin.reactivate_user',
+				resourceType: 'user',
+				resourceId: userId,
+				details: { newRole: 'user' },
+				ipAddress: request.headers.get('x-forwarded-for') || 'unknown',
+				userAgent: request.headers.get('user-agent') || 'unknown'
+			});
+
+			return {
+				success: true,
+				message: 'User reactivated successfully'
+			};
+		} catch (error) {
+			return fail(500, { error: 'Failed to reactivate user' });
 		}
 	}
 };
