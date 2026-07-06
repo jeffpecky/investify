@@ -17,34 +17,34 @@
 <SidebarProvider defaultOpen={true}>
     <UserSidebar />
     <SidebarInset>
-        <header class="sticky top-0 z-10 flex h-16 shrink-0 items-center gap-4 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-6">
-            <div class="flex flex-1 items-center gap-4">
+        <header class="sticky top-0 z-10 flex h-14 shrink-0 items-center gap-3 border-b border-border/60 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4 sm:px-5">
+            <div class="flex flex-1 items-center gap-3">
                 <SidebarTrigger class="-ml-1 lg:hidden" />
-                <div class="relative w-full max-w-md group">
+                <div class="relative w-full max-w-sm group">
                     <Search class="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
                     <input
                         type="text"
                         placeholder="Search markets, assets, or plans..."
-                        class="w-full bg-muted/50 border-none rounded-full pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                        class="w-full bg-muted/50 border-none rounded-full pl-10 pr-4 py-1.5 text-sm focus:ring-2 focus:ring-primary/20 transition-all outline-none"
                     />
                 </div>
             </div>
-            <div class="flex items-center gap-2">
-                <Button variant="ghost" size="icon" class="relative h-10 w-10 rounded-full">
-                    <Bell class="h-5 w-5 text-muted-foreground" />
-                    <span class="absolute top-2 right-2 h-2 w-2 bg-destructive rounded-full border-2 border-background"></span>
+            <div class="flex items-center gap-1.5">
+                <Button variant="ghost" size="icon" class="relative h-9 w-9 rounded-full">
+                    <Bell class="h-4 w-4 text-muted-foreground" />
+                    <span class="absolute top-1.5 right-1.5 h-2 w-2 bg-destructive rounded-full border-2 border-background"></span>
                 </Button>
-                <Button variant="ghost" size="icon" class="h-10 w-10 rounded-full">
-                    <HelpCircle class="h-5 w-5 text-muted-foreground" />
+                <Button variant="ghost" size="icon" class="h-9 w-9 rounded-full">
+                    <HelpCircle class="h-4 w-4 text-muted-foreground" />
                 </Button>
-                <div class="h-8 w-px bg-border mx-2"></div>
-                <Button class="bg-primary text-primary-foreground px-5 py-2 rounded-lg font-bold text-sm shadow-sm hover:opacity-90 transition-opacity h-10">
+                <div class="h-6 w-px bg-border mx-1"></div>
+                <Button class="bg-primary text-primary-foreground px-4 py-1.5 rounded-lg font-bold text-sm shadow-sm hover:opacity-90 transition-opacity h-9">
                     Trade Now
                 </Button>
             </div>
         </header>
 
-        <div class="flex flex-col min-h-[calc(100vh-4rem)]">
+        <div class="flex flex-col min-h-[calc(100vh-3.5rem)]">
             <div class="flex-1">
                 {@render children?.()}
             </div>

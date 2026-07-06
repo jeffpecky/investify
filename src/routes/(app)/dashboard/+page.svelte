@@ -151,14 +151,14 @@
     <title>Dashboard | Ethercore</title>
 </svelte:head>
 
-<div class="mx-auto w-full max-w-[1600px] space-y-6 px-4 py-6 sm:px-6 lg:px-8">
+<div class="mx-auto w-full max-w-[1440px] space-y-4 px-4 py-4 sm:px-5 lg:px-6">
     <!-- Top Row: 4 Stat Cards -->
-    <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">
+    <div class="grid gap-3 grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">
         {#each statCards as card}
-            <div class="glass-card p-5 rounded-xl flex flex-col gap-2">
-                <div class="flex items-center justify-between mb-1">
-                    <div class="flex h-10 w-10 items-center justify-center rounded-lg {card.iconBg}">
-                        <card.icon class="h-5 w-5 {card.iconColor}" />
+            <div class="glass-card p-4 rounded-xl flex flex-col gap-1.5">
+                <div class="flex items-center justify-between mb-0.5">
+                    <div class="flex h-8 w-8 items-center justify-center rounded-lg {card.iconBg}">
+                        <card.icon class="h-4 w-4 {card.iconColor}" />
                     </div>
                     {#if card.badge}
                         {#if card.badgeNeutral}
@@ -170,11 +170,11 @@
                         {/if}
                     {/if}
                 </div>
-                <p class="text-xs font-semibold text-muted-foreground tracking-wide uppercase">{card.label}</p>
+                <p class="text-[11px] font-semibold text-muted-foreground tracking-wide uppercase">{card.label}</p>
                 <div class="flex items-end justify-between">
-                    <h2 class="text-2xl font-bold tracking-tight tabular-nums">{card.value}</h2>
+                    <h2 class="text-xl font-bold tracking-tight tabular-nums">{card.value}</h2>
                     {#if card.sparkline && card.sparkline.length > 0}
-                        <svg class="h-8 w-16 opacity-40" viewBox="0 0 64 32" preserveAspectRatio="none">
+                        <svg class="h-7 w-14 opacity-50" viewBox="0 0 64 32" preserveAspectRatio="none">
                             <polyline
                                 points={generateSparklineFromData(card.sparkline)}
                                 fill="none"
@@ -191,25 +191,25 @@
     </div>
 
     <!-- Middle Row: Chart + Recent Activity -->
-    <div class="grid gap-4 grid-cols-1 lg:grid-cols-3">
+    <div class="grid gap-3 grid-cols-1 lg:grid-cols-3">
         <!-- Chart (2/3 width) -->
         <div class="lg:col-span-2">
             <Chart />
         </div>
 
         <!-- Recent Activity (1/3 width) -->
-        <div class="glass-card p-5 rounded-xl flex flex-col">
-            <div class="flex items-center justify-between mb-5">
+        <div class="glass-card p-4 rounded-xl flex flex-col">
+            <div class="flex items-center justify-between mb-4">
                 <h3 class="text-base font-semibold">Recent Activity</h3>
                 <a href="/investments" class="text-xs font-semibold text-primary hover:underline">View All</a>
             </div>
-            <div class="flex-1 space-y-5 overflow-y-auto custom-scrollbar pr-1">
+            <div class="flex-1 space-y-4 overflow-y-auto custom-scrollbar pr-1">
                 {#if data.recentActivity && data.recentActivity.length > 0}
                     {#each data.recentActivity as activity}
                         {@const iconConfig = getActivityIcon(activity.type)}
                         <div class="flex gap-3">
-                            <div class="h-10 w-10 shrink-0 rounded-full {iconConfig.bg} flex items-center justify-center {iconConfig.text}">
-                                <iconConfig.icon class="h-5 w-5" />
+                            <div class="h-9 w-9 shrink-0 rounded-full {iconConfig.bg} flex items-center justify-center {iconConfig.text}">
+                                <iconConfig.icon class="h-4 w-4" />
                             </div>
                             <div class="flex-1 min-w-0">
                                 <div class="flex justify-between items-start gap-2">
@@ -233,10 +233,10 @@
     </div>
 
     <!-- Bottom Row: Portfolio + Quick Action + Active Plans -->
-    <div class="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+    <div class="grid gap-3 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         <!-- Portfolio Allocation -->
-        <div class="glass-card p-5 rounded-xl">
-            <div class="flex items-center justify-between mb-5">
+        <div class="glass-card p-4 rounded-xl">
+            <div class="flex items-center justify-between mb-4">
                 <h3 class="text-base font-semibold">Portfolio</h3>
                 <span class="text-xs font-medium text-muted-foreground">{data.portfolioDistribution?.length || 0} Assets</span>
             </div>
@@ -285,8 +285,8 @@
         </div>
 
         <!-- Quick Action -->
-        <div class="glass-card p-5 rounded-xl flex flex-col">
-            <h3 class="text-base font-semibold mb-4">Quick Action</h3>
+        <div class="glass-card p-4 rounded-xl flex flex-col">
+            <h3 class="text-sm font-semibold mb-3">Quick Action</h3>
             <div class="space-y-3 flex-1">
                 <!-- From Card -->
                 <div class="bg-muted/50 border border-border/60 rounded-xl p-3.5">
@@ -333,8 +333,8 @@
         </div>
 
         <!-- Active Plans -->
-        <div class="glass-card p-5 rounded-xl">
-            <div class="flex items-center justify-between mb-5">
+        <div class="glass-card p-4 rounded-xl">
+            <div class="flex items-center justify-between mb-4">
                 <h3 class="text-base font-semibold">Active Plans</h3>
                 <a href="/investments" class="text-xs font-semibold text-primary hover:underline">View All</a>
             </div>
@@ -370,7 +370,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="pt-6 border-t border-border/60 flex flex-col md:flex-row justify-between items-center gap-4 py-6">
+    <footer class="pt-4 border-t border-border/60 flex flex-col md:flex-row justify-between items-center gap-4 py-4">
         <div class="flex flex-col md:flex-row items-center gap-6">
             <p class="text-sm text-muted-foreground">&copy; 2024 Ethercore Asset Management. All rights reserved.</p>
             <div class="flex gap-4">
