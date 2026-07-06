@@ -5,11 +5,11 @@
 	import { Label } from '$lib/components/ui/label';
 	import { ArrowLeft } from 'lucide-svelte';
 	import { toast } from 'svelte-sonner';
+	import { enhance } from '$app/forms';
 	import type { PageData, ActionData } from './$types';
 
 	let { data, form }: { data: PageData, form?: ActionData } = $props();
 
-	// Show toast on form response
 	$effect(() => {
 		if (form?.success) {
 			toast.success(form.message || 'Action completed successfully');
@@ -35,11 +35,10 @@
 	<title>Edit {data.plan.name} - Admin</title>
 </svelte:head>
 
-<div class="mx-auto w-full space-y-6 px-4 py-6 sm:px-6 lg:px-8">
-	<!-- Header -->
-	<div class="flex items-center gap-4">
+<div class="mx-auto w-full space-y-4 px-4 py-4 sm:px-6 lg:px-8">
+	<div class="flex items-center gap-3">
 		<a href="/admin/plans">
-			<Button variant="ghost" size="icon">
+			<Button variant="ghost" size="icon" class="h-8 w-8">
 				<ArrowLeft class="h-4 w-4" />
 			</Button>
 		</a>
@@ -49,72 +48,69 @@
 		</div>
 	</div>
 
-	<!-- Form -->
-	<Card>
-		<CardHeader>
-			<CardTitle>Plan Details</CardTitle>
-		</CardHeader>
-		<CardContent>
-			<form class="space-y-6">
-				<div class="grid gap-4 md:grid-cols-2">
-					<div class="space-y-2">
-						<Label for="name">Plan Name</Label>
-						<Input id="name" bind:value={formData.name} required />
+	<form method="POST" action="?/update" use:enhance>
+		<Card class="border-border/50">
+			<CardHeader class="pb-2">
+				<CardTitle class="text-base">Plan Details</CardTitle>
+			</CardHeader>
+			<CardContent class="p-3 pt-0">
+				<div class="space-y-3">
+					<div class="grid gap-3 md:grid-cols-2">
+						<div class="space-y-1.5">
+							<Label for="name" class="text-xs">Plan Name</Label>
+							<Input id="name" name="name" bind:value={formData.name} required class="h-9" />
+						</div>
+						<div class="space-y-1.5">
+							<Label for="category" class="text-xs">Category</Label>
+							<Input id="category" name="category" bind:value={formData.category} required class="h-9" />
+						</div>
 					</div>
-					<div class="space-y-2">
-						<Label for="category">Category</Label>
-						<Input id="category" bind:value={formData.category} required />
+					<div class="grid gap-3 md:grid-cols-2">
+						<div class="space-y-1.5">
+							<Label for="minAmount" class="text-xs">Minimum Amount ($)</Label>
+							<Input id="minAmount" name="minAmount" type="number" bind:value={formData.minAmount} required class="h-9" />
+						</div>
+						<div class="space-y-1.5">
+							<Label for="maxAmount" class="text-xs">Maximum Amount ($)</Label>
+							<Input id="maxAmount" name="maxAmount" type="number" bind:value={formData.maxAmount} required class="h-9" />
+						</div>
+					</div>
+					<div class="grid gap-3 md:grid-cols-3">
+						<div class="space-y-1.5">
+							<Label for="durationDays" class="text-xs">Duration (Days)</Label>
+							<Input id="durationDays" name="durationDays" type="number" bind:value={formData.durationDays} required class="h-9" />
+						</div>
+						<div class="space-y-1.5">
+							<Label for="percentMin" class="text-xs">Min ROI (%)</Label>
+							<Input id="percentMin" name="percentMin" type="number" step="0.01" bind:value={formData.percentMin} required class="h-9" />
+						</div>
+						<div class="space-y-1.5">
+							<Label for="percentMax" class="text-xs">Max ROI (%)</Label>
+							<Input id="percentMax" name="percentMax" type="number" step="0.01" bind:value={formData.percentMax} required class="h-9" />
+						</div>
+					</div>
+					<div class="space-y-1.5">
+						<Label for="status" class="text-xs">Status</Label>
+						<select id="status" name="status" bind:value={formData.status} class="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1.5 text-sm">
+							<option value="active">Active</option>
+							<option value="inactive">Inactive</option>
+						</select>
+					</div>
+					<div class="flex items-center gap-2">
+						<input type="checkbox" id="recommended" name="recommended" bind:checked={formData.recommended} class="h-3.5 w-3.5" />
+						<Label for="recommended" class="text-xs">Mark as Recommended</Label>
+					</div>
+					<div class="flex gap-2 border-t border-border/30 pt-3">
+						<Button type="submit" size="sm">Update Plan</Button>
+						<a href="/admin/plans">
+							<Button variant="outline" size="sm">Cancel</Button>
+						</a>
+						<form method="POST" action="?/delete" use:enhance class="ml-auto">
+							<Button variant="destructive" size="sm" type="submit">Delete Plan</Button>
+						</form>
 					</div>
 				</div>
-
-				<div class="grid gap-4 md:grid-cols-2">
-					<div class="space-y-2">
-						<Label for="minAmount">Minimum Amount ($)</Label>
-						<Input id="minAmount" type="number" bind:value={formData.minAmount} required />
-					</div>
-					<div class="space-y-2">
-						<Label for="maxAmount">Maximum Amount ($)</Label>
-						<Input id="maxAmount" type="number" bind:value={formData.maxAmount} required />
-					</div>
-				</div>
-
-				<div class="grid gap-4 md:grid-cols-3">
-					<div class="space-y-2">
-						<Label for="durationDays">Duration (Days)</Label>
-						<Input id="durationDays" type="number" bind:value={formData.durationDays} required />
-					</div>
-					<div class="space-y-2">
-						<Label for="percentMin">Min ROI (%)</Label>
-						<Input id="percentMin" type="number" step="0.01" bind:value={formData.percentMin} required />
-					</div>
-					<div class="space-y-2">
-						<Label for="percentMax">Max ROI (%)</Label>
-						<Input id="percentMax" type="number" step="0.01" bind:value={formData.percentMax} required />
-					</div>
-				</div>
-
-				<div class="space-y-2">
-					<Label for="status">Status</Label>
-					<select id="status" bind:value={formData.status} class="w-full rounded-md border border-input bg-background px-3 py-2">
-						<option value="active">Active</option>
-						<option value="inactive">Inactive</option>
-					</select>
-				</div>
-
-				<div class="flex items-center gap-2">
-					<input type="checkbox" id="recommended" bind:checked={formData.recommended} class="h-4 w-4" />
-					<Label for="recommended">Mark as Recommended</Label>
-				</div>
-
-				<div class="flex gap-2 border-t pt-4">
-					<Button type="submit">Update Plan</Button>
-					<a href="/admin/plans">
-						<Button variant="outline">Cancel</Button>
-					</a>
-					<Button variant="destructive" class="ml-auto">Delete Plan</Button>
-				</div>
-			</form>
-
-		</CardContent>
-	</Card>
+			</CardContent>
+		</Card>
+	</form>
 </div>

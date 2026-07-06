@@ -22,7 +22,7 @@
 	<title>Surveys - Admin</title>
 </svelte:head>
 
-<div class="mx-auto w-full space-y-6 px-4 py-6 sm:px-6 lg:px-8">
+<div class="mx-auto w-full space-y-4 px-4 py-4 sm:px-6 lg:px-8">
 	<!-- Header -->
 	<div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 		<div>
@@ -43,17 +43,17 @@
 			<table class="w-full">
 				<thead class="border-b border-border/50 bg-muted/30">
 					<tr>
-						<th class="px-4 py-3 text-left text-sm font-semibold text-foreground">Name</th>
-						<th class="px-4 py-3 text-left text-sm font-semibold text-foreground">Type</th>
-						<th class="px-4 py-3 text-left text-sm font-semibold text-foreground">Status</th>
-						<th class="px-4 py-3 text-left text-sm font-semibold text-foreground">Created</th>
-						<th class="px-4 py-3 text-right text-sm font-semibold text-foreground">Actions</th>
+						<th class="px-4 py-2.5 text-left text-sm font-semibold text-foreground">Name</th>
+						<th class="px-4 py-2.5 text-left text-sm font-semibold text-foreground">Type</th>
+						<th class="px-4 py-2.5 text-left text-sm font-semibold text-foreground">Status</th>
+						<th class="px-4 py-2.5 text-left text-sm font-semibold text-foreground">Created</th>
+						<th class="px-4 py-2.5 text-right text-sm font-semibold text-foreground">Actions</th>
 					</tr>
 				</thead>
 				<tbody class="divide-y divide-border/30">
 					{#each data.surveys as survey}
 						<tr class="transition-colors hover:bg-muted/20">
-							<td class="px-4 py-3">
+							<td class="px-4 py-2.5">
 								<div>
 									<p class="font-medium text-foreground">{survey.name}</p>
 									{#if survey.description}
@@ -61,16 +61,16 @@
 									{/if}
 								</div>
 							</td>
-							<td class="px-4 py-3">
+							<td class="px-4 py-2.5">
 								<Badge variant="outline">{survey.type}</Badge>
 							</td>
-							<td class="px-4 py-3">
+							<td class="px-4 py-2.5">
 								<Badge variant={getStatusBadgeVariant(survey.status)}>{survey.status}</Badge>
 							</td>
-							<td class="px-4 py-3 text-sm text-muted-foreground">
+							<td class="px-4 py-2.5 text-sm text-muted-foreground">
 								{formatDate(survey.createdAt)}
 							</td>
-							<td class="px-4 py-3 text-right">
+							<td class="px-4 py-2.5 text-right">
 								<div class="flex justify-end gap-2">
 									<a href="/admin/surveys/{survey.id}">
 										<Button variant="ghost" size="sm">

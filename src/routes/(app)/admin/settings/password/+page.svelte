@@ -15,35 +15,32 @@
 	<title>Change Password - Admin</title>
 </svelte:head>
 
-<div class="mx-auto w-full space-y-6 px-4 py-6 sm:px-6 lg:px-8">
+<div class="mx-auto w-full space-y-4 px-4 py-4 sm:px-6 lg:px-8">
 	<div>
 		<h1 class="text-2xl font-semibold text-foreground">Change Password</h1>
 		<p class="mt-1 text-sm text-muted-foreground">Update your admin account password</p>
 	</div>
 
-	<Card>
-		<CardHeader>
-			<CardTitle>Password Update</CardTitle>
+	<Card class="border-border/50">
+		<CardHeader class="pb-2">
+			<CardTitle class="text-base">Password Update</CardTitle>
 		</CardHeader>
-		<CardContent>
-			<form class="space-y-4">
-				<div class="space-y-2">
-					<Label for="currentPassword">Current Password</Label>
-					<Input id="currentPassword" type="password" bind:value={formData.currentPassword} required />
-				</div>
-				<div class="space-y-2">
-					<Label for="newPassword">New Password</Label>
-					<Input id="newPassword" type="password" bind:value={formData.newPassword} required />
-				</div>
-				<div class="space-y-2">
-					<Label for="confirmPassword">Confirm New Password</Label>
-					<Input id="confirmPassword" type="password" bind:value={formData.confirmPassword} required />
-				</div>
-				<div class="border-t pt-4">
-					<Button type="submit">Update Password</Button>
-				</div>
-			</form>
-
+		<CardContent class="space-y-3 p-3 pt-0">
+			<div class="space-y-1.5">
+				<Label for="currentPassword" class="text-xs">Current Password</Label>
+				<Input id="currentPassword" name="currentPassword" type="password" bind:value={formData.currentPassword} required class="h-9" />
+			</div>
+			<div class="space-y-1.5">
+				<Label for="newPassword" class="text-xs">New Password</Label>
+				<Input id="newPassword" name="newPassword" type="password" bind:value={formData.newPassword} required class="h-9" />
+			</div>
+			<div class="space-y-1.5">
+				<Label for="confirmPassword" class="text-xs">Confirm New Password</Label>
+				<Input id="confirmPassword" name="confirmPassword" type="password" bind:value={formData.confirmPassword} required class="h-9" />
+			</div>
+			<div class="border-t border-border/30 pt-3">
+				<Button type="submit" size="sm">Update Password</Button>
+			</div>
 		</CardContent>
 	</Card>
 </div>

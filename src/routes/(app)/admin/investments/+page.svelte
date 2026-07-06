@@ -37,7 +37,7 @@
 	<title>Investments - Admin</title>
 </svelte:head>
 
-<div class="mx-auto w-full space-y-6 px-4 py-6 sm:px-6 lg:px-8">
+<div class="mx-auto w-full space-y-4 px-4 py-4 sm:px-6 lg:px-8">
 	<!-- Header -->
 	<div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 		<div>
@@ -83,19 +83,19 @@
 			<table class="w-full">
 				<thead class="border-b border-border/50 bg-muted/30">
 					<tr>
-						<th class="px-4 py-3 text-left text-sm font-semibold text-foreground">User</th>
-						<th class="px-4 py-3 text-left text-sm font-semibold text-foreground">Plan</th>
-						<th class="px-4 py-3 text-left text-sm font-semibold text-foreground">Amount</th>
-						<th class="px-4 py-3 text-left text-sm font-semibold text-foreground">Status</th>
-						<th class="px-4 py-3 text-left text-sm font-semibold text-foreground">Profit</th>
-						<th class="px-4 py-3 text-left text-sm font-semibold text-foreground">Date</th>
-						<th class="px-4 py-3 text-right text-sm font-semibold text-foreground">Actions</th>
+						<th class="px-4 py-2.5 text-left text-sm font-semibold text-foreground">User</th>
+						<th class="px-4 py-2.5 text-left text-sm font-semibold text-foreground">Plan</th>
+						<th class="px-4 py-2.5 text-left text-sm font-semibold text-foreground">Amount</th>
+						<th class="px-4 py-2.5 text-left text-sm font-semibold text-foreground">Status</th>
+						<th class="px-4 py-2.5 text-left text-sm font-semibold text-foreground">Profit</th>
+						<th class="px-4 py-2.5 text-left text-sm font-semibold text-foreground">Date</th>
+						<th class="px-4 py-2.5 text-right text-sm font-semibold text-foreground">Actions</th>
 					</tr>
 				</thead>
 				<tbody class="divide-y divide-border/30">
 					{#each data.investments as investment}
 						<tr class="transition-colors hover:bg-muted/20">
-							<td class="px-4 py-3">
+							<td class="px-4 py-2.5">
 								<div>
 									<p class="font-medium text-foreground">
 										{investment.user?.firstName || ''} {investment.user?.lastName || ''}
@@ -103,25 +103,25 @@
 									<p class="text-sm text-muted-foreground">{investment.user?.email}</p>
 								</div>
 							</td>
-							<td class="px-4 py-3">
+							<td class="px-4 py-2.5">
 								<p class="font-medium text-foreground">{investment.plan?.name || 'Unknown'}</p>
 								<p class="text-xs text-muted-foreground">{investment.plan?.category || ''}</p>
 							</td>
-							<td class="px-4 py-3">
+							<td class="px-4 py-2.5">
 								<p class="font-semibold text-foreground">{formatCurrency(Number(investment.amount))}</p>
 								<p class="text-xs text-muted-foreground">{investment.paymentMethod}</p>
 							</td>
-							<td class="px-4 py-3">
+							<td class="px-4 py-2.5">
 								<Badge variant={getStatusBadgeVariant(investment.status)}>{investment.status}</Badge>
 							</td>
-							<td class="px-4 py-3">
+							<td class="px-4 py-2.5">
 								<p class="font-medium text-foreground">{formatCurrency(Number(investment.profitAccrued))}</p>
 								<p class="text-xs text-muted-foreground">of {formatCurrency(Number(investment.totalExpectedProfit))}</p>
 							</td>
-							<td class="px-4 py-3 text-sm text-muted-foreground">
+							<td class="px-4 py-2.5 text-sm text-muted-foreground">
 								{formatDate(investment.createdAt)}
 							</td>
-							<td class="px-4 py-3 text-right">
+							<td class="px-4 py-2.5 text-right">
 								<a href="/admin/investments/{investment.id}">
 									<Button variant="ghost" size="sm">View</Button>
 								</a>

@@ -43,7 +43,7 @@
 	<title>Users - Admin</title>
 </svelte:head>
 
-<div class="mx-auto w-full space-y-6 px-4 py-6 sm:px-6 lg:px-8">
+<div class="mx-auto w-full space-y-4 px-4 py-4 sm:px-6 lg:px-8">
 	<!-- Header -->
 	<div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 		<div>
@@ -77,18 +77,18 @@
 			<table class="w-full">
 				<thead class="border-b border-border/50 bg-muted/30">
 					<tr>
-						<th class="px-4 py-3 text-left text-sm font-semibold text-foreground">User</th>
-						<th class="px-4 py-3 text-left text-sm font-semibold text-foreground">Role</th>
-						<th class="px-4 py-3 text-left text-sm font-semibold text-foreground">KYC Status</th>
-						<th class="px-4 py-3 text-left text-sm font-semibold text-foreground">Balance</th>
-						<th class="px-4 py-3 text-left text-sm font-semibold text-foreground">Joined</th>
-						<th class="px-4 py-3 text-right text-sm font-semibold text-foreground">Actions</th>
+						<th class="px-4 py-2.5 text-left text-sm font-semibold text-foreground">User</th>
+						<th class="px-4 py-2.5 text-left text-sm font-semibold text-foreground">Role</th>
+						<th class="px-4 py-2.5 text-left text-sm font-semibold text-foreground">KYC Status</th>
+						<th class="px-4 py-2.5 text-left text-sm font-semibold text-foreground">Balance</th>
+						<th class="px-4 py-2.5 text-left text-sm font-semibold text-foreground">Joined</th>
+						<th class="px-4 py-2.5 text-right text-sm font-semibold text-foreground">Actions</th>
 					</tr>
 				</thead>
 				<tbody class="divide-y divide-border/30">
 					{#each data.users as user}
 						<tr class="transition-colors hover:bg-muted/20">
-							<td class="px-4 py-3">
+							<td class="px-4 py-2.5">
 								<div>
 									<p class="font-medium text-foreground">
 										{user.firstName || ''} {user.lastName || ''}
@@ -96,20 +96,20 @@
 									<p class="text-sm text-muted-foreground">{user.email}</p>
 								</div>
 							</td>
-							<td class="px-4 py-3">
+							<td class="px-4 py-2.5">
 								<Badge variant={getRoleBadgeVariant(user.role)}>{user.role}</Badge>
 							</td>
-							<td class="px-4 py-3">
+							<td class="px-4 py-2.5">
 								<Badge variant={getKycBadgeVariant(user.kycStatus)}>{user.kycStatus}</Badge>
 							</td>
-							<td class="px-4 py-3">
+							<td class="px-4 py-2.5">
 								<p class="font-medium text-foreground">{formatCurrency(Number(user.walletBalance))}</p>
 								<p class="text-xs text-muted-foreground">{formatNumber(Number(user.tokenBalance))} TKN</p>
 							</td>
-							<td class="px-4 py-3 text-sm text-muted-foreground">
+							<td class="px-4 py-2.5 text-sm text-muted-foreground">
 								{formatDate(user.createdAt)}
 							</td>
-							<td class="px-4 py-3 text-right">
+							<td class="px-4 py-2.5 text-right">
 								<a href="/admin/users/{user.id}">
 									<Button variant="ghost" size="sm">View</Button>
 								</a>
