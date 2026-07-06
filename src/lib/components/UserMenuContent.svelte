@@ -2,7 +2,7 @@
     import UserInfo from '$lib/components/UserInfo.svelte';
     import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
     import type { User } from '$lib/types';
-    import { LogOut, Settings } from 'lucide-svelte';
+    import { LogOut, Settings, Globe, Wallet, Cog, Shield } from 'lucide-svelte';
     import IncognitoToggle from './user/IncognitoToggle.svelte';
     import { isAdmin } from '$lib/isAdmin.svelte.js';
 
@@ -19,16 +19,51 @@
     </div>
 </DropdownMenu.Label>
 <DropdownMenu.Separator />
-<DropdownMenu.Group>
-    <DropdownMenu.Item>
-        <a class="block w-full" href="/settings/profile">
-            <div class="flex items-center">
+
+{#if $isAdmin}
+    <DropdownMenu.Sub>
+        <DropdownMenu.SubTrigger>
+            <Settings class="mr-2 size-4" />
+            <span>Settings</span>
+        </DropdownMenu.SubTrigger>
+        <DropdownMenu.SubContent>
+            <DropdownMenu.Item>
+                <a class="flex items-center w-full" href="/admin/settings/website">
+                    <Globe class="mr-2 size-4" />
+                    <span>Website</span>
+                </a>
+            </DropdownMenu.Item>
+            <DropdownMenu.Item>
+                <a class="flex items-center w-full" href="/admin/settings/platform">
+                    <Cog class="mr-2 size-4" />
+                    <span>Platform</span>
+                </a>
+            </DropdownMenu.Item>
+            <DropdownMenu.Item>
+                <a class="flex items-center w-full" href="/admin/settings/wallets">
+                    <Wallet class="mr-2 size-4" />
+                    <span>Wallets</span>
+                </a>
+            </DropdownMenu.Item>
+            <DropdownMenu.Separator />
+            <DropdownMenu.Item>
+                <a class="flex items-center w-full" href="/admin/settings/profile">
+                    <Shield class="mr-2 size-4" />
+                    <span>My Profile</span>
+                </a>
+            </DropdownMenu.Item>
+        </DropdownMenu.SubContent>
+    </DropdownMenu.Sub>
+{:else}
+    <DropdownMenu.Group>
+        <DropdownMenu.Item>
+            <a class="flex items-center w-full" href="/settings/profile">
                 <Settings class="mr-2 size-4" />
                 <span>Settings</span>
-            </div>
-        </a>
-    </DropdownMenu.Item>
-</DropdownMenu.Group>
+            </a>
+        </DropdownMenu.Item>
+    </DropdownMenu.Group>
+{/if}
 <DropdownMenu.Separator />
 
 {#if !$isAdmin}

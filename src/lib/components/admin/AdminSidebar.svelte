@@ -23,9 +23,6 @@
         Shield, 
         Newspaper, 
         MessageSquare, 
-        Globe, 
-        Settings, 
-        Wallet,
         BarChart3
     } from 'lucide-svelte';
     import AppLogo from '$lib/components/AppLogo.svelte';
@@ -95,26 +92,6 @@
                     title: 'Surveys',
                     href: '/admin/surveys',
                     icon: MessageSquare,
-                },
-            ]
-        },
-        {
-            menuGroup: 'Settings',
-            items: [
-                {
-                    title: 'Website',
-                    href: '/admin/settings/website',
-                    icon: Globe,
-                },
-                {
-                    title: 'Platform',
-                    href: '/admin/settings/platform',
-                    icon: Settings,
-                },
-                {
-                    title: 'Wallets',
-                    href: '/admin/settings/wallets',
-                    icon: Wallet,
                 },
             ]
         }
