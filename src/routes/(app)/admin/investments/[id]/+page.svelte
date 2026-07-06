@@ -5,14 +5,16 @@
 	import { formatCurrency, formatNumber } from '$lib/utils';
 	import { User, TrendingUp, Calendar, DollarSign, ArrowUpRight } from 'lucide-svelte';
 	import { toast } from 'svelte-sonner';
+	import { enhance } from '$app/forms';
+	import { invalidateAll } from '$app/navigation';
 	import type { PageData, ActionData } from './$types';
 
 	let { data, form }: { data: PageData, form?: ActionData } = $props();
 
-	// Show toast on form response
 	$effect(() => {
 		if (form?.success) {
 			toast.success(form.message || 'Action completed successfully');
+			invalidateAll();
 		} else if (form?.error) {
 			toast.error(form.error || 'Action failed');
 		}
@@ -49,11 +51,23 @@
 		</div>
 		<div class="flex gap-2">
 			{#if data.investment.status === 'pending'}
-				<Button variant="default">Approve</Button>
-				<Button variant="destructive">Reject</Button>
+				<form method="POST" action="?/updateStatus" use:enhance>
+					<input type="hidden" name="status" value="active" />
+					<Button variant="default" size="sm" type="submit">Approve</Button>
+				</form>
+				<form method="POST" action="?/updateStatus" use:enhance>
+					<input type="hidden" name="status" value="rejected" />
+					<Button variant="destructive" size="sm" type="submit">Reject</Button>
+				</form>
 			{:else if data.investment.status === 'active'}
-				<Button variant="outline">Complete</Button>
-				<Button variant="destructive">Cancel</Button>
+				<form method="POST" action="?/updateStatus" use:enhance>
+					<input type="hidden" name="status" value="completed" />
+					<Button variant="outline" size="sm" type="submit">Complete</Button>
+				</form>
+				<form method="POST" action="?/updateStatus" use:enhance>
+					<input type="hidden" name="status" value="cancelled" />
+					<Button variant="destructive" size="sm" type="submit">Cancel</Button>
+				</form>
 			{/if}
 		</div>
 	</div>

@@ -80,7 +80,12 @@ export const AuditActions = {
 	ADMIN_UPDATE_SETTINGS: 'admin.update_settings',
 
 	// Survey actions
-	SURVEY_SUBMIT_RESPONSE: 'survey.submit_response'
+	SURVEY_SUBMIT_RESPONSE: 'survey.submit_response',
+
+	// Deposit actions
+	DEPOSIT_SUBMIT: 'deposit.submit',
+	DEPOSIT_APPROVE: 'deposit.approve',
+	DEPOSIT_REJECT: 'deposit.reject'
 } as const;
 
 /**

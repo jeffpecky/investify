@@ -19,6 +19,7 @@
         Users, 
         Sparkles, 
         ArrowDownToLine, 
+        ArrowDownCircle,
         Shield, 
         Newspaper, 
         MessageSquare, 
@@ -59,6 +60,11 @@
                     title: 'Investments',
                     href: '/admin/investments',
                     icon: TrendingUp,
+                },
+                {
+                    title: 'Deposits',
+                    href: '/admin/deposits',
+                    icon: ArrowDownCircle,
                 },
                 {
                     title: 'Plans',
