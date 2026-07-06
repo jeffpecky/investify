@@ -18,7 +18,7 @@
 	let saving = $state(false);
 	let message = $state('');
 	let isError = $state(false);
-	let avatarPreview = $state($state.snapshot(data.profile?.profilePhotoUrl || ''));
+	let avatarPreview = $state($state.snapshot(data.profile?.avatarPath || ''));
 	let avatarInput: HTMLInputElement;
 	let countryValue = $state(profile.country || '');
 

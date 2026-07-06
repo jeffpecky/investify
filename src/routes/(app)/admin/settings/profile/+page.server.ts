@@ -19,7 +19,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 			state: users.state,
 			zipCode: users.zipCode,
 			country: users.country,
-			profilePhotoUrl: users.profilePhotoUrl
+			avatarPath: users.avatarPath
 		})
 		.from(users)
 		.where(eq(users.id, locals.user!.id))
