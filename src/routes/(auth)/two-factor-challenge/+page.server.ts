@@ -72,7 +72,18 @@ export const actions: Actions = {
 		// Check for returnUrl parameter and validate it
 		const returnUrl = url.searchParams.get('returnUrl');
 		if (returnUrl && returnUrl.startsWith('/') && !returnUrl.includes('//')) {
-			throw redirect(303, returnUrl);
+			// SECURITY: Only redirect to returnUrl if user has permission
+			// Admin routes require admin role
+			if (returnUrl.startsWith('/admin')) {
+				if (user.role === 'admin') {
+					throw redirect(303, returnUrl);
+				}
+				// Customer trying to access admin route - ignore returnUrl
+			}
+			// Customer routes - any authenticated user can access
+			else {
+				throw redirect(303, returnUrl);
+			}
 		}
 
 		// Default redirects based on role
@@ -146,7 +157,18 @@ export const actions: Actions = {
 		// Check for returnUrl parameter and validate it
 		const returnUrl = url.searchParams.get('returnUrl');
 		if (returnUrl && returnUrl.startsWith('/') && !returnUrl.includes('//')) {
-			throw redirect(303, returnUrl);
+			// SECURITY: Only redirect to returnUrl if user has permission
+			// Admin routes require admin role
+			if (returnUrl.startsWith('/admin')) {
+				if (user.role === 'admin') {
+					throw redirect(303, returnUrl);
+				}
+				// Customer trying to access admin route - ignore returnUrl
+			}
+			// Customer routes - any authenticated user can access
+			else {
+				throw redirect(303, returnUrl);
+			}
 		}
 
 		// Default redirects based on role
