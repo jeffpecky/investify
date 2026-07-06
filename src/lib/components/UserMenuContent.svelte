@@ -4,6 +4,7 @@
     import type { User } from '$lib/types';
     import { LogOut, Settings } from 'lucide-svelte';
     import IncognitoToggle from './user/IncognitoToggle.svelte';
+    import { isAdmin } from '$lib/isAdmin.svelte.js';
 
     interface Props {
         user: User;
@@ -30,10 +31,12 @@
 </DropdownMenu.Group>
 <DropdownMenu.Separator />
 
+{#if !$isAdmin}
 <DropdownMenu.Sub>
     <IncognitoToggle type="text" />
 </DropdownMenu.Sub>
 <DropdownMenu.Separator />
+{/if}
 
 <DropdownMenu.Item>
     <form method="POST" action="/logout" class="w-full">
