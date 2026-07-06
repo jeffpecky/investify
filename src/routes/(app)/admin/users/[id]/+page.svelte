@@ -15,12 +15,12 @@
 
 	let editingWallet = $state(false);
 	let editingToken = $state(false);
-	let walletValue = $state(data.user.walletBalance?.toString() || '0');
-	let tokenValue = $state(data.user.tokenBalance?.toString() || '0');
+	let walletValue = $state(data.viewedUser.walletBalance?.toString() || '0');
+	let tokenValue = $state(data.viewedUser.tokenBalance?.toString() || '0');
 
 	$effect(() => {
-		walletValue = data.user.walletBalance?.toString() || '0';
-		tokenValue = data.user.tokenBalance?.toString() || '0';
+		walletValue = data.viewedUser.walletBalance?.toString() || '0';
+		tokenValue = data.viewedUser.tokenBalance?.toString() || '0';
 	});
 
 	$effect(() => {
@@ -48,7 +48,7 @@
 </script>
 
 <svelte:head>
-	<title>{data.user.email} - Users - Admin</title>
+	<title>{data.viewedUser.email} - Users - Admin</title>
 </svelte:head>
 
 <div class="mx-auto w-full space-y-4 px-4 py-4 sm:px-6 lg:px-8">
@@ -61,9 +61,9 @@
 			</a>
 			<div>
 				<h1 class="text-2xl font-semibold text-foreground">
-					{data.user.firstName || ''} {data.user.lastName || ''}
+					{data.viewedUser.firstName || ''} {data.viewedUser.lastName || ''}
 				</h1>
-				<p class="mt-0.5 text-sm text-muted-foreground">{data.user.email}</p>
+				<p class="mt-0.5 text-sm text-muted-foreground">{data.viewedUser.email}</p>
 			</div>
 		</div>
 		<div class="flex gap-1.5">
@@ -77,7 +77,7 @@
 			<CardContent class="p-3">
 				{#if editingWallet}
 					<form method="POST" action="?/updateBalances" use:enhance class="space-y-2">
-						<input type="hidden" name="tokenBalance" value={data.user.tokenBalance?.toString() || '0'} />
+						<input type="hidden" name="tokenBalance" value={data.viewedUser.tokenBalance?.toString() || '0'} />
 						<Label class="text-xs">Wallet Balance ($)</Label>
 						<div class="flex gap-1.5">
 							<Input
@@ -90,7 +90,7 @@
 							<Button variant="default" size="icon" class="h-7 w-7 shrink-0" type="submit">
 								<Check class="h-3 w-3" />
 							</Button>
-							<Button variant="ghost" size="icon" class="h-7 w-7 shrink-0" type="button" onclick={() => { editingWallet = false; walletValue = data.user.walletBalance?.toString() || '0'; }}>
+							<Button variant="ghost" size="icon" class="h-7 w-7 shrink-0" type="button" onclick={() => { editingWallet = false; walletValue = data.viewedUser.walletBalance?.toString() || '0'; }}>
 								<X class="h-3 w-3" />
 							</Button>
 						</div>
@@ -99,7 +99,7 @@
 					<div class="flex items-start justify-between">
 						<div>
 							<p class="text-xs text-muted-foreground">Wallet Balance</p>
-							<p class="text-xl font-bold tabular-nums">{formatCurrency(Number(data.user.walletBalance))}</p>
+							<p class="text-xl font-bold tabular-nums">{formatCurrency(Number(data.viewedUser.walletBalance))}</p>
 						</div>
 						<button class="text-muted-foreground hover:text-foreground mt-0.5" onclick={() => editingWallet = true}>
 							<Pencil class="h-3.5 w-3.5" />
@@ -112,7 +112,7 @@
 			<CardContent class="p-3">
 				{#if editingToken}
 					<form method="POST" action="?/updateBalances" use:enhance class="space-y-2">
-						<input type="hidden" name="walletBalance" value={data.user.walletBalance?.toString() || '0'} />
+						<input type="hidden" name="walletBalance" value={data.viewedUser.walletBalance?.toString() || '0'} />
 						<Label class="text-xs">Token Balance</Label>
 						<div class="flex gap-1.5">
 							<Input
@@ -125,7 +125,7 @@
 							<Button variant="default" size="icon" class="h-7 w-7 shrink-0" type="submit">
 								<Check class="h-3 w-3" />
 							</Button>
-							<Button variant="ghost" size="icon" class="h-7 w-7 shrink-0" type="button" onclick={() => { editingToken = false; tokenValue = data.user.tokenBalance?.toString() || '0'; }}>
+							<Button variant="ghost" size="icon" class="h-7 w-7 shrink-0" type="button" onclick={() => { editingToken = false; tokenValue = data.viewedUser.tokenBalance?.toString() || '0'; }}>
 								<X class="h-3 w-3" />
 							</Button>
 						</div>
@@ -134,7 +134,7 @@
 					<div class="flex items-start justify-between">
 						<div>
 							<p class="text-xs text-muted-foreground">Token Balance</p>
-							<p class="text-xl font-bold tabular-nums">{formatNumber(Number(data.user.tokenBalance))} TKN</p>
+							<p class="text-xl font-bold tabular-nums">{formatNumber(Number(data.viewedUser.tokenBalance))} TKN</p>
 						</div>
 						<button class="text-muted-foreground hover:text-foreground mt-0.5" onclick={() => editingToken = true}>
 							<Pencil class="h-3.5 w-3.5" />
@@ -161,49 +161,49 @@
 					<div class="flex items-center gap-2">
 						<Mail class="h-3.5 w-3.5 text-muted-foreground" />
 						<span class="text-xs text-muted-foreground">Email:</span>
-						<span class="text-sm font-medium">{data.user.email}</span>
+						<span class="text-sm font-medium">{data.viewedUser.email}</span>
 					</div>
-					{#if data.user.phone}
+					{#if data.viewedUser.phone}
 						<div class="flex items-center gap-2">
 							<Phone class="h-3.5 w-3.5 text-muted-foreground" />
 							<span class="text-xs text-muted-foreground">Phone:</span>
-							<span class="text-sm font-medium">{data.user.phone}</span>
+							<span class="text-sm font-medium">{data.viewedUser.phone}</span>
 						</div>
 					{/if}
 					<div class="flex items-center gap-2">
 						<Calendar class="h-3.5 w-3.5 text-muted-foreground" />
 						<span class="text-xs text-muted-foreground">Joined:</span>
-						<span class="text-sm font-medium">{formatDate(data.user.createdAt)}</span>
+						<span class="text-sm font-medium">{formatDate(data.viewedUser.createdAt)}</span>
 					</div>
 				</div>
 				<div class="space-y-2">
 					<div class="flex items-center gap-2">
 						<span class="text-xs text-muted-foreground">Role:</span>
-						<Badge class="text-xs">{data.user.role}</Badge>
+						<Badge class="text-xs">{data.viewedUser.role}</Badge>
 					</div>
 					<div class="flex items-center gap-2">
 						<span class="text-xs text-muted-foreground">KYC Status:</span>
-						<Badge variant={getStatusBadgeVariant(data.user.kycStatus)} class="text-xs">{data.user.kycStatus}</Badge>
+						<Badge variant={getStatusBadgeVariant(data.viewedUser.kycStatus)} class="text-xs">{data.viewedUser.kycStatus}</Badge>
 					</div>
-					{#if data.user.group}
+					{#if data.viewedUser.group}
 						<div class="flex items-center gap-2">
 							<span class="text-xs text-muted-foreground">Group:</span>
-							<Badge variant="outline" class="text-xs">{data.user.group}</Badge>
+							<Badge variant="outline" class="text-xs">{data.viewedUser.group}</Badge>
 						</div>
 					{/if}
 				</div>
 			</div>
-			{#if data.user.address}
+			{#if data.viewedUser.address}
 				<div class="flex items-start gap-2 border-t border-border/30 pt-2.5">
 					<MapPin class="h-3.5 w-3.5 text-muted-foreground mt-0.5 shrink-0" />
 					<div>
 						<span class="text-xs text-muted-foreground">Address:</span>
 						<p class="text-sm font-medium">
-							{data.user.address}
-							{#if data.user.city}, {data.user.city}{/if}
-							{#if data.user.state}, {data.user.state}{/if}
-							{#if data.user.zipCode} {data.user.zipCode}{/if}
-							{#if data.user.country}, {data.user.country}{/if}
+							{data.viewedUser.address}
+							{#if data.viewedUser.city}, {data.viewedUser.city}{/if}
+							{#if data.viewedUser.state}, {data.viewedUser.state}{/if}
+							{#if data.viewedUser.zipCode} {data.viewedUser.zipCode}{/if}
+							{#if data.viewedUser.country}, {data.viewedUser.country}{/if}
 						</p>
 					</div>
 				</div>

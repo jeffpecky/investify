@@ -68,7 +68,7 @@ export const load: PageServerLoad = async ({ params }) => {
 			{ title: 'Users', href: '/admin/users' },
 			{ title: user.email, href: `/admin/users/${userId}` }
 		],
-		user,
+		viewedUser: user,
 		investments: userInvestments,
 		wallets: userWallets,
 		withdrawals: userWithdrawals,
