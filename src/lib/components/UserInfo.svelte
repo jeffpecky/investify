@@ -24,18 +24,18 @@
 </script>
 
 <Avatar class="h-8 w-8 rounded-lg">
-    {#if user.profile_photo_url}
-        <AvatarImage src={user.profile_photo_url} alt={user.first_name} />
+    {#if user.profilePhotoUrl || user.profile_photo_url}
+        <AvatarImage src={user.profilePhotoUrl || user.profile_photo_url} alt={user.firstName || user.first_name} />
     {:else}
         <AvatarFallback class="rounded-lg">
-            {getInitials(user.first_name + ' ' + user.last_name)}
+            {getInitials((user.firstName || user.first_name || '') + ' ' + (user.lastName || user.last_name || ''))}
         </AvatarFallback>
     {/if}
 </Avatar>
 
 <div class="grid flex-1 text-left text-sm leading-tight">
     <div class="flex items-center gap-2">
-        <span class="truncate font-medium">{user.first_name} {user.last_name}</span>
+        <span class="truncate font-medium">{user.firstName || user.first_name} {user.lastName || user.last_name}</span>
         {#if showGroup && !$isAdmin}
             <span class="text-xs font-bold border border-zinc-200 rounded-full px-1.5 py-0.5 w-fit mt-0.5">{$USER.group}</span>
         {/if}
