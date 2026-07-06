@@ -4,6 +4,7 @@
 	import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
+	import { Avatar, AvatarFallback, AvatarImage } from '$lib/components/ui/avatar';
 	import { formatCurrency, formatNumber } from '$lib/utils';
 	import { Mail, Phone, MapPin, Calendar, TrendingUp, Wallet, ArrowDownToLine, Shield, ArrowLeft, Pencil, Check, X, UserX, UserCheck } from 'lucide-svelte';
 	import { toast } from 'svelte-sonner';
@@ -75,11 +76,21 @@
 					<ArrowLeft class="h-4 w-4" />
 				</Button>
 			</a>
-			<div>
-				<h1 class="text-2xl font-semibold text-foreground">
-					{data.viewedUser.firstName || ''} {data.viewedUser.lastName || ''}
-				</h1>
-				<p class="mt-0.5 text-sm text-muted-foreground">{data.viewedUser.email}</p>
+			<div class="flex items-center gap-3">
+				<Avatar class="h-12 w-12">
+					{#if data.viewedUser.avatarPath}
+						<AvatarImage src={data.viewedUser.avatarPath} alt={data.viewedUser.firstName} />
+					{:else}
+						<AvatarImage src={`https://api.dicebear.com/7.x/notionists/svg?seed=${encodeURIComponent(data.viewedUser.email)}`} alt={data.viewedUser.firstName} />
+					{/if}
+					<AvatarFallback>{(data.viewedUser.firstName?.[0] || '')}{(data.viewedUser.lastName?.[0] || '')}</AvatarFallback>
+				</Avatar>
+				<div>
+					<h1 class="text-2xl font-semibold text-foreground">
+						{data.viewedUser.firstName || ''} {data.viewedUser.lastName || ''}
+					</h1>
+					<p class="mt-0.5 text-sm text-muted-foreground">{data.viewedUser.email}</p>
+				</div>
 			</div>
 		</div>
 		<div class="flex gap-1.5">

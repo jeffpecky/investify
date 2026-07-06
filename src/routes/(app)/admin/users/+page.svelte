@@ -2,6 +2,7 @@
 	import { Badge } from '$lib/components/ui/badge';
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
+	import { Avatar, AvatarFallback, AvatarImage } from '$lib/components/ui/avatar';
 	import { formatCurrency, formatNumber } from '$lib/utils';
 	import { Search, UserPlus, ChevronLeft, ChevronRight } from 'lucide-svelte';
 	import type { PageData } from './$types';
@@ -89,11 +90,21 @@
 					{#each data.users as user}
 						<tr class="transition-colors hover:bg-muted/20">
 							<td class="px-4 py-2.5">
-								<div>
-									<p class="font-medium text-foreground">
-										{user.firstName || ''} {user.lastName || ''}
-									</p>
-									<p class="text-sm text-muted-foreground">{user.email}</p>
+								<div class="flex items-center gap-3">
+									<Avatar class="h-8 w-8">
+										{#if user.avatarPath}
+											<AvatarImage src={user.avatarPath} alt={user.firstName} />
+										{:else}
+											<AvatarImage src={`https://api.dicebear.com/7.x/notionists/svg?seed=${encodeURIComponent(user.email)}`} alt={user.firstName} />
+										{/if}
+										<AvatarFallback>{(user.firstName?.[0] || '')}{(user.lastName?.[0] || '')}</AvatarFallback>
+									</Avatar>
+									<div>
+										<p class="font-medium text-foreground">
+											{user.firstName || ''} {user.lastName || ''}
+										</p>
+										<p class="text-sm text-muted-foreground">{user.email}</p>
+									</div>
 								</div>
 							</td>
 							<td class="px-4 py-2.5">

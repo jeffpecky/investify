@@ -16,21 +16,21 @@
 
     const { getInitials } = useInitials();
 
-    // you can do this or
-    // let isAdmin = $derived($page.url.startsWith('/admin'));
-
-    // or you can check if the user is admin by checking the role in the stored
-    // let isAdmin = $derived($page.props.auth.user.role === 'admin');
+    function getAvatarUrl(user: User): string {
+        const seed = user.email || user.id?.toString() || 'default';
+        return `https://api.dicebear.com/7.x/notionists/svg?seed=${encodeURIComponent(seed)}`;
+    }
 </script>
 
 <Avatar class="h-8 w-8 rounded-lg">
     {#if user.profilePhotoUrl || user.profile_photo_url}
         <AvatarImage src={user.profilePhotoUrl || user.profile_photo_url} alt={user.firstName || user.first_name} />
     {:else}
-        <AvatarFallback class="rounded-lg">
-            {getInitials((user.firstName || user.first_name || '') + ' ' + (user.lastName || user.last_name || ''))}
-        </AvatarFallback>
+        <AvatarImage src={getAvatarUrl(user)} alt={user.firstName || user.first_name} class="rounded-lg" />
     {/if}
+    <AvatarFallback class="rounded-lg">
+        {getInitials((user.firstName || user.first_name || '') + ' ' + (user.lastName || user.last_name || ''))}
+    </AvatarFallback>
 </Avatar>
 
 <div class="grid flex-1 text-left text-sm leading-tight">

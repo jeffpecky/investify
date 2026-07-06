@@ -18,7 +18,7 @@
 	let saving = $state(false);
 	let message = $state('');
 	let isError = $state(false);
-	let avatarPreview = $state($state.snapshot(data.profile?.avatarPath || ''));
+	let avatarPreview = $state($state.snapshot(data.profile?.avatarPath || `https://api.dicebear.com/7.x/notionists/svg?seed=${encodeURIComponent(data.profile?.email || 'admin')}`));
 	let avatarInput: HTMLInputElement;
 	let countryValue = $state(profile.country || '');
 
@@ -79,7 +79,7 @@
 			<div class="flex items-center gap-6">
 				<div class="relative group">
 					<Avatar.Root class="h-20 w-20 cursor-pointer" onclick={() => avatarInput.click()}>
-						<Avatar.Image src={avatarPreview} alt={data.user?.name || 'Admin'} />
+						<Avatar.Image src={avatarPreview} alt={data.user?.firstName || 'Admin'} />
 						<Avatar.Fallback>{data.user?.firstName?.[0]}{data.user?.lastName?.[0]}</Avatar.Fallback>
 					</Avatar.Root>
 					<div
