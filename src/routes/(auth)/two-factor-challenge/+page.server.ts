@@ -18,7 +18,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
 };
 
 export const actions: Actions = {
-	code: async ({ request, cookies }) => {
+	code: async ({ request, cookies, url }) => {
 		const userId = cookies.get('2fa_user_id');
 
 		if (!userId) {
@@ -69,6 +69,13 @@ export const actions: Actions = {
 
 		cookies.delete('2fa_user_id', { path: '/' });
 
+		// Check for returnUrl parameter and validate it
+		const returnUrl = url.searchParams.get('returnUrl');
+		if (returnUrl && returnUrl.startsWith('/') && !returnUrl.includes('//')) {
+			throw redirect(303, returnUrl);
+		}
+
+		// Default redirects based on role
 		if (user.role === 'admin') {
 			throw redirect(303, '/admin/dashboard');
 		}
@@ -76,7 +83,7 @@ export const actions: Actions = {
 		throw redirect(303, '/dashboard');
 	},
 
-	recovery: async ({ request, cookies }) => {
+	recovery: async ({ request, cookies, url }) => {
 		const userId = cookies.get('2fa_user_id');
 
 		if (!userId) {
@@ -136,6 +143,13 @@ export const actions: Actions = {
 
 		cookies.delete('2fa_user_id', { path: '/' });
 
+		// Check for returnUrl parameter and validate it
+		const returnUrl = url.searchParams.get('returnUrl');
+		if (returnUrl && returnUrl.startsWith('/') && !returnUrl.includes('//')) {
+			throw redirect(303, returnUrl);
+		}
+
+		// Default redirects based on role
 		if (user.role === 'admin') {
 			throw redirect(303, '/admin/dashboard');
 		}

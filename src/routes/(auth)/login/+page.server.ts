@@ -94,6 +94,13 @@ export const actions: Actions = {
 				sameSite: 'lax',
 				maxAge: 60 * 10 // 10 minutes
 			});
+			
+			// Preserve returnUrl if present
+			const returnUrl = event.url.searchParams.get('returnUrl');
+			if (returnUrl && returnUrl.startsWith('/') && !returnUrl.includes('//')) {
+				throw redirect(302, `/two-factor-challenge?returnUrl=${encodeURIComponent(returnUrl)}`);
+			}
+			
 			throw redirect(302, '/two-factor-challenge');
 		}
 
@@ -106,6 +113,13 @@ export const actions: Actions = {
 			...sessionCookie.attributes
 		});
 
+		// Check for returnUrl parameter and validate it
+		const returnUrl = event.url.searchParams.get('returnUrl');
+		if (returnUrl && returnUrl.startsWith('/') && !returnUrl.includes('//')) {
+			throw redirect(302, returnUrl);
+		}
+
+		// Default redirects based on role
 		if (user.role === 'admin') {
 			throw redirect(302, '/admin/dashboard');
 		} else {
