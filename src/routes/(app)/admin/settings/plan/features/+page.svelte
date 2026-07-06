@@ -4,13 +4,18 @@
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
 	import { Plus, Trash2 } from 'lucide-svelte';
-	import type { PageData } from './$types';
+	import { toast } from 'svelte-sonner';
+	import { enhance } from '$app/forms';
+	import type { PageData, ActionData } from './$types';
 
-	let { data }: { data: PageData } = $props();
+	let { data, form }: { data: PageData, form?: ActionData } = $props();
 
-	let newFeature = $state({
-		name: '',
-		description: ''
+	$effect(() => {
+		if (form?.success) {
+			toast.success(form.message || 'Action completed');
+		} else if (form?.error) {
+			toast.error(form.error || 'Action failed');
+		}
 	});
 </script>
 
@@ -18,29 +23,29 @@
 	<title>Plan Features - Admin</title>
 </svelte:head>
 
-<div class="mx-auto w-full space-y-6 px-4 py-6 sm:px-6 lg:px-8">
+<div class="mx-auto w-full space-y-4 px-4 py-4 sm:px-6 lg:px-8">
 	<div>
 		<h1 class="text-2xl font-semibold text-foreground">Plan Features</h1>
 		<p class="mt-1 text-sm text-muted-foreground">Manage features that can be assigned to plans</p>
 	</div>
 
-	<Card>
-		<CardHeader>
-			<CardTitle>Add Feature</CardTitle>
+	<Card class="border-border/50">
+		<CardHeader class="pb-2">
+			<CardTitle class="text-base">Add Feature</CardTitle>
 		</CardHeader>
-		<CardContent>
-			<form class="space-y-4">
-				<div class="grid gap-4 md:grid-cols-2">
-					<div class="space-y-2">
-						<Label for="name">Feature Name</Label>
-						<Input id="name" placeholder="24/7 Support" bind:value={newFeature.name} required />
+		<CardContent class="p-3 pt-0">
+			<form method="POST" action="?/addFeature" use:enhance class="space-y-3">
+				<div class="grid gap-3 md:grid-cols-2">
+					<div class="space-y-1.5">
+						<Label for="name" class="text-xs">Feature Name</Label>
+						<Input id="name" name="name" placeholder="24/7 Support" required />
 					</div>
-					<div class="space-y-2">
-						<Label for="description">Description</Label>
-						<Input id="description" placeholder="Round-the-clock customer support" bind:value={newFeature.description} />
+					<div class="space-y-1.5">
+						<Label for="description" class="text-xs">Description</Label>
+						<Input id="description" name="description" placeholder="Round-the-clock customer support" />
 					</div>
 				</div>
-				<Button type="submit" class="gap-2">
+				<Button type="submit" size="sm" class="gap-2">
 					<Plus class="h-4 w-4" />
 					Add Feature
 				</Button>
@@ -48,24 +53,27 @@
 		</CardContent>
 	</Card>
 
-	<Card>
-		<CardHeader>
-			<CardTitle>Features ({data.features.length})</CardTitle>
+	<Card class="border-border/50">
+		<CardHeader class="pb-2">
+			<CardTitle class="text-base">Features ({data.features.length})</CardTitle>
 		</CardHeader>
-		<CardContent>
+		<CardContent class="p-3 pt-0">
 			{#if data.features.length > 0}
 				<div class="space-y-2">
 					{#each data.features as feature}
-						<div class="flex items-center justify-between rounded-lg border border-border/40 p-3">
+						<div class="flex items-center justify-between rounded-lg border border-border/40 p-2.5">
 							<div>
-								<p class="font-medium text-foreground">{feature.name}</p>
+								<p class="text-sm font-medium text-foreground">{feature.name}</p>
 								{#if feature.description}
-									<p class="text-sm text-muted-foreground">{feature.description}</p>
+									<p class="text-xs text-muted-foreground">{feature.description}</p>
 								{/if}
 							</div>
-							<Button variant="ghost" size="sm" class="text-destructive">
-								<Trash2 class="h-4 w-4" />
-							</Button>
+							<form method="POST" action="?/deleteFeature" use:enhance>
+								<input type="hidden" name="featureId" value={feature.id} />
+								<Button variant="ghost" size="sm" type="submit" class="text-destructive hover:text-destructive">
+									<Trash2 class="h-4 w-4" />
+								</Button>
+							</form>
 						</div>
 					{/each}
 				</div>

@@ -1,5 +1,4 @@
 <script lang="ts">
-    import NavFooter from '$lib/components/NavFooter.svelte';
     import NavMain from '$lib/components/NavMain.svelte';
     import NavUser from '$lib/components/NavUser.svelte';
     import {
@@ -13,8 +12,7 @@
         SidebarSeparator,
         useSidebar,
     } from '$lib/components/ui/sidebar';
-    import type { NavItem, UserMenuItem } from '$lib/types';
-    // Link replaced with native <a> tags
+    import type { UserMenuItem } from '$lib/types';
     import { 
         LayoutGrid, 
         TrendingUp, 
@@ -27,8 +25,7 @@
         Globe, 
         Settings, 
         Wallet,
-        BarChart3,
-        ArrowLeft
+        BarChart3
     } from 'lucide-svelte';
     import AppLogo from '$lib/components/AppLogo.svelte';
 
@@ -116,14 +113,6 @@
             ]
         }
     ];
-
-    const footerNavItems: NavItem[] = [
-        {
-            title: 'User View',
-            href: '/dashboard',
-            icon: ArrowLeft,
-        },
-    ];
 </script>
 
 <Sidebar collapsible="icon" variant="inset">
@@ -158,8 +147,6 @@
     </SidebarContent>
 
     <SidebarFooter>
-        <NavFooter items={footerNavItems} class="mt-auto" />
-        <SidebarSeparator />
         <NavUser />
     </SidebarFooter>
 </Sidebar>

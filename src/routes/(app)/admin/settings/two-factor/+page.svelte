@@ -51,11 +51,6 @@
 				</div>
 			{/if}
 
-			<div class="mt-6 rounded-lg border border-yellow-500/20 bg-yellow-500/10 p-4">
-				<p class="text-sm text-yellow-700 dark:text-yellow-300">
-					<strong>TODO:</strong> Implement 2FA setup/disable workflow
-				</p>
-			</div>
 		</CardContent>
 	</Card>
 </div>

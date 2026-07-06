@@ -5,12 +5,13 @@
     interface Props {
         variant?: 'header' | 'sidebar';
         class?: string;
+        defaultOpen?: boolean;
         children?: Snippet;
     }
 
-    let { variant = 'sidebar', class: className, children }: Props = $props();
+    let { variant = 'sidebar', class: className, defaultOpen = true, children }: Props = $props();
 
-    let isOpen = $state(false);
+    let isOpen = $state(defaultOpen);
 </script>
 
 {#if variant === 'header'}

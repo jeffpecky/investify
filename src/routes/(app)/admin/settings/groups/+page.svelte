@@ -3,15 +3,19 @@
 	import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
-	import { Plus, Trash2, Edit } from 'lucide-svelte';
-	import type { PageData } from './$types';
+	import { Plus, Trash2 } from 'lucide-svelte';
+	import { toast } from 'svelte-sonner';
+	import { enhance } from '$app/forms';
+	import type { PageData, ActionData } from './$types';
 
-	let { data }: { data: PageData } = $props();
+	let { data, form }: { data: PageData, form?: ActionData } = $props();
 
-	let newGroup = $state({
-		name: '',
-		tokenThreshold: '',
-		description: ''
+	$effect(() => {
+		if (form?.success) {
+			toast.success(form.message || 'Action completed');
+		} else if (form?.error) {
+			toast.error(form.error || 'Action failed');
+		}
 	});
 </script>
 
@@ -19,33 +23,33 @@
 	<title>User Groups - Admin</title>
 </svelte:head>
 
-<div class="mx-auto w-full space-y-6 px-4 py-6 sm:px-6 lg:px-8">
+<div class="mx-auto w-full space-y-4 px-4 py-4 sm:px-6 lg:px-8">
 	<div>
 		<h1 class="text-2xl font-semibold text-foreground">User Groups</h1>
 		<p class="mt-1 text-sm text-muted-foreground">Manage user groups based on token balance</p>
 	</div>
 
-	<Card>
-		<CardHeader>
-			<CardTitle>Add New Group</CardTitle>
+	<Card class="border-border/50">
+		<CardHeader class="pb-2">
+			<CardTitle class="text-base">Add New Group</CardTitle>
 		</CardHeader>
-		<CardContent>
-			<form class="space-y-4">
-				<div class="grid gap-4 md:grid-cols-3">
-					<div class="space-y-2">
-						<Label for="name">Group Name</Label>
-						<Input id="name" placeholder="Gold" bind:value={newGroup.name} required />
+		<CardContent class="p-3 pt-0">
+			<form method="POST" action="?/addGroup" use:enhance class="space-y-3">
+				<div class="grid gap-3 md:grid-cols-3">
+					<div class="space-y-1.5">
+						<Label for="name" class="text-xs">Group Name</Label>
+						<Input id="name" name="name" placeholder="Gold" required />
 					</div>
-					<div class="space-y-2">
-						<Label for="tokenThreshold">Token Threshold</Label>
-						<Input id="tokenThreshold" type="number" placeholder="10000" bind:value={newGroup.tokenThreshold} required />
+					<div class="space-y-1.5">
+						<Label for="tokenThreshold" class="text-xs">Token Threshold</Label>
+						<Input id="tokenThreshold" name="tokenThreshold" type="number" placeholder="10000" required />
 					</div>
-					<div class="space-y-2">
-						<Label for="description">Description</Label>
-						<Input id="description" placeholder="Premium tier" bind:value={newGroup.description} />
+					<div class="space-y-1.5">
+						<Label for="description" class="text-xs">Description</Label>
+						<Input id="description" name="description" placeholder="Premium tier" />
 					</div>
 				</div>
-				<Button type="submit" class="gap-2">
+				<Button type="submit" size="sm" class="gap-2">
 					<Plus class="h-4 w-4" />
 					Add Group
 				</Button>
@@ -53,42 +57,34 @@
 		</CardContent>
 	</Card>
 
-	<Card>
-		<CardHeader>
-			<CardTitle>User Groups ({data.groups.length})</CardTitle>
+	<Card class="border-border/50">
+		<CardHeader class="pb-2">
+			<CardTitle class="text-base">User Groups ({data.groups.length})</CardTitle>
 		</CardHeader>
-		<CardContent>
+		<CardContent class="p-3 pt-0">
 			{#if data.groups.length > 0}
-				<div class="space-y-3">
+				<div class="space-y-2">
 					{#each data.groups as group}
-						<div class="flex items-center justify-between rounded-lg border border-border/40 p-4">
+						<div class="flex items-center justify-between rounded-lg border border-border/40 p-3">
 							<div>
 								<p class="font-medium text-foreground">{group.name}</p>
-								<p class="text-sm text-muted-foreground">Threshold: {group.tokenThreshold} tokens</p>
+								<p class="text-xs text-muted-foreground">Threshold: {group.tokenThreshold} tokens</p>
 								{#if group.description}
 									<p class="text-xs text-muted-foreground">{group.description}</p>
 								{/if}
 							</div>
-							<div class="flex gap-2">
-								<Button variant="ghost" size="sm">
-									<Edit class="h-4 w-4" />
-								</Button>
-								<Button variant="ghost" size="sm" class="text-destructive">
+							<form method="POST" action="?/deleteGroup" use:enhance>
+								<input type="hidden" name="groupId" value={group.id} />
+								<Button variant="ghost" size="sm" type="submit" class="text-destructive hover:text-destructive">
 									<Trash2 class="h-4 w-4" />
 								</Button>
-							</div>
+							</form>
 						</div>
 					{/each}
 				</div>
 			{:else}
 				<p class="text-center text-sm text-muted-foreground py-8">No groups configured</p>
 			{/if}
-
-			<div class="mt-6 rounded-lg border border-yellow-500/20 bg-yellow-500/10 p-4">
-				<p class="text-sm text-yellow-700 dark:text-yellow-300">
-					<strong>TODO:</strong> Implement CRUD actions
-				</p>
-			</div>
 		</CardContent>
 	</Card>
 </div>

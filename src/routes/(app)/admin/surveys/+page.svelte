@@ -98,9 +98,5 @@
 		{/if}
 	</div>
 
-	<div class="rounded-lg border border-yellow-500/20 bg-yellow-500/10 p-4">
-		<p class="text-sm text-yellow-700 dark:text-yellow-300">
-			<strong>TODO:</strong> Implement survey builder and responses viewer
-		</p>
-	</div>
+
 </div>

@@ -3,67 +3,63 @@
 	import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
-	import type { PageData } from './$types';
+	import { toast } from 'svelte-sonner';
+	import { enhance } from '$app/forms';
+	import type { PageData, ActionData } from './$types';
 
-	let { data }: { data: PageData } = $props();
+	let { data, form }: { data: PageData, form?: ActionData } = $props();
 
-	let formData = $state($state.snapshot({
-		siteName: data.settings.site_name || '',
-		siteDescription: data.settings.site_description || '',
-		contactEmail: data.settings.contact_email || '',
-		contactPhone: data.settings.contact_phone || '',
-		address: data.settings.address || ''
-	}));
+	$effect(() => {
+		if (form?.success) {
+			toast.success(form.message || 'Settings updated');
+		} else if (form?.error) {
+			toast.error(form.error || 'Update failed');
+		}
+	});
 </script>
 
 <svelte:head>
 	<title>Website Settings - Admin</title>
 </svelte:head>
 
-<div class="mx-auto w-full space-y-6 px-4 py-6 sm:px-6 lg:px-8">
+<div class="mx-auto w-full space-y-4 px-4 py-4 sm:px-6 lg:px-8">
 	<div>
 		<h1 class="text-2xl font-semibold text-foreground">Website Settings</h1>
 		<p class="mt-1 text-sm text-muted-foreground">Configure site information and branding</p>
 	</div>
 
-	<Card>
-		<CardHeader>
-			<CardTitle>General Information</CardTitle>
+	<Card class="border-border/50">
+		<CardHeader class="pb-2">
+			<CardTitle class="text-base">General Information</CardTitle>
 		</CardHeader>
-		<CardContent>
-			<form class="space-y-4">
-				<div class="space-y-2">
-					<Label for="siteName">Site Name</Label>
-					<Input id="siteName" bind:value={formData.siteName} placeholder="Ethercore" />
+		<CardContent class="p-3 pt-0">
+			<form method="POST" action="?/updateSettings" use:enhance class="space-y-3">
+				<div class="space-y-1.5">
+					<Label for="siteName" class="text-xs">Site Name</Label>
+					<Input id="siteName" name="siteName" value={data.settings.site_name || ''} placeholder="Ethercore" />
 				</div>
-				<div class="space-y-2">
-					<Label for="siteDescription">Site Description</Label>
-					<Input id="siteDescription" bind:value={formData.siteDescription} placeholder="Your investment platform" />
+				<div class="space-y-1.5">
+					<Label for="siteDescription" class="text-xs">Site Description</Label>
+					<Input id="siteDescription" name="siteDescription" value={data.settings.site_description || ''} placeholder="Your investment platform" />
 				</div>
-				<div class="grid gap-4 md:grid-cols-2">
-					<div class="space-y-2">
-						<Label for="contactEmail">Contact Email</Label>
-						<Input id="contactEmail" type="email" bind:value={formData.contactEmail} placeholder="contact@ethercore.org" />
+				<div class="grid gap-3 md:grid-cols-2">
+					<div class="space-y-1.5">
+						<Label for="contactEmail" class="text-xs">Contact Email</Label>
+						<Input id="contactEmail" name="contactEmail" type="email" value={data.settings.site_email || ''} placeholder="contact@ethercore.org" />
 					</div>
-					<div class="space-y-2">
-						<Label for="contactPhone">Contact Phone</Label>
-						<Input id="contactPhone" bind:value={formData.contactPhone} placeholder="+1 234 567 8900" />
+					<div class="space-y-1.5">
+						<Label for="contactPhone" class="text-xs">Contact Phone</Label>
+						<Input id="contactPhone" name="contactPhone" value={data.settings.site_phone || ''} placeholder="+1 234 567 8900" />
 					</div>
 				</div>
-				<div class="space-y-2">
-					<Label for="address">Address</Label>
-					<Input id="address" bind:value={formData.address} placeholder="123 Main St, City, Country" />
+				<div class="space-y-1.5">
+					<Label for="address" class="text-xs">Address</Label>
+					<Input id="address" name="address" value={data.settings.site_address || ''} placeholder="123 Main St, City, Country" />
 				</div>
-				<div class="border-t pt-4">
-					<Button type="submit">Save Changes</Button>
+				<div class="border-t border-border/30 pt-3">
+					<Button type="submit" size="sm">Save Changes</Button>
 				</div>
 			</form>
-
-			<div class="mt-6 rounded-lg border border-yellow-500/20 bg-yellow-500/10 p-4">
-				<p class="text-sm text-yellow-700 dark:text-yellow-300">
-					<strong>TODO:</strong> Implement form action handler
-				</p>
-			</div>
 		</CardContent>
 	</Card>
 </div>
