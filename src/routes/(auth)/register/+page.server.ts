@@ -12,6 +12,7 @@ import {
 } from '$lib/server/services/email';
 import { authRateLimiter } from '$lib/server/rate-limit';
 import { logAuditEvent, AuditActions } from '$lib/server/audit';
+import { createInitialSnapshot } from '$lib/server/services/snapshot-service';
 import crypto from 'crypto';
 
 export const load: PageServerLoad = async (event) => {
@@ -214,6 +215,9 @@ export const actions: Actions = {
 			ipAddress: event.request.headers.get('x-forwarded-for') || event.request.headers.get('x-real-ip') || 'unknown',
 			userAgent: event.request.headers.get('user-agent') || 'unknown'
 		});
+
+		// Create initial zero snapshot for historical tracking
+		await createInitialSnapshot(newUser.id);
 
 		// Send verification email
 		const verificationToken = await createEmailVerificationToken(newUser.id);

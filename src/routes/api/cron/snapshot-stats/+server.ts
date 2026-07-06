@@ -2,7 +2,7 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { db } from '$lib/server/db';
 import { users, investments, referrals, dailyStats } from '$lib/server/db/schema';
-import { eq } from 'drizzle-orm';
+import { eq, and } from 'drizzle-orm';
 import { env } from '$env/dynamic/private';
 
 export const GET: RequestHandler = async ({ request }) => {
@@ -36,8 +36,7 @@ export const GET: RequestHandler = async ({ request }) => {
 			const existingSnapshot = await db
 				.select()
 				.from(dailyStats)
-				.where(eq(dailyStats.userId, user.id))
-				.where(eq(dailyStats.date, today))
+				.where(and(eq(dailyStats.userId, user.id), eq(dailyStats.date, today)))
 				.limit(1);
 
 			if (existingSnapshot.length === 0) {
