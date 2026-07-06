@@ -6,6 +6,7 @@ import { fail } from '@sveltejs/kit';
 import { safeQuery, withTransaction } from '$lib/server/db/utils';
 import { logAuditEvent, AuditActions } from '$lib/server/audit';
 import { sendWithdrawalApprovalEmail, sendWithdrawalRejectionEmail } from '$lib/server/email';
+import { createUserSnapshot } from '$lib/server/services/snapshot-service';
 
 export const load: PageServerLoad = async () => {
 	const withdrawalsList = await safeQuery(
@@ -110,6 +111,9 @@ export const actions: Actions = {
 				userAgent: request.headers.get('user-agent') || 'unknown'
 			});
 
+			// Create historical snapshot after withdrawal is processed
+			await createUserSnapshot(withdrawal.userId);
+
 			return { success: true, message: 'Withdrawal approved' };
 		} catch (error) {
 			return fail(500, { error: 'Failed to approve withdrawal' });
@@ -173,6 +177,9 @@ export const actions: Actions = {
 					})
 					.where(eq(withdrawals.id, id as string));
 			}, 'Failed to reject withdrawal');
+
+			// Create historical snapshot after wallet refund
+			await createUserSnapshot(withdrawal.userId);
 
 			await logAuditEvent({
 				userId: locals.user?.id || '',

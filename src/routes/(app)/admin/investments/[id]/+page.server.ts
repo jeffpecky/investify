@@ -6,6 +6,7 @@ import { error, fail } from '@sveltejs/kit';
 import { updateInvestmentStatusSchema } from '$lib/server/validation/admin';
 import { logAuditEvent, AuditActions } from '$lib/server/audit';
 import { sendInvestmentApprovalEmail, sendInvestmentRejectionEmail } from '$lib/server/email';
+import { createUserSnapshot } from '$lib/server/services/snapshot-service';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const investmentId = params.id;
@@ -109,6 +110,11 @@ export const actions: Actions = {
 					updatedAt: new Date()
 				})
 				.where(eq(investments.id, params.id));
+
+			// Create historical snapshot when investment becomes active
+			if (result.data.status === 'active') {
+				await createUserSnapshot(currentInvestment.userId);
+			}
 
 			// Get user info for email
 			const [user] = await db

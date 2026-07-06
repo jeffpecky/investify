@@ -5,6 +5,7 @@ import { eq, and, desc } from 'drizzle-orm';
 import { fail, redirect } from '@sveltejs/kit';
 import { buyPlanSchema } from '$lib/server/validation/user';
 import { withTransaction, safeQuery } from '$lib/server/db/utils';
+import { createUserSnapshot } from '$lib/server/services/snapshot-service';
 
 export const load: PageServerLoad = async () => {
 	const plansList = await safeQuery(
@@ -109,6 +110,9 @@ export const actions: Actions = {
 					})
 					.where(eq(users.id, user.id));
 			}
+
+			// Create historical snapshot after investment purchase
+			await createUserSnapshot(user.id);
 
 			return {
 				success: true,
