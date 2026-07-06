@@ -73,7 +73,7 @@ export const actions: Actions = {
 			throw redirect(303, '/admin/dashboard');
 		}
 
-		throw redirect(303, '/user/dashboard');
+		throw redirect(303, '/dashboard');
 	},
 
 	recovery: async ({ request, cookies }) => {
@@ -140,6 +140,6 @@ export const actions: Actions = {
 			throw redirect(303, '/admin/dashboard');
 		}
 
-		throw redirect(303, '/user/dashboard');
+		throw redirect(303, '/dashboard');
 	}
 };

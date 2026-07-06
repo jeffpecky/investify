@@ -1,71 +1,58 @@
 import { onMount } from 'svelte';
+import { browser } from '$app/environment';
 
 export type Appearance = 'light' | 'dark' | 'system';
 
-// Define mediaQuery as a function to safely access window
-const getMediaQuery = () => (typeof window !== 'undefined' ? window.matchMedia('(prefers-color-scheme: dark)') : null);
+function getMediaQuery() {
+    if (!browser) return null;
+    return window.matchMedia('(prefers-color-scheme: dark)');
+}
 
-// Initialize theme only in browser environments
-if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-    const savedAppearance = localStorage.getItem('appearance') as Appearance | null;
-    const appearance = savedAppearance || 'light';
+function getSavedAppearance(): Appearance | null {
+    if (!browser) return null;
+    try {
+        return localStorage.getItem('appearance') as Appearance | null;
+    } catch {
+        return null;
+    }
+}
+
+function applyAppearance(appearance: Appearance) {
+    if (!browser) return;
 
     if (appearance === 'system') {
-        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        document.documentElement.classList.toggle('dark', systemTheme === 'dark');
+        const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.classList.toggle('dark', isDark);
     } else {
         document.documentElement.classList.toggle('dark', appearance === 'dark');
     }
 }
 
-export function updateTheme(value: Appearance) {
-    // Only run in browser environment
-    if (typeof window === 'undefined' || typeof document === 'undefined') return;
-
-    if (value === 'system') {
-        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        document.documentElement.classList.toggle('dark', systemTheme === 'dark');
-    } else {
-        document.documentElement.classList.toggle('dark', value === 'dark');
-    }
-}
-
 const handleSystemThemeChange = () => {
-    // Only run in browser environment
-    if (typeof window === 'undefined') return;
-
-    const currentAppearance = localStorage.getItem('appearance') as Appearance | null;
-    updateTheme(currentAppearance || 'light');
+    if (!browser) return;
+    const current = getSavedAppearance();
+    applyAppearance(current || 'light');
 };
 
 export function initializeTheme() {
-    // Only run in browser environment
-    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+    if (!browser) return;
 
-    const savedAppearance = localStorage.getItem('appearance') as Appearance | null;
-    updateTheme(savedAppearance || 'light');
+    const saved = getSavedAppearance();
+    applyAppearance(saved || 'light');
 
     const mediaQuery = getMediaQuery();
     mediaQuery?.addEventListener('change', handleSystemThemeChange);
 }
 
 export function useAppearance() {
-    // Get saved appearance from localStorage
-    const savedAppearance = typeof localStorage !== 'undefined' ? (localStorage.getItem('appearance') as Appearance | null) : null;
-
-    // Initialize with saved appearance or default to system
-    let appearance = $state(savedAppearance || 'light');
+    let appearance = $state<Appearance>(getSavedAppearance() || 'light');
 
     onMount(() => {
-        // Initialize theme
         initializeTheme();
 
-        // Make sure appearance state matches localStorage
-        if (typeof localStorage !== 'undefined') {
-            const currentAppearance = localStorage.getItem('appearance') as Appearance | null;
-            if (currentAppearance) {
-                appearance = currentAppearance;
-            }
+        const current = getSavedAppearance();
+        if (current) {
+            appearance = current;
         }
 
         return () => {
@@ -76,10 +63,14 @@ export function useAppearance() {
 
     function updateAppearance(value: Appearance) {
         appearance = value;
-        if (typeof localStorage !== 'undefined') {
-            localStorage.setItem('appearance', value);
+        if (browser) {
+            try {
+                localStorage.setItem('appearance', value);
+            } catch {
+                // localStorage may be unavailable
+            }
         }
-        updateTheme(value);
+        applyAppearance(value);
     }
 
     return {

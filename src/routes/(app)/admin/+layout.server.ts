@@ -10,7 +10,7 @@ export const load: LayoutServerLoad = async ({ locals }) => {
 	
 	// CRITICAL: Enforce admin role
 	if (user.role !== 'admin') {
-		throw redirect(303, '/user/dashboard');
+		throw redirect(303, '/dashboard');
 	}
 	
 	return {

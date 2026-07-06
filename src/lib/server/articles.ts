@@ -113,7 +113,7 @@ export async function getArticleById(id: string): Promise<Article | null> {
 }
 
 function formatArticle(post: any): Article {
-	const authorName = [post.authorFirstName, post.authorLastName].filter(Boolean).join(' ') || 'Investify Team';
+	const authorName = [post.authorFirstName, post.authorLastName].filter(Boolean).join(' ') || 'Ethercore Team';
 	const dateStr = post.publishedAt
 		? new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
 		: new Date(post.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });

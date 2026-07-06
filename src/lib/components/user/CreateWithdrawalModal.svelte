@@ -85,7 +85,7 @@
                     <Label for="amount">Amount</Label>
                     <InputGroup.Root>
                         <InputGroup.Addon>
-                            <InputGroup.Text>£</InputGroup.Text>
+                            <InputGroup.Text>$</InputGroup.Text>
                         </InputGroup.Addon>
                         <InputGroup.Input
                             placeholder="0.00"
@@ -98,7 +98,7 @@
                             disabled={form.wallet === null}
                         />
                         <InputGroup.Addon align="inline-end">
-                            <InputGroup.Text>GBP</InputGroup.Text>
+                            <InputGroup.Text>USD</InputGroup.Text>
                         </InputGroup.Addon>
                     </InputGroup.Root>
                 </div>

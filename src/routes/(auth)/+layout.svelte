@@ -4,6 +4,7 @@
 	import CardHeader from '$lib/components/ui/card/card-header.svelte';
 	import CardTitle from '$lib/components/ui/card/card-title.svelte';
 	import CardDescription from '$lib/components/ui/card/card-description.svelte';
+	import { siteSettings } from '$lib/stores/site.svelte';
 	import type { Snippet } from 'svelte';
 
 	interface Props {
@@ -51,30 +52,30 @@
 			style="background-image: radial-gradient(circle, currentColor 1px, transparent 1px); background-size: 32px 32px;"
 		></div>
 
-		<div class="relative z-10 flex w-full max-w-md flex-col gap-8">
-			<!-- Logo + Brand -->
-			<a href="/" class="flex items-center justify-center gap-2.5">
-				<div
-					class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-md"
-				>
-					<span class="text-base font-bold">I</span>
-				</div>
-				<span class="text-lg font-semibold tracking-tight text-foreground">Investify</span>
-			</a>
+		<div class="relative z-10 flex w-full max-w-md flex-col gap-6">
+		<!-- Logo + Brand -->
+		<a href="/" class="flex items-center justify-center gap-2.5">
+			<div
+				class="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-md"
+			>
+				<span class="text-sm font-bold">{siteSettings.siteName?.charAt(0) ?? 'I'}</span>
+			</div>
+			<span class="text-base font-semibold tracking-tight text-foreground">{siteSettings.siteName}</span>
+		</a>
 
 			<Card class="overflow-hidden rounded-2xl border-border/50 shadow-xl">
-				<CardHeader class="px-8 pb-0 pt-8 text-center sm:px-10">
-					<CardTitle class="text-xl font-semibold">{title}</CardTitle>
-					<CardDescription class="mt-1.5 text-sm">
+				<CardHeader class="px-6 pb-0 pt-6 text-center sm:px-8 sm:pt-7">
+					<CardTitle class="text-lg font-semibold">{title}</CardTitle>
+					<CardDescription class="mt-1 text-xs">
 						{description}
 					</CardDescription>
 				</CardHeader>
-				<CardContent class="px-8 py-8 sm:px-10">
+				<CardContent class="px-6 py-5 sm:px-8 sm:py-6">
 					{@render children?.()}
 				</CardContent>
 			</Card>
 
-			<p class="text-center text-xs text-muted-foreground">
+			<p class="text-center text-[11px] leading-relaxed text-muted-foreground">
 				By continuing, you agree to our
 				<a href="/terms-of-use" class="underline hover:text-foreground">Terms</a>
 				and

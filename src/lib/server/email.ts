@@ -80,13 +80,13 @@ export async function sendInvestmentApprovalEmail(
 ): Promise<boolean> {
 	return sendEmail({
 		to: userEmail,
-		subject: 'Investment Approved - Investify',
+		subject: 'Investment Approved - Ethercore',
 		html: `
 			<h1>Your Investment Has Been Approved</h1>
 			<p>Great news! Your investment in <strong>${planName}</strong> has been approved.</p>
 			<p>Amount: £${amount}</p>
 			<p>Your investment is now active and earning returns.</p>
-			<p>Best regards,<br>The Investify Team</p>
+			<p>Best regards,<br>The Ethercore Team</p>
 		`,
 		text: `Your investment in ${planName} for £${amount} has been approved and is now active.`
 	});
@@ -103,14 +103,14 @@ export async function sendInvestmentRejectionEmail(
 ): Promise<boolean> {
 	return sendEmail({
 		to: userEmail,
-		subject: 'Investment Update - Investify',
+		subject: 'Investment Update - Ethercore',
 		html: `
 			<h1>Investment Update</h1>
 			<p>Unfortunately, your investment in <strong>${planName}</strong> could not be approved at this time.</p>
 			<p>Amount: £${amount}</p>
 			${reason ? `<p>Reason: ${reason}</p>` : ''}
 			<p>If you have questions, please contact our support team.</p>
-			<p>Best regards,<br>The Investify Team</p>
+			<p>Best regards,<br>The Ethercore Team</p>
 		`,
 		text: `Your investment in ${planName} for £${amount} could not be approved. ${reason || ''}`
 	});
@@ -126,13 +126,13 @@ export async function sendWithdrawalApprovalEmail(
 ): Promise<boolean> {
 	return sendEmail({
 		to: userEmail,
-		subject: 'Withdrawal Approved - Investify',
+		subject: 'Withdrawal Approved - Ethercore',
 		html: `
 			<h1>Withdrawal Approved</h1>
 			<p>Your withdrawal request has been approved and processed.</p>
 			<p>Amount: £${amount} (${cryptoSymbol})</p>
 			<p>The funds have been sent to your wallet.</p>
-			<p>Best regards,<br>The Investify Team</p>
+			<p>Best regards,<br>The Ethercore Team</p>
 		`,
 		text: `Your withdrawal of £${amount} (${cryptoSymbol}) has been approved and processed.`
 	});
@@ -148,7 +148,7 @@ export async function sendWithdrawalRejectionEmail(
 ): Promise<boolean> {
 	return sendEmail({
 		to: userEmail,
-		subject: 'Withdrawal Update - Investify',
+		subject: 'Withdrawal Update - Ethercore',
 		html: `
 			<h1>Withdrawal Update</h1>
 			<p>Unfortunately, your withdrawal request could not be processed at this time.</p>
@@ -156,7 +156,7 @@ export async function sendWithdrawalRejectionEmail(
 			${reason ? `<p>Reason: ${reason}</p>` : ''}
 			<p>The funds have been returned to your wallet.</p>
 			<p>If you have questions, please contact our support team.</p>
-			<p>Best regards,<br>The Investify Team</p>
+			<p>Best regards,<br>The Ethercore Team</p>
 		`,
 		text: `Your withdrawal of £${amount} could not be processed. ${reason || ''}`
 	});
@@ -168,12 +168,12 @@ export async function sendWithdrawalRejectionEmail(
 export async function sendKycApprovalEmail(userEmail: string): Promise<boolean> {
 	return sendEmail({
 		to: userEmail,
-		subject: 'KYC Verification Approved - Investify',
+		subject: 'KYC Verification Approved - Ethercore',
 		html: `
 			<h1>KYC Verification Approved</h1>
 			<p>Your identity verification has been approved.</p>
 			<p>You can now access all platform features.</p>
-			<p>Best regards,<br>The Investify Team</p>
+			<p>Best regards,<br>The Ethercore Team</p>
 		`,
 		text: 'Your KYC verification has been approved. You can now access all platform features.'
 	});
@@ -188,14 +188,14 @@ export async function sendKycRejectionEmail(
 ): Promise<boolean> {
 	return sendEmail({
 		to: userEmail,
-		subject: 'KYC Verification Update - Investify',
+		subject: 'KYC Verification Update - Ethercore',
 		html: `
 			<h1>KYC Verification Update</h1>
 			<p>Unfortunately, your identity verification could not be approved at this time.</p>
 			${reason ? `<p>Reason: ${reason}</p>` : ''}
 			<p>Please upload a new document and try again.</p>
 			<p>If you have questions, please contact our support team.</p>
-			<p>Best regards,<br>The Investify Team</p>
+			<p>Best regards,<br>The Ethercore Team</p>
 		`,
 		text: `Your KYC verification could not be approved. ${reason || ''} Please upload a new document.`
 	});
@@ -211,13 +211,13 @@ export async function sendPayoutEmail(
 ): Promise<boolean> {
 	return sendEmail({
 		to: userEmail,
-		subject: 'Payout Received - Investify',
+		subject: 'Payout Received - Ethercore',
 		html: `
 			<h1>Payout Received</h1>
 			<p>You have received a payout from your <strong>${planName}</strong> investment.</p>
 			<p>Amount: £${amount}</p>
 			<p>The funds have been credited to your main wallet.</p>
-			<p>Best regards,<br>The Investify Team</p>
+			<p>Best regards,<br>The Ethercore Team</p>
 		`,
 		text: `You have received a payout of £${amount} from your ${planName} investment.`
 	});
@@ -232,7 +232,7 @@ export async function sendPasswordResetEmail(
 ): Promise<boolean> {
 	return sendEmail({
 		to: userEmail,
-		subject: 'Password Reset Request - Investify',
+		subject: 'Password Reset Request - Ethercore',
 		html: `
 			<h1>Password Reset Request</h1>
 			<p>You have requested to reset your password.</p>
@@ -240,7 +240,7 @@ export async function sendPasswordResetEmail(
 			<p><a href="${resetLink}">Reset Password</a></p>
 			<p>This link will expire in 1 hour.</p>
 			<p>If you did not request this, please ignore this email.</p>
-			<p>Best regards,<br>The Investify Team</p>
+			<p>Best regards,<br>The Ethercore Team</p>
 		`,
 		text: `You have requested to reset your password. Use this link to reset: ${resetLink}`
 	});
@@ -255,9 +255,9 @@ export async function sendWelcomeEmail(
 ): Promise<boolean> {
 	return sendEmail({
 		to: userEmail,
-		subject: 'Welcome to Investify',
+		subject: 'Welcome to Ethercore',
 		html: `
-			<h1>Welcome to Investify, ${firstName}!</h1>
+			<h1>Welcome to Ethercore, ${firstName}!</h1>
 			<p>Thank you for joining our investment platform.</p>
 			<p>Here's what you can do next:</p>
 			<ul>
@@ -267,8 +267,8 @@ export async function sendWelcomeEmail(
 				<li>Start investing and earning returns</li>
 			</ul>
 			<p>If you have any questions, our support team is here to help.</p>
-			<p>Best regards,<br>The Investify Team</p>
+			<p>Best regards,<br>The Ethercore Team</p>
 		`,
-		text: `Welcome to Investify, ${firstName}! Start exploring our investment plans today.`
+		text: `Welcome to Ethercore, ${firstName}! Start exploring our investment plans today.`
 	});
 }

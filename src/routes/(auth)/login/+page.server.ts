@@ -14,7 +14,7 @@ export const load: PageServerLoad = async (event) => {
 		if (event.locals.user.role === 'admin') {
 			throw redirect(302, '/admin/dashboard');
 		} else {
-			throw redirect(302, '/user/dashboard');
+			throw redirect(302, '/dashboard');
 		}
 	}
 	return {};
@@ -109,7 +109,7 @@ export const actions: Actions = {
 		if (user.role === 'admin') {
 			throw redirect(302, '/admin/dashboard');
 		} else {
-			throw redirect(302, '/user/dashboard');
+			throw redirect(302, '/dashboard');
 		}
 	}
 };

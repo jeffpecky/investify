@@ -22,7 +22,7 @@ export const USER = writable({
     auth2fa: true,
     status: 'active',
     group: '💎 Ambassador',
-    referralLink: 'https://investify.com/register?ref=1234567890',
+    referralLink: 'https://ethercore.org/register?ref=1234567890',
     walletBalance: 1000,
     tokenBalance: 100,
 
@@ -32,9 +32,9 @@ export const USER = writable({
 // Fake system data you can justv chnage it in the app so the data comes from backend
 export const SYSTEM = writable({
     tokenSymbol: 'PRTP',
-    siteName: 'Investify',
-    company: 'Investify Wealth Management',
-    email: 'info@investify.com',
+    siteName: 'Ethercore',
+    company: 'Ethercore Wealth Management',
+    email: 'info@ethercore.org',
     phone: '+1 (888) 555-0123',
     address: '123 Main St',
     city: 'New York',

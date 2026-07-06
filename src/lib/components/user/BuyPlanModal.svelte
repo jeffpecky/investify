@@ -14,7 +14,7 @@
     import { SUPPORT_CRYPTOS, CRYPTO_WALLETS } from '$lib/store';
 
     import QRCode from 'qrcode';
-    import { copy, formatCurrency, convertGBPToCrypto } from '$lib/utils';
+    import { copy, formatCurrency, convertUSDToCrypto } from '$lib/utils';
     import * as Alert from '$lib/components/ui/alert/index.js';
     import { USER, SYSTEM } from '$lib/store';
 
@@ -113,7 +113,7 @@
             try {
                 // Perform Currency Conversion FIRST
                 isLoadingConversion = true;
-                const result = await convertGBPToCrypto(form.amount, form.crypto || 'BTC');
+                const result = await convertUSDToCrypto(form.amount, form.crypto || 'BTC');
                 cryptoConversion = result;
 
                 // Construct Payment URI
@@ -242,7 +242,7 @@
                     <Label for="amount">Amount</Label>
                     <InputGroup.Root>
                         <InputGroup.Addon>
-                            <InputGroup.Text>£</InputGroup.Text>
+                            <InputGroup.Text>$</InputGroup.Text>
                         </InputGroup.Addon>
                         <InputGroup.Input
                             placeholder="0.00"
@@ -255,7 +255,7 @@
                             disabled={form.plan === null}
                         />
                         <InputGroup.Addon align="inline-end">
-                            <InputGroup.Text>GBP</InputGroup.Text>
+                            <InputGroup.Text>USD</InputGroup.Text>
                         </InputGroup.Addon>
                     </InputGroup.Root>
                 </div>

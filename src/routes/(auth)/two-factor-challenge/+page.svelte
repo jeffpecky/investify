@@ -16,7 +16,7 @@
 </script>
 
 <svelte:head>
-	<title>Two-Factor Authentication - Investify</title>
+	<title>Two-Factor Authentication - Ethercore</title>
 </svelte:head>
 
 <div class="space-y-6">

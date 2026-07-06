@@ -32,6 +32,20 @@
         const ctx = chartCanvas.getContext('2d');
         if (!ctx) return;
 
+        // Extract design system colors from CSS custom properties
+        const styles = getComputedStyle(document.documentElement);
+        const primaryColor = styles.getPropertyValue('--color-chart-1').trim() || styles.getPropertyValue('--color-primary').trim();
+        const mutedForeground = styles.getPropertyValue('--color-muted-foreground').trim();
+        const border = styles.getPropertyValue('--color-border').trim();
+        const cardBg = styles.getPropertyValue('--color-card').trim();
+        const foreground = styles.getPropertyValue('--color-foreground').trim();
+
+        // Convert hsl to rgb for chart.js compatibility
+        const primaryRgb = hslToRgb(primaryColor);
+        const mutedRgb = hslToRgb(mutedForeground);
+        const bgRgb = hslToRgb(cardBg);
+        const fgRgb = hslToRgb(foreground);
+
         const data = mockData[currentTimeFrame];
 
         chart = new Chart(ctx, {
@@ -43,15 +57,15 @@
                         label: 'Investments',
                         data: data.data,
                         fill: true,
-                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                        borderColor: 'rgb(59, 130, 246)',
-                        borderWidth: 2,
+                        backgroundColor: `rgba(${primaryRgb.r}, ${primaryRgb.g}, ${primaryRgb.b}, 0.08)`,
+                        borderColor: `rgb(${primaryRgb.r}, ${primaryRgb.g}, ${primaryRgb.b})`,
+                        borderWidth: 2.5,
                         tension: 0.4,
-                        pointBackgroundColor: 'rgb(59, 130, 246)',
-                        pointBorderColor: '#fff',
+                        pointBackgroundColor: `rgb(${primaryRgb.r}, ${primaryRgb.g}, ${primaryRgb.b})`,
+                        pointBorderColor: `rgb(${bgRgb.r}, ${bgRgb.g}, ${bgRgb.b})`,
                         pointHoverRadius: 6,
-                        pointHoverBackgroundColor: 'rgb(59, 130, 246)',
-                        pointHoverBorderColor: '#fff',
+                        pointHoverBackgroundColor: `rgb(${primaryRgb.r}, ${primaryRgb.g}, ${primaryRgb.b})`,
+                        pointHoverBorderColor: `rgb(${bgRgb.r}, ${bgRgb.g}, ${bgRgb.b})`,
                         pointHoverBorderWidth: 2,
                         pointRadius: 4,
                         pointHitRadius: 10,
@@ -68,10 +82,10 @@
                     tooltip: {
                         mode: 'index',
                         intersect: false,
-                        backgroundColor: 'rgba(17, 24, 39, 0.9)',
-                        titleColor: '#fff',
-                        bodyColor: '#fff',
-                        borderColor: 'rgba(255, 255, 255, 0.1)',
+                        backgroundColor: `rgba(${bgRgb.r}, ${bgRgb.g}, ${bgRgb.b}, 0.95)`,
+                        titleColor: `rgb(${fgRgb.r}, ${fgRgb.g}, ${fgRgb.b})`,
+                        bodyColor: `rgb(${fgRgb.r}, ${fgRgb.g}, ${fgRgb.b})`,
+                        borderColor: `rgba(${mutedRgb.r}, ${mutedRgb.g}, ${mutedRgb.b}, 0.2)`,
                         borderWidth: 1,
                         padding: 12,
                         displayColors: false,
@@ -98,21 +112,23 @@
                             display: false,
                         },
                         ticks: {
-                            color: 'rgba(156, 163, 175, 0.8)',
+                            color: `rgba(${mutedRgb.r}, ${mutedRgb.g}, ${mutedRgb.b}, 0.7)`,
                             font: {
-                                size: 12,
+                                size: 11,
+                                family: 'Geist, system-ui, sans-serif',
                             },
                         },
                     },
                     y: {
                         beginAtZero: true,
                         grid: {
-                            color: 'rgba(156, 163, 175, 0.1)',
+                            color: `rgba(${mutedRgb.r}, ${mutedRgb.g}, ${mutedRgb.b}, 0.08)`,
                         },
                         ticks: {
-                            color: 'rgba(156, 163, 175, 0.8)',
+                            color: `rgba(${mutedRgb.r}, ${mutedRgb.g}, ${mutedRgb.b}, 0.7)`,
                             font: {
-                                size: 12,
+                                size: 11,
+                                family: 'Geist, system-ui, sans-serif',
                             },
                             callback: function (value) {
                                 if (Number(value) >= 1000) {
@@ -125,6 +141,28 @@
                 },
             },
         });
+    }
+
+    // Helper function to convert hsl to rgb
+    function hslToRgb(hslString: string): { r: number; g: number; b: number } {
+        // Parse hsl/oklch string - design system uses oklch
+        // For simplicity, we'll use a temp element to get computed RGB
+        const temp = document.createElement('div');
+        temp.style.color = hslString.startsWith('hsl') || hslString.startsWith('oklch') ? hslString : `hsl(${hslString})`;
+        document.body.appendChild(temp);
+        const rgb = getComputedStyle(temp).color;
+        document.body.removeChild(temp);
+        
+        // Parse rgb string like "rgb(59, 130, 246)"
+        const match = rgb.match(/\d+/g);
+        if (match) {
+            return {
+                r: parseInt(match[0]),
+                g: parseInt(match[1]),
+                b: parseInt(match[2]),
+            };
+        }
+        return { r: 99, g: 102, h: 241 }; // fallback to indigo-500
     }
 
     $effect(() => {
@@ -182,7 +220,7 @@
         </div>
     </Card.Header>
 
-    <Card.Content class="relative min-h-[400px] w-full grow pb-3">
+    <Card.Content class="relative h-[300px] sm:h-[350px] w-full grow pb-3">
         <canvas bind:this={chartCanvas}></canvas>
     </Card.Content>
 </Card.Root>

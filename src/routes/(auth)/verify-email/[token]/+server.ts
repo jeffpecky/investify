@@ -21,5 +21,5 @@ export const GET: RequestHandler = async ({ params }) => {
 
 	await deleteEmailVerificationToken(userId);
 
-	throw redirect(303, '/user/dashboard?verified=true');
+	throw redirect(303, '/dashboard?verified=true');
 };

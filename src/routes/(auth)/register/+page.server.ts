@@ -19,7 +19,7 @@ export const load: PageServerLoad = async (event) => {
 		if (event.locals.user.role === 'admin') {
 			throw redirect(302, '/admin/dashboard');
 		} else {
-			throw redirect(302, '/user/dashboard');
+			throw redirect(302, '/dashboard');
 		}
 	}
 	const ref = event.url.searchParams.get('ref');
@@ -228,6 +228,6 @@ export const actions: Actions = {
 			...sessionCookie.attributes
 		});
 
-		throw redirect(302, '/user/dashboard');
+		throw redirect(302, '/dashboard');
 	}
 };

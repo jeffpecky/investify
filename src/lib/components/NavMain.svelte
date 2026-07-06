@@ -16,7 +16,7 @@
         <SidebarMenu>
             {#each item.items as subItem (subItem.title)}
                 <SidebarMenuItem>
-                    <Link href={subItem.href} class="relative block w-full">
+                    <a href={subItem.href} class="relative block w-full">
                         <SidebarMenuButton class="!cursor-pointer" isActive={subItem.href === $page.url}>
                             {#snippet tooltipContent()}
                                 {subItem.title}
@@ -32,7 +32,7 @@
                                 {subItem.counter}
                             </SidebarMenuBadge>
                         {/if}
-                    </Link>
+                    </a>
                 </SidebarMenuItem>
             {/each}
         </SidebarMenu>

@@ -1,0 +1,696 @@
+﻿
+> ethercore@0.0.1 build
+> vite build
+
+[36mvite v8.1.3 [32mbuilding ssr environment for production...[36m[39m
+[2K
+node.exe : 17:12:39 [vite-plugin-svelte] src/routes/(app)/user/my-wallets/+page.svelte:15:25 This reference only 
+captures the initial value of `data`. Did you mean to reference it inside a derived instead?
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (17:12:39 [vite-...erived instead?:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+https://svelte.dev/e/state_referenced_locally
+13:     let { data }: { data: PageData } = $props();
+14: 
+15:     let wallets = $state(data.wallets);
+                                 ^
+16:     let open = $state(false);
+17:     let isEditing = $state(false);
+17:12:39 [vite-plugin-svelte] src/routes/(app)/user/referrals/+page.svelte:19:68 This reference only captures the 
+initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+17: 
+18:     let searchQuery = $state('');
+19:     let referralLink = $state(`https://ethercore.org/register?ref=${data.user.referralCode}`);
+                                                                            ^
+20: </script>
+21: 
+17:12:39 [vite-plugin-svelte] src/routes/(app)/user/referrals/+page.svelte:85:7 '#' is not a valid href attribute
+https://svelte.dev/e/a11y_invalid_attribute
+83: 
+84:     <!-- Promotional Banner -->
+85:     <a href="#" class="block relative overflow-hidden rounded-xl border bg-card shadow-sm group mt-2 mb-6 h-32 
+md:h-40 xl:h-48 cursor-pointer">
+                   ^
+86:         <img
+87:             src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2664&auto=format&fit=crop"
+17:12:40 [vite-plugin-svelte] src/routes/(app)/user/settings/profile/+page.svelte:22:22 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+20:   let { data, form }: Props = $props();
+21: 
+22:   let profile = $state(data.profile || {});
+                               ^
+23:   let saving = $state(false);
+24:   let message = $state('');
+17:12:40 [vite-plugin-svelte] src/routes/(app)/user/settings/profile/+page.svelte:26:28 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+24:   let message = $state('');
+25:   let isError = $state(false);
+26:   let avatarPreview = $state(data.user?.profilePhotoUrl || '');
+                                     ^
+27:   let avatarInput: HTMLInputElement;
+28:   let countryValue = $state(profile.country || '');
+17:12:40 [vite-plugin-svelte] src/routes/(app)/admin/investments/+page.svelte:11:25 This reference only captures the 
+initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+ 9:   let { data }: { data: PageData } = $props();
+10: 
+11:   let searchTerm = $state(data.search);
+                                  ^
+12:   let statusFilter = $state(data.status);
+13: 
+17:12:40 [vite-plugin-svelte] src/routes/(app)/admin/investments/+page.svelte:12:27 This reference only captures the 
+initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+10: 
+11:   let searchTerm = $state(data.search);
+12:   let statusFilter = $state(data.status);
+                                    ^
+13: 
+14:   function handleSearch() {
+17:12:40 [vite-plugin-svelte] src/routes/(app)/admin/plans/[id]/edit/+page.svelte:22:8 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+20: 
+21:   let formData = $state({
+22:     name: data.plan.name,
+                  ^
+23:     category: data.plan.category,
+24:     minAmount: data.plan.minAmount,
+17:12:40 [vite-plugin-svelte] src/routes/(app)/admin/plans/[id]/edit/+page.svelte:23:12 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+21:   let formData = $state({
+22:     name: data.plan.name,
+23:     category: data.plan.category,
+                      ^
+24:     minAmount: data.plan.minAmount,
+25:     maxAmount: data.plan.maxAmount,
+17:12:40 [vite-plugin-svelte] src/routes/(app)/admin/plans/[id]/edit/+page.svelte:24:13 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+22:     name: data.plan.name,
+23:     category: data.plan.category,
+24:     minAmount: data.plan.minAmount,
+                       ^
+25:     maxAmount: data.plan.maxAmount,
+26:     durationDays: data.plan.durationDays,
+17:12:40 [vite-plugin-svelte] src/routes/(app)/admin/plans/[id]/edit/+page.svelte:25:13 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+23:     category: data.plan.category,
+24:     minAmount: data.plan.minAmount,
+25:     maxAmount: data.plan.maxAmount,
+                       ^
+26:     durationDays: data.plan.durationDays,
+27:     percentMin: data.plan.percentMin,
+17:12:40 [vite-plugin-svelte] src/routes/(app)/admin/plans/[id]/edit/+page.svelte:26:16 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+24:     minAmount: data.plan.minAmount,
+25:     maxAmount: data.plan.maxAmount,
+26:     durationDays: data.plan.durationDays,
+                          ^
+27:     percentMin: data.plan.percentMin,
+28:     percentMax: data.plan.percentMax,
+17:12:40 [vite-plugin-svelte] src/routes/(app)/admin/plans/[id]/edit/+page.svelte:27:14 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+25:     maxAmount: data.plan.maxAmount,
+26:     durationDays: data.plan.durationDays,
+27:     percentMin: data.plan.percentMin,
+                        ^
+28:     percentMax: data.plan.percentMax,
+29:     status: data.plan.status,
+17:12:40 [vite-plugin-svelte] src/routes/(app)/admin/plans/[id]/edit/+page.svelte:28:14 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+26:     durationDays: data.plan.durationDays,
+27:     percentMin: data.plan.percentMin,
+28:     percentMax: data.plan.percentMax,
+                        ^
+29:     status: data.plan.status,
+30:     recommended: data.plan.recommended
+17:12:40 [vite-plugin-svelte] src/routes/(app)/admin/plans/[id]/edit/+page.svelte:29:10 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+27:     percentMin: data.plan.percentMin,
+28:     percentMax: data.plan.percentMax,
+29:     status: data.plan.status,
+                    ^
+30:     recommended: data.plan.recommended
+31:   });
+17:12:40 [vite-plugin-svelte] src/routes/(app)/admin/plans/[id]/edit/+page.svelte:30:15 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+28:     percentMax: data.plan.percentMax,
+29:     status: data.plan.status,
+30:     recommended: data.plan.recommended
+                         ^
+31:   });
+32: </script>
+17:12:40 [vite-plugin-svelte] src/routes/(app)/admin/settings/ai/+page.svelte:11:14 This reference only captures the 
+initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+ 9: 
+10:   let formData = $state({
+11:     aiProvider: data.settings.ai_provider || 'openai',
+                        ^
+12:     apiKey: 'ÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇó',
+13:     model: data.settings.ai_model || 'gpt-4',
+17:12:40 [vite-plugin-svelte] src/routes/(app)/admin/settings/ai/+page.svelte:13:9 This reference only captures the 
+initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+11:     aiProvider: data.settings.ai_provider || 'openai',
+12:     apiKey: 'ÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇó',
+13:     model: data.settings.ai_model || 'gpt-4',
+                   ^
+14:     temperature: data.settings.ai_temperature || '0.7',
+15:     maxTokens: data.settings.ai_max_tokens || '2000',
+17:12:40 [vite-plugin-svelte] src/routes/(app)/admin/settings/ai/+page.svelte:14:15 This reference only captures the 
+initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+12:     apiKey: 'ÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇó',
+13:     model: data.settings.ai_model || 'gpt-4',
+14:     temperature: data.settings.ai_temperature || '0.7',
+                         ^
+15:     maxTokens: data.settings.ai_max_tokens || '2000',
+16:     enabled: data.settings.ai_enabled === 'true'
+17:12:40 [vite-plugin-svelte] src/routes/(app)/admin/settings/ai/+page.svelte:15:13 This reference only captures the 
+initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+13:     model: data.settings.ai_model || 'gpt-4',
+14:     temperature: data.settings.ai_temperature || '0.7',
+15:     maxTokens: data.settings.ai_max_tokens || '2000',
+                       ^
+16:     enabled: data.settings.ai_enabled === 'true'
+17:   });
+17:12:40 [vite-plugin-svelte] src/routes/(app)/admin/settings/ai/+page.svelte:16:11 This reference only captures the 
+initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+14:     temperature: data.settings.ai_temperature || '0.7',
+15:     maxTokens: data.settings.ai_max_tokens || '2000',
+16:     enabled: data.settings.ai_enabled === 'true'
+                     ^
+17:   });
+18: </script>
+17:12:42 [vite-plugin-svelte] src/routes/(app)/admin/settings/platform/+page.svelte:11:19 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+ 9: 
+10:   let formData = $state({
+11:     tokenMultiplier: data.settings.token_multiplier || '1.0',
+                             ^
+12:     minWithdrawal: data.settings.min_withdrawal || '10',
+13:     maxWithdrawal: data.settings.max_withdrawal || '100000',
+17:12:42 [vite-plugin-svelte] src/routes/(app)/admin/settings/platform/+page.svelte:12:17 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+10:   let formData = $state({
+11:     tokenMultiplier: data.settings.token_multiplier || '1.0',
+12:     minWithdrawal: data.settings.min_withdrawal || '10',
+                           ^
+13:     maxWithdrawal: data.settings.max_withdrawal || '100000',
+14:     referralBonus: data.settings.referral_bonus || '100'
+17:12:42 [vite-plugin-svelte] src/routes/(app)/admin/settings/platform/+page.svelte:13:17 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+11:     tokenMultiplier: data.settings.token_multiplier || '1.0',
+12:     minWithdrawal: data.settings.min_withdrawal || '10',
+13:     maxWithdrawal: data.settings.max_withdrawal || '100000',
+                           ^
+14:     referralBonus: data.settings.referral_bonus || '100'
+15:   });
+17:12:42 [vite-plugin-svelte] src/routes/(app)/admin/settings/platform/+page.svelte:14:17 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+12:     minWithdrawal: data.settings.min_withdrawal || '10',
+13:     maxWithdrawal: data.settings.max_withdrawal || '100000',
+14:     referralBonus: data.settings.referral_bonus || '100'
+                           ^
+15:   });
+16: </script>
+17:12:42 [vite-plugin-svelte] src/routes/(frontend)/regulatory-disclosures/+page.svelte:42:27 '#' is not a valid href 
+attribute
+https://svelte.dev/e/a11y_invalid_attribute
+40:                 <ul class="list-none space-y-3 pl-0">
+41:                     <li>
+42:                         <a href="#" class="flex items-center gap-2 text-sm text-foreground underline 
+underline-offset-4 decoration-muted-foreground hover:decoration-foreground transition-all">
+                                       ^
+43:                             <span class="material-icons text-sm">description</span>
+44:                             Form ADV Part 2A (Firm Brochure)
+17:12:42 [vite-plugin-svelte] src/routes/(frontend)/regulatory-disclosures/+page.svelte:48:27 '#' is not a valid href 
+attribute
+https://svelte.dev/e/a11y_invalid_attribute
+46:                     </li>
+47:                     <li>
+48:                         <a href="#" class="flex items-center gap-2 text-sm text-foreground underline 
+underline-offset-4 decoration-muted-foreground hover:decoration-foreground transition-all">
+                                       ^
+49:                             <span class="material-icons text-sm">description</span>
+50:                             Part 3: Client Relationship Summary (Form CRS)
+17:12:43 [vite-plugin-svelte] src/routes/(app)/admin/settings/website/+page.svelte:11:12 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+ 9: 
+10:   let formData = $state({
+11:     siteName: data.settings.site_name || '',
+                      ^
+12:     siteDescription: data.settings.site_description || '',
+13:     contactEmail: data.settings.contact_email || '',
+17:12:43 [vite-plugin-svelte] src/routes/(app)/admin/settings/website/+page.svelte:12:19 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+10:   let formData = $state({
+11:     siteName: data.settings.site_name || '',
+12:     siteDescription: data.settings.site_description || '',
+                             ^
+13:     contactEmail: data.settings.contact_email || '',
+14:     contactPhone: data.settings.contact_phone || '',
+17:12:43 [vite-plugin-svelte] src/routes/(app)/admin/settings/website/+page.svelte:13:16 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+11:     siteName: data.settings.site_name || '',
+12:     siteDescription: data.settings.site_description || '',
+13:     contactEmail: data.settings.contact_email || '',
+                          ^
+14:     contactPhone: data.settings.contact_phone || '',
+15:     address: data.settings.address || ''
+17:12:43 [vite-plugin-svelte] src/routes/(app)/admin/settings/website/+page.svelte:14:16 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+12:     siteDescription: data.settings.site_description || '',
+13:     contactEmail: data.settings.contact_email || '',
+14:     contactPhone: data.settings.contact_phone || '',
+                          ^
+15:     address: data.settings.address || ''
+16:   });
+17:12:43 [vite-plugin-svelte] src/routes/(app)/admin/settings/website/+page.svelte:15:11 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+13:     contactEmail: data.settings.contact_email || '',
+14:     contactPhone: data.settings.contact_phone || '',
+15:     address: data.settings.address || ''
+                     ^
+16:   });
+17: </script>
+17:12:43 [vite-plugin-svelte] src/routes/(app)/admin/users/+page.svelte:11:25 This reference only captures the initial 
+value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+ 9:   let { data }: { data: PageData } = $props();
+10: 
+11:   let searchTerm = $state(data.search);
+                                  ^
+12: 
+13:   function handleSearch() {
+17:12:44 [vite-plugin-svelte] src/lib/components/SurveyViewer.svelte:22:61 This reference only captures the initial 
+value of `survey`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+20:   }
+21: 
+22:   let answers = $state<Record<string, any>>(getInitialAnswers(survey.questions));
+                                                                        ^
+23:   let submitting = $state(false);
+24:   let submitted = $state(false);
+17:12:54 [vite-plugin-svelte] src/lib/components/user/ShareRefferal.svelte:39:12 Buttons and links should either 
+contain text or have an `aria-label`, `aria-labelledby` or `title` attribute
+https://svelte.dev/e/a11y_consider_explicit_label
+37:         <div class="flex justify-center gap-6 pt-4">
+38:             <!-- Facebook -->
+39:             <a href={facebookUrl} target="_blank" rel="noopener noreferrer" class="hover:scale-110 
+transition-transform">
+                    ^
+40:                 <svg class="h-8 w-8 text-blue-600 fill-current" viewBox="0 0 24 24" 
+xmlns="http://www.w3.org/2000/svg"
+41:                     ><path
+17:12:54 [vite-plugin-svelte] src/lib/components/user/ShareRefferal.svelte:47:12 Buttons and links should either 
+contain text or have an `aria-label`, `aria-labelledby` or `title` attribute
+https://svelte.dev/e/a11y_consider_explicit_label
+45:             </a>
+46:             <!-- X (Twitter) -->
+47:             <a href={xUrl} target="_blank" rel="noopener noreferrer" class="hover:scale-110 transition-transform">
+                    ^
+48:                 <svg class="h-8 w-8 text-black dark:text-white fill-current" viewBox="0 0 24 24" 
+xmlns="http://www.w3.org/2000/svg"
+49:                     ><path
+17:12:54 [vite-plugin-svelte] src/lib/components/user/ShareRefferal.svelte:55:12 Buttons and links should either 
+contain text or have an `aria-label`, `aria-labelledby` or `title` attribute
+https://svelte.dev/e/a11y_consider_explicit_label
+53:             </a>
+54:             <!-- WhatsApp -->
+55:             <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="hover:scale-110 
+transition-transform">
+                    ^
+56:                 <svg class="h-8 w-8 text-green-500 fill-current" viewBox="0 0 24 24" 
+xmlns="http://www.w3.org/2000/svg"
+57:                     ><path
+transforming...Ô£ô 4827 modules transformed.
+rendering chunks...
+[36mvite v8.1.3 [32mbuilding client environment for production...[36m[39m
+[2K
+17:13:44 [vite-plugin-svelte] src/routes/(app)/admin/investments/+page.svelte:11:25 This reference only captures the 
+initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+ 9:   let { data }: { data: PageData } = $props();
+10: 
+11:   let searchTerm = $state(data.search);
+                                  ^
+12:   let statusFilter = $state(data.status);
+13: 
+17:13:44 [vite-plugin-svelte] src/routes/(app)/admin/investments/+page.svelte:12:27 This reference only captures the 
+initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+10: 
+11:   let searchTerm = $state(data.search);
+12:   let statusFilter = $state(data.status);
+                                    ^
+13: 
+14:   function handleSearch() {
+17:13:44 [vite-plugin-svelte] src/routes/(app)/admin/settings/ai/+page.svelte:11:14 This reference only captures the 
+initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+ 9: 
+10:   let formData = $state({
+11:     aiProvider: data.settings.ai_provider || 'openai',
+                        ^
+12:     apiKey: 'ÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇó',
+13:     model: data.settings.ai_model || 'gpt-4',
+17:13:44 [vite-plugin-svelte] src/routes/(app)/admin/settings/ai/+page.svelte:13:9 This reference only captures the 
+initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+11:     aiProvider: data.settings.ai_provider || 'openai',
+12:     apiKey: 'ÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇó',
+13:     model: data.settings.ai_model || 'gpt-4',
+                   ^
+14:     temperature: data.settings.ai_temperature || '0.7',
+15:     maxTokens: data.settings.ai_max_tokens || '2000',
+17:13:44 [vite-plugin-svelte] src/routes/(app)/admin/settings/ai/+page.svelte:14:15 This reference only captures the 
+initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+12:     apiKey: 'ÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇó',
+13:     model: data.settings.ai_model || 'gpt-4',
+14:     temperature: data.settings.ai_temperature || '0.7',
+                         ^
+15:     maxTokens: data.settings.ai_max_tokens || '2000',
+16:     enabled: data.settings.ai_enabled === 'true'
+17:13:44 [vite-plugin-svelte] src/routes/(app)/admin/settings/ai/+page.svelte:15:13 This reference only captures the 
+initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+13:     model: data.settings.ai_model || 'gpt-4',
+14:     temperature: data.settings.ai_temperature || '0.7',
+15:     maxTokens: data.settings.ai_max_tokens || '2000',
+                       ^
+16:     enabled: data.settings.ai_enabled === 'true'
+17:   });
+17:13:44 [vite-plugin-svelte] src/routes/(app)/admin/settings/ai/+page.svelte:16:11 This reference only captures the 
+initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+14:     temperature: data.settings.ai_temperature || '0.7',
+15:     maxTokens: data.settings.ai_max_tokens || '2000',
+16:     enabled: data.settings.ai_enabled === 'true'
+                     ^
+17:   });
+18: </script>
+17:13:45 [vite-plugin-svelte] src/routes/(app)/user/my-wallets/+page.svelte:15:25 This reference only captures the 
+initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+13:     let { data }: { data: PageData } = $props();
+14: 
+15:     let wallets = $state(data.wallets);
+                                 ^
+16:     let open = $state(false);
+17:     let isEditing = $state(false);
+17:13:45 [vite-plugin-svelte] src/routes/(app)/admin/plans/[id]/edit/+page.svelte:22:8 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+20: 
+21:   let formData = $state({
+22:     name: data.plan.name,
+                  ^
+23:     category: data.plan.category,
+24:     minAmount: data.plan.minAmount,
+17:13:45 [vite-plugin-svelte] src/routes/(app)/admin/plans/[id]/edit/+page.svelte:23:12 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+21:   let formData = $state({
+22:     name: data.plan.name,
+23:     category: data.plan.category,
+                      ^
+24:     minAmount: data.plan.minAmount,
+25:     maxAmount: data.plan.maxAmount,
+17:13:45 [vite-plugin-svelte] src/routes/(app)/admin/plans/[id]/edit/+page.svelte:24:13 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+22:     name: data.plan.name,
+23:     category: data.plan.category,
+24:     minAmount: data.plan.minAmount,
+                       ^
+25:     maxAmount: data.plan.maxAmount,
+26:     durationDays: data.plan.durationDays,
+17:13:45 [vite-plugin-svelte] src/routes/(app)/admin/plans/[id]/edit/+page.svelte:25:13 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+23:     category: data.plan.category,
+24:     minAmount: data.plan.minAmount,
+25:     maxAmount: data.plan.maxAmount,
+                       ^
+26:     durationDays: data.plan.durationDays,
+27:     percentMin: data.plan.percentMin,
+17:13:45 [vite-plugin-svelte] src/routes/(app)/admin/plans/[id]/edit/+page.svelte:26:16 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+24:     minAmount: data.plan.minAmount,
+25:     maxAmount: data.plan.maxAmount,
+26:     durationDays: data.plan.durationDays,
+                          ^
+27:     percentMin: data.plan.percentMin,
+28:     percentMax: data.plan.percentMax,
+17:13:45 [vite-plugin-svelte] src/routes/(app)/admin/plans/[id]/edit/+page.svelte:27:14 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+25:     maxAmount: data.plan.maxAmount,
+26:     durationDays: data.plan.durationDays,
+27:     percentMin: data.plan.percentMin,
+                        ^
+28:     percentMax: data.plan.percentMax,
+29:     status: data.plan.status,
+17:13:45 [vite-plugin-svelte] src/routes/(app)/admin/plans/[id]/edit/+page.svelte:28:14 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+26:     durationDays: data.plan.durationDays,
+27:     percentMin: data.plan.percentMin,
+28:     percentMax: data.plan.percentMax,
+                        ^
+29:     status: data.plan.status,
+30:     recommended: data.plan.recommended
+17:13:45 [vite-plugin-svelte] src/routes/(app)/admin/plans/[id]/edit/+page.svelte:29:10 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+27:     percentMin: data.plan.percentMin,
+28:     percentMax: data.plan.percentMax,
+29:     status: data.plan.status,
+                    ^
+30:     recommended: data.plan.recommended
+31:   });
+17:13:45 [vite-plugin-svelte] src/routes/(app)/admin/plans/[id]/edit/+page.svelte:30:15 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+28:     percentMax: data.plan.percentMax,
+29:     status: data.plan.status,
+30:     recommended: data.plan.recommended
+                         ^
+31:   });
+32: </script>
+17:13:45 [vite-plugin-svelte] src/routes/(app)/admin/settings/platform/+page.svelte:11:19 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+ 9: 
+10:   let formData = $state({
+11:     tokenMultiplier: data.settings.token_multiplier || '1.0',
+                             ^
+12:     minWithdrawal: data.settings.min_withdrawal || '10',
+13:     maxWithdrawal: data.settings.max_withdrawal || '100000',
+17:13:45 [vite-plugin-svelte] src/routes/(app)/admin/settings/platform/+page.svelte:12:17 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+10:   let formData = $state({
+11:     tokenMultiplier: data.settings.token_multiplier || '1.0',
+12:     minWithdrawal: data.settings.min_withdrawal || '10',
+                           ^
+13:     maxWithdrawal: data.settings.max_withdrawal || '100000',
+14:     referralBonus: data.settings.referral_bonus || '100'
+17:13:45 [vite-plugin-svelte] src/routes/(app)/admin/settings/platform/+page.svelte:13:17 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+11:     tokenMultiplier: data.settings.token_multiplier || '1.0',
+12:     minWithdrawal: data.settings.min_withdrawal || '10',
+13:     maxWithdrawal: data.settings.max_withdrawal || '100000',
+                           ^
+14:     referralBonus: data.settings.referral_bonus || '100'
+15:   });
+17:13:45 [vite-plugin-svelte] src/routes/(app)/admin/settings/platform/+page.svelte:14:17 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+12:     minWithdrawal: data.settings.min_withdrawal || '10',
+13:     maxWithdrawal: data.settings.max_withdrawal || '100000',
+14:     referralBonus: data.settings.referral_bonus || '100'
+                           ^
+15:   });
+16: </script>
+17:13:45 [vite-plugin-svelte] src/routes/(app)/admin/users/+page.svelte:11:25 This reference only captures the initial 
+value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+ 9:   let { data }: { data: PageData } = $props();
+10: 
+11:   let searchTerm = $state(data.search);
+                                  ^
+12: 
+13:   function handleSearch() {
+17:13:45 [vite-plugin-svelte] src/routes/(app)/user/referrals/+page.svelte:19:68 This reference only captures the 
+initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+17: 
+18:     let searchQuery = $state('');
+19:     let referralLink = $state(`https://ethercore.org/register?ref=${data.user.referralCode}`);
+                                                                            ^
+20: </script>
+21: 
+17:13:45 [vite-plugin-svelte] src/routes/(app)/user/referrals/+page.svelte:85:7 '#' is not a valid href attribute
+https://svelte.dev/e/a11y_invalid_attribute
+83: 
+84:     <!-- Promotional Banner -->
+85:     <a href="#" class="block relative overflow-hidden rounded-xl border bg-card shadow-sm group mt-2 mb-6 h-32 
+md:h-40 xl:h-48 cursor-pointer">
+                   ^
+86:         <img
+87:             src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2664&auto=format&fit=crop"
+17:13:45 [vite-plugin-svelte] src/routes/(app)/user/settings/profile/+page.svelte:22:22 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+20:   let { data, form }: Props = $props();
+21: 
+22:   let profile = $state(data.profile || {});
+                               ^
+23:   let saving = $state(false);
+24:   let message = $state('');
+17:13:45 [vite-plugin-svelte] src/routes/(app)/user/settings/profile/+page.svelte:26:28 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+24:   let message = $state('');
+25:   let isError = $state(false);
+26:   let avatarPreview = $state(data.user?.profilePhotoUrl || '');
+                                     ^
+27:   let avatarInput: HTMLInputElement;
+28:   let countryValue = $state(profile.country || '');
+17:13:46 [vite-plugin-svelte] src/routes/(app)/admin/settings/website/+page.svelte:11:12 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+ 9: 
+10:   let formData = $state({
+11:     siteName: data.settings.site_name || '',
+                      ^
+12:     siteDescription: data.settings.site_description || '',
+13:     contactEmail: data.settings.contact_email || '',
+17:13:46 [vite-plugin-svelte] src/routes/(app)/admin/settings/website/+page.svelte:12:19 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+10:   let formData = $state({
+11:     siteName: data.settings.site_name || '',
+12:     siteDescription: data.settings.site_description || '',
+                             ^
+13:     contactEmail: data.settings.contact_email || '',
+14:     contactPhone: data.settings.contact_phone || '',
+17:13:46 [vite-plugin-svelte] src/routes/(app)/admin/settings/website/+page.svelte:13:16 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+11:     siteName: data.settings.site_name || '',
+12:     siteDescription: data.settings.site_description || '',
+13:     contactEmail: data.settings.contact_email || '',
+                          ^
+14:     contactPhone: data.settings.contact_phone || '',
+15:     address: data.settings.address || ''
+17:13:46 [vite-plugin-svelte] src/routes/(app)/admin/settings/website/+page.svelte:14:16 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+12:     siteDescription: data.settings.site_description || '',
+13:     contactEmail: data.settings.contact_email || '',
+14:     contactPhone: data.settings.contact_phone || '',
+                          ^
+15:     address: data.settings.address || ''
+16:   });
+17:13:46 [vite-plugin-svelte] src/routes/(app)/admin/settings/website/+page.svelte:15:11 This reference only captures 
+the initial value of `data`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+13:     contactEmail: data.settings.contact_email || '',
+14:     contactPhone: data.settings.contact_phone || '',
+15:     address: data.settings.address || ''
+                     ^
+16:   });
+17: </script>
+17:13:47 [vite-plugin-svelte] src/routes/(frontend)/regulatory-disclosures/+page.svelte:42:27 '#' is not a valid href 
+attribute
+https://svelte.dev/e/a11y_invalid_attribute
+40:                 <ul class="list-none space-y-3 pl-0">
+41:                     <li>
+42:                         <a href="#" class="flex items-center gap-2 text-sm text-foreground underline 
+underline-offset-4 decoration-muted-foreground hover:decoration-foreground transition-all">
+                                       ^
+43:                             <span class="material-icons text-sm">description</span>
+44:                             Form ADV Part 2A (Firm Brochure)
+17:13:47 [vite-plugin-svelte] src/routes/(frontend)/regulatory-disclosures/+page.svelte:48:27 '#' is not a valid href 
+attribute
+https://svelte.dev/e/a11y_invalid_attribute
+46:                     </li>
+47:                     <li>
+48:                         <a href="#" class="flex items-center gap-2 text-sm text-foreground underline 
+underline-offset-4 decoration-muted-foreground hover:decoration-foreground transition-all">
+                                       ^
+49:                             <span class="material-icons text-sm">description</span>
+50:                             Part 3: Client Relationship Summary (Form CRS)
+17:13:51 [vite-plugin-svelte] src/lib/components/SurveyViewer.svelte:22:61 This reference only captures the initial 
+value of `survey`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+20:   }
+21: 
+22:   let answers = $state<Record<string, any>>(getInitialAnswers(survey.questions));
+                                                                        ^
+23:   let submitting = $state(false);
+24:   let submitted = $state(false);
+17:13:54 [vite-plugin-svelte] src/lib/components/user/ShareRefferal.svelte:39:12 Buttons and links should either 
+contain text or have an `aria-label`, `aria-labelledby` or `title` attribute
+https://svelte.dev/e/a11y_consider_explicit_label
+37:         <div class="flex justify-center gap-6 pt-4">
+38:             <!-- Facebook -->
+39:             <a href={facebookUrl} target="_blank" rel="noopener noreferrer" class="hover:scale-110 
+transition-transform">
+                    ^
+40:                 <svg class="h-8 w-8 text-blue-600 fill-current" viewBox="0 0 24 24" 
+xmlns="http://www.w3.org/2000/svg"
+41:                     ><path
+17:13:54 [vite-plugin-svelte] src/lib/components/user/ShareRefferal.svelte:47:12 Buttons and links should either 
+contain text or have an `aria-label`, `aria-labelledby` or `title` attribute
+https://svelte.dev/e/a11y_consider_explicit_label
+45:             </a>
+46:             <!-- X (Twitter) -->
+47:             <a href={xUrl} target="_blank" rel="noopener noreferrer" class="hover:scale-110 transition-transform">
+                    ^
+48:                 <svg class="h-8 w-8 text-black dark:text-white fill-current" viewBox="0 0 24 24" 
+xmlns="http://www.w3.org/2000/svg"
+49:                     ><path
+17:13:54 [vite-plugin-svelte] src/lib/components/user/ShareRefferal.svelte:55:12 Buttons and links should either 
+contain text or have an `aria-label`, `aria-labelledby` or `title` attribute
+https://svelte.dev/e/a11y_consider_explicit_label
+53:             </a>
+54:             <!-- WhatsApp -->
+55:             <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="hover:scale-110 
+transition-transform">
+                    ^
+56:                 <svg class="h-8 w-8 text-green-500 fill-current" viewBox="0 0 24 24" 
+xmlns="http://www.w3.org/2000/svg"
+57:                     ><path

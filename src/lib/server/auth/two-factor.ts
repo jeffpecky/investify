@@ -9,7 +9,7 @@ export interface TwoFactorSecret {
 export async function generateTwoFactorSecret(email: string): Promise<TwoFactorSecret> {
 	const secret = new OTPAuth.Secret({ size: 20 });
 	const totp = new OTPAuth.TOTP({
-		issuer: 'Investify',
+		issuer: 'Ethercore',
 		label: email,
 		algorithm: 'SHA1',
 		digits: 6,
@@ -30,7 +30,7 @@ export function generateTOTPSecret(): string {
 
 export function generateTOTPUri(email: string, secret: string): string {
 	const totp = new OTPAuth.TOTP({
-		issuer: 'Investify',
+		issuer: 'Ethercore',
 		label: email,
 		algorithm: 'SHA1',
 		digits: 6,
@@ -47,7 +47,7 @@ export async function generateQRCode(uri: string): Promise<string> {
 
 export function verifyTOTP(secret: string, token: string): boolean {
 	const totp = new OTPAuth.TOTP({
-		issuer: 'Investify',
+		issuer: 'Ethercore',
 		algorithm: 'SHA1',
 		digits: 6,
 		period: 30,

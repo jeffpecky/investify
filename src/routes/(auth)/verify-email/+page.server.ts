@@ -11,7 +11,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 	}
 
 	if (locals.user.emailVerifiedAt) {
-		throw redirect(303, '/user/dashboard');
+		throw redirect(303, '/dashboard');
 	}
 
 	return {

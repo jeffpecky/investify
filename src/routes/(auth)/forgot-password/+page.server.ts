@@ -8,7 +8,7 @@ import { createPasswordResetToken, sendPasswordResetEmail } from '$lib/server/se
 
 export const load: PageServerLoad = async (event) => {
 	if (event.locals.user) {
-		throw redirect(302, '/user/dashboard');
+		throw redirect(302, '/dashboard');
 	}
 	return {};
 };

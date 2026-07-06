@@ -22,7 +22,7 @@
                     <BreadcrumbPage>{item.title}</BreadcrumbPage>
                 {:else}
                     <BreadcrumbLink>
-                        <Link href={item.href ?? '#'}>{item.title}</Link>
+                        <a href={item.href ?? '#'}>{item.title}</a>
                     </BreadcrumbLink>
                 {/if}
             </Item>

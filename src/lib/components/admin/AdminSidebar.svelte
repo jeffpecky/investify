@@ -120,7 +120,7 @@
     const footerNavItems: NavItem[] = [
         {
             title: 'User View',
-            href: '/user/dashboard',
+            href: '/dashboard',
             icon: ArrowLeft,
         },
     ];
@@ -131,9 +131,9 @@
         <SidebarMenu>
             <SidebarMenuItem>
                 <SidebarMenuButton size="lg">
-                    <Link href={route('admin.dashboard')}>
+                    <a href="/admin/dashboard">
                         <AppLogo />
-                    </Link>
+                    </a>
                 </SidebarMenuButton>
             </SidebarMenuItem>
 

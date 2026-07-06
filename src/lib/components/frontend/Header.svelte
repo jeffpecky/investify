@@ -99,7 +99,7 @@
             <!-- Right: CTA -->
             <div class="hidden items-center gap-6 lg:flex">
                 {#if user && (user.role === 'user' || user.role === 'company')}
-                    <a class="text-sm text-muted-foreground transition-colors hover:text-foreground" href="/user/dashboard">
+                    <a class="text-sm text-muted-foreground transition-colors hover:text-foreground" href="/dashboard">
                         Dashboard
                     </a>
                 {:else}
@@ -170,7 +170,7 @@
 
                 <div class="flex flex-col gap-3 py-4">
                     {#if user && (user.role === 'user' || user.role === 'company')}
-                        <a href="/user/dashboard" class="text-sm text-muted-foreground hover:text-foreground" onclick={closeMenu}>Dashboard</a>
+                        <a href="/dashboard" class="text-sm text-muted-foreground hover:text-foreground" onclick={closeMenu}>Dashboard</a>
                     {:else}
                         <a href="/login" class="text-sm text-muted-foreground hover:text-foreground" onclick={closeMenu}>Private Area</a>
                     {/if}

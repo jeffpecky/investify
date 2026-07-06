@@ -143,20 +143,23 @@ export const investments = pgTable(
 		planId: uuid('plan_id')
 			.notNull()
 			.references(() => plans.id, { onDelete: 'cascade' }),
-		amount: decimal('amount', { precision: 18, scale: 2 }).notNull(),
-		paymentMethod: varchar('payment_method', { length: 50 }).notNull(),
-		cryptoSymbol: varchar('crypto_symbol', { length: 10 }),
-		cryptoAmount: decimal('crypto_amount', { precision: 18, scale: 8 }),
-		transactionHash: varchar('transaction_hash', { length: 255 }),
-		payoutOption: varchar('payout_option', { length: 20 }).notNull(),
-		status: varchar('status', { length: 20 }).notNull().default('pending'),
-		profitAccrued: decimal('profit_accrued', { precision: 18, scale: 2 }).notNull().default('0'),
-		totalExpectedProfit: decimal('total_expected_profit', { precision: 18, scale: 2 }).notNull(),
-		startDate: date('start_date'),
-		endDate: date('end_date'),
-		nextPayoutDate: date('next_payout_date'),
-		createdAt: timestamp('created_at').notNull().defaultNow(),
-		updatedAt: timestamp('updated_at').notNull().defaultNow()
+	amount: decimal('amount', { precision: 18, scale: 2 }).notNull(),
+	paymentMethod: varchar('payment_method', { length: 50 }).notNull(),
+	cryptoSymbol: varchar('crypto_symbol', { length: 10 }),
+	cryptoAmount: decimal('crypto_amount', { precision: 18, scale: 8 }),
+	transactionHash: varchar('transaction_hash', { length: 255 }),
+	payoutOption: varchar('payout_option', { length: 20 }).notNull(),
+	status: varchar('status', { length: 20 }).notNull().default('pending'),
+	profitAccrued: decimal('profit_accrued', { precision: 18, scale: 2 }).notNull().default('0'),
+	totalExpectedProfit: decimal('total_expected_profit', { precision: 18, scale: 2 }).notNull(),
+	startDate: date('start_date'),
+	endDate: date('end_date'),
+	nextPayoutDate: date('next_payout_date'),
+	lastCalculationDate: timestamp('last_calculation_date'),
+	lastPayoutDate: timestamp('last_payout_date'),
+	completedAt: timestamp('completed_at'),
+	createdAt: timestamp('created_at').notNull().defaultNow(),
+	updatedAt: timestamp('updated_at').notNull().defaultNow()
 	},
 	(table) => ({
 		userIdIdx: index('investments_user_id_idx').on(table.userId),
@@ -173,11 +176,15 @@ export const payouts = pgTable('payouts', {
 	userId: uuid('user_id')
 		.notNull()
 		.references(() => users.id, { onDelete: 'cascade' }),
+	amount: decimal('amount', { precision: 18, scale: 2 }).notNull(),
+	type: varchar('type', { length: 20 }).notNull().default('interest'),
 	date: date('date').notNull(),
-	capitalGrowth: decimal('capital_growth', { precision: 18, scale: 2 }).notNull(),
-	payoutAmount: decimal('payout_amount', { precision: 18, scale: 2 }).notNull(),
-	roiPercent: decimal('roi_percent', { precision: 5, scale: 2 }).notNull(),
+	capitalGrowth: decimal('capital_growth', { precision: 18, scale: 2 }),
+	payoutAmount: decimal('payout_amount', { precision: 18, scale: 2 }),
+	roiPercent: decimal('roi_percent', { precision: 5, scale: 2 }),
 	status: varchar('status', { length: 20 }).notNull().default('pending'),
+	requestedAt: timestamp('requested_at'),
+	processedAt: timestamp('processed_at'),
 	createdAt: timestamp('created_at').notNull().defaultNow()
 });
 
@@ -203,6 +210,33 @@ export const platformWallets = pgTable('platform_wallets', {
 	isActive: boolean('is_active').notNull().default(true),
 	createdAt: timestamp('created_at').notNull().defaultNow()
 });
+
+// Deposits
+export const deposits = pgTable(
+	'deposits',
+	{
+		id: uuid('id').defaultRandom().primaryKey(),
+		userId: uuid('user_id')
+			.notNull()
+			.references(() => users.id, { onDelete: 'cascade' }),
+		platformWalletId: uuid('platform_wallet_id')
+			.references(() => platformWallets.id, { onDelete: 'set null' }),
+		cryptocurrency: varchar('cryptocurrency', { length: 10 }).notNull(),
+		amount: decimal('amount', { precision: 18, scale: 8 }).notNull(),
+		transactionHash: varchar('transaction_hash', { length: 255 }).notNull().unique(),
+		status: varchar('status', { length: 20 }).notNull().default('pending'),
+		confirmedAt: timestamp('confirmed_at'),
+		confirmedBy: uuid('confirmed_by').references(() => users.id, { onDelete: 'set null' }),
+		rejectedReason: text('rejected_reason'),
+		createdAt: timestamp('created_at').notNull().defaultNow(),
+		updatedAt: timestamp('updated_at').notNull().defaultNow()
+	},
+	(table) => ({
+		userIdIdx: index('deposits_user_id_idx').on(table.userId),
+		statusIdx: index('deposits_status_idx').on(table.status),
+		createdAtIdx: index('deposits_created_at_idx').on(table.createdAt)
+	})
+);
 
 // Withdrawals
 export const withdrawals = pgTable(
@@ -374,12 +408,35 @@ export const contactSubmissions = pgTable('contact_submissions', {
 	createdAt: timestamp('created_at').notNull().defaultNow()
 });
 
+// Daily statistics snapshots for historical tracking
+export const dailyStats = pgTable(
+	'daily_stats',
+	{
+		id: uuid('id').defaultRandom().primaryKey(),
+		userId: uuid('user_id')
+			.notNull()
+			.references(() => users.id, { onDelete: 'cascade' }),
+		date: date('date').notNull(),
+		totalInvested: decimal('total_invested', { precision: 15, scale: 2 }).notNull().default('0'),
+		totalProfit: decimal('total_profit', { precision: 15, scale: 2 }).notNull().default('0'),
+		walletBalance: decimal('wallet_balance', { precision: 15, scale: 2 }).notNull().default('0'),
+		referralEarnings: decimal('referral_earnings', { precision: 15, scale: 2 }).notNull().default('0'),
+		createdAt: timestamp('created_at').notNull().defaultNow()
+	},
+	(table) => ({
+		userDateIdx: index('daily_stats_user_date_idx').on(table.userId, table.date),
+		dateIdx: index('daily_stats_date_idx').on(table.date)
+	})
+);
+
 // Relations
 export const usersRelations = relations(users, ({ many, one }) => ({
 	sessions: many(sessions),
 	investments: many(investments),
 	wallets: many(wallets),
 	withdrawals: many(withdrawals),
+	deposits: many(deposits),
+	dailyStats: many(dailyStats),
 	referralsMade: many(referrals, { relationName: 'referrer' }),
 	referralsReceived: many(referrals, { relationName: 'referred' }),
 	referredByUser: one(users, {
@@ -445,6 +502,21 @@ export const withdrawalsRelations = relations(withdrawals, ({ one }) => ({
 	wallet: one(wallets, {
 		fields: [withdrawals.walletId],
 		references: [wallets.id]
+	})
+}));
+
+export const depositsRelations = relations(deposits, ({ one }) => ({
+	user: one(users, {
+		fields: [deposits.userId],
+		references: [users.id]
+	}),
+	platformWallet: one(platformWallets, {
+		fields: [deposits.platformWalletId],
+		references: [platformWallets.id]
+	}),
+	confirmedByUser: one(users, {
+		fields: [deposits.confirmedBy],
+		references: [users.id]
 	})
 }));
 
@@ -524,6 +596,8 @@ export type Wallet = typeof wallets.$inferSelect;
 export type NewWallet = typeof wallets.$inferInsert;
 export type PlatformWallet = typeof platformWallets.$inferSelect;
 export type NewPlatformWallet = typeof platformWallets.$inferInsert;
+export type Deposit = typeof deposits.$inferSelect;
+export type NewDeposit = typeof deposits.$inferInsert;
 export type Withdrawal = typeof withdrawals.$inferSelect;
 export type NewWithdrawal = typeof withdrawals.$inferInsert;
 export type Referral = typeof referrals.$inferSelect;
@@ -563,5 +637,14 @@ export const auditLogsRelations = relations(auditLogs, ({ one }) => ({
 	})
 }));
 
+export const dailyStatsRelations = relations(dailyStats, ({ one }) => ({
+	user: one(users, {
+		fields: [dailyStats.userId],
+		references: [users.id]
+	})
+}));
+
 export type AuditLog = typeof auditLogs.$inferSelect;
 export type NewAuditLog = typeof auditLogs.$inferInsert;
+export type DailyStat = typeof dailyStats.$inferSelect;
+export type NewDailyStat = typeof dailyStats.$inferInsert;

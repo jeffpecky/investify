@@ -23,6 +23,6 @@
     <p class="text-xs font-bold text-blue-400">{title}</p>
     <p class="text-xs text-blue-400">{description}</p>
     {#if href}
-        <Link {href} class="text-sm font-bold text-blue-400 underline">{linkText}</Link>
+        <a href={href} class="text-sm font-bold text-blue-400 underline">{linkText}</a>
     {/if}
 </div>

@@ -121,27 +121,27 @@
     </div>
     <Card.Root class="py-0 overflow-hidden">
         <Table.Root class="overflow-hidden">
-            <Table.Header class="bg-gray-50 dark:bg-zinc-900">
-                <Table.Row class="[&>th]:px-3">
-                    <Table.Head class="ps-6">S/N</Table.Head>
-                    <Table.Head>Capital Growth</Table.Head>
-                    <Table.Head>Payout</Table.Head>
+            <Table.Header class="bg-muted/30">
+                <Table.Row>
+                    <Table.Head class="ps-6 w-20">S/N</Table.Head>
+                    <Table.Head class="text-right">Capital Growth</Table.Head>
+                    <Table.Head class="text-right">Payout</Table.Head>
                     <Table.Head>Date</Table.Head>
                 </Table.Row>
             </Table.Header>
             <Table.Body>
                 {#each payouts[0][timeFrame] as payout, i}
-                    <Table.Row class="[&>td]:py-3 [&>td]:px-3">
-                        <Table.Cell class="ps-6 font-medium">
+                    <Table.Row>
+                        <Table.Cell class="ps-6 font-medium tabular-nums">
                             {i + 1}
                         </Table.Cell>
-                        <Table.Cell>
+                        <Table.Cell class="text-right font-medium tabular-nums">
                             {formatCurrency(payout.capitalGrowth)}
                         </Table.Cell>
-                        <Table.Cell class="text-green-600">
+                        <Table.Cell class="text-right font-semibold text-success tabular-nums">
                             +{formatCurrency(payout.payout)}
                         </Table.Cell>
-                        <Table.Cell>
+                        <Table.Cell class="text-muted-foreground">
                             {formatDateExt(payout.date)}
                         </Table.Cell>
                     </Table.Row>

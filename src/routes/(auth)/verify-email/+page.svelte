@@ -15,7 +15,7 @@
 </script>
 
 <svelte:head>
-	<title>Verify Email - Investify</title>
+	<title>Verify Email - Ethercore</title>
 </svelte:head>
 
 <div class="space-y-6">
@@ -60,7 +60,7 @@
 		</form>
 
 		<div class="text-center">
-			<TextLink href="/user/dashboard" class="text-sm">Skip for now</TextLink>
+			<TextLink href="/dashboard" class="text-sm">Skip for now</TextLink>
 		</div>
 	</div>
 </div>

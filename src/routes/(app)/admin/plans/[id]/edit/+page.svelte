@@ -18,7 +18,7 @@
 		}
 	});
 
-	let formData = $state({
+	let formData = $state($state.snapshot({
 		name: data.plan.name,
 		category: data.plan.category,
 		minAmount: data.plan.minAmount,
@@ -28,7 +28,7 @@
 		percentMax: data.plan.percentMax,
 		status: data.plan.status,
 		recommended: data.plan.recommended
-	});
+	}));
 </script>
 
 <svelte:head>

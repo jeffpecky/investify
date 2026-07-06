@@ -136,7 +136,7 @@
                         Hi{user?.first_name ? `, ${user.first_name}` : ''}! 👋
                     </h3>
                     <p class="text-muted-foreground text-sm mt-2 max-w-[260px]">
-                        I'm your Investify assistant. Ask me about investments, withdrawals, or navigating the platform.
+                        I'm your Ethercore assistant. Ask me about investments, withdrawals, or navigating the platform.
                     </p>
 
                     <div class="grid gap-2 mt-6 w-full max-w-[280px]">

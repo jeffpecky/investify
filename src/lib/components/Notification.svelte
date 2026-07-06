@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { Button } from '$lib/components/ui/button/index.js';
+    import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
     import * as Popover from '$lib/components/ui/popover/index.js';
     import * as Dialog from '$lib/components/ui/dialog/index.js';
     import { Bell, BellOff } from 'lucide-svelte';
-    import { timeAgo } from '$lib/utils';
+    import { timeAgo, cn } from '$lib/utils';
 
     import type { Notification } from '$lib/types';
 
@@ -39,16 +39,14 @@
 </Dialog.Root>
 
 <Popover.Root bind:open>
-    <Popover.Trigger>
-        <Button variant="ghost" size="icon" class="cursor-pointer ">
-            <div class="relative">
-                <Bell class="size-5" />
-                {#if notifications.some((n) => !n.read)}
-                    <span class="absolute -right-1 -top-1 block h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-white"></span>
-                {/if}
-            </div>
-            <span class="sr-only">Notifications</span>
-        </Button>
+    <Popover.Trigger class={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), 'cursor-pointer')}>
+        <div class="relative">
+            <Bell class="size-5" />
+            {#if notifications.some((n) => !n.read)}
+                <span class="absolute -right-1 -top-1 block h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-white"></span>
+            {/if}
+        </div>
+        <span class="sr-only">Notifications</span>
     </Popover.Trigger>
     <Popover.Content align="end" class="w-80 overflow-hidden !rounded-xl border border-border bg-background p-0 shadow-lg">
         <div class="flex items-center justify-between border-b border-border bg-muted/30 px-4 py-3">

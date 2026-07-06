@@ -9,8 +9,8 @@
             &copy; {new Date().getFullYear()} <a href="/" class="font-medium underline underline-offset-4">{$SYSTEM.siteName}</a>. All rights reserved.
         </p>
         <div class="flex items-center gap-4">
-            <Link href="/about" class="text-sm font-medium text-muted-foreground underline underline-offset-4 hover:text-foreground">Any Link You Want</Link>
-            <Link href="/about" class="text-sm font-medium text-muted-foreground underline underline-offset-4 hover:text-foreground">Any Link You Want</Link>
+            <a href="/about" class="text-sm font-medium text-muted-foreground underline underline-offset-4 hover:text-foreground">Any Link You Want</a>
+            <a href="/about" class="text-sm font-medium text-muted-foreground underline underline-offset-4 hover:text-foreground">Any Link You Want</a>
         </div>
     </div>
 </footer>

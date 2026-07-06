@@ -7,13 +7,13 @@
 
 	let { data }: { data: PageData } = $props();
 
-	let formData = $state({
+	let formData = $state($state.snapshot({
 		siteName: data.settings.site_name || '',
 		siteDescription: data.settings.site_description || '',
 		contactEmail: data.settings.contact_email || '',
 		contactPhone: data.settings.contact_phone || '',
 		address: data.settings.address || ''
-	});
+	}));
 </script>
 
 <svelte:head>
@@ -34,7 +34,7 @@
 			<form class="space-y-4">
 				<div class="space-y-2">
 					<Label for="siteName">Site Name</Label>
-					<Input id="siteName" bind:value={formData.siteName} placeholder="Investify" />
+					<Input id="siteName" bind:value={formData.siteName} placeholder="Ethercore" />
 				</div>
 				<div class="space-y-2">
 					<Label for="siteDescription">Site Description</Label>
@@ -43,7 +43,7 @@
 				<div class="grid gap-4 md:grid-cols-2">
 					<div class="space-y-2">
 						<Label for="contactEmail">Contact Email</Label>
-						<Input id="contactEmail" type="email" bind:value={formData.contactEmail} placeholder="contact@investify.com" />
+						<Input id="contactEmail" type="email" bind:value={formData.contactEmail} placeholder="contact@ethercore.org" />
 					</div>
 					<div class="space-y-2">
 						<Label for="contactPhone">Contact Phone</Label>

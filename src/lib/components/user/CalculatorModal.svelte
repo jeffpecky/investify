@@ -1,10 +1,8 @@
 <script lang="ts">
     import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
-    import { Input } from '$lib/components/ui/input/index.js';
     import { Calculator } from 'lucide-svelte';
     import { Label } from '$lib/components/ui/label/index.js';
     import { cn } from '$lib/utils';
-    import { toast } from 'svelte-sonner';
     import * as InputGroup from '$lib/components/ui/input-group/index.js';
     import * as Dialog from '$lib/components/ui/dialog/index.js';
     import ComboBox from '../ComboBox.svelte';
@@ -32,9 +30,9 @@
     const payoutOptions = $derived.by(() => {
         if (!plans || !form.plan) return [];
         const selectedPlan = plans.find((plan: any) => plan.id === form.plan);
-        if (!selectedPlan?.payout) return [];
+        if (!selectedPlan?.payoutOptions) return [];
 
-        return selectedPlan.payout.map((payoutOption: any) => ({
+        return selectedPlan.payoutOptions.map((payoutOption: any) => ({
             value: payoutOption,
             label: payoutOption,
         }));
@@ -42,10 +40,13 @@
 
     function handleSubmit(e: Event) {
         e.preventDefault();
-        toast.success('Plan calculated successfully');
+        const params = new URLSearchParams();
+        if (form.amount) params.set('amount', String(form.amount));
+        if (form.payoutOption) params.set('payout', form.payoutOption);
+        if (form.crypto) params.set('crypto', form.crypto);
         open = false;
-        // TODO: pass the form data to the calculator page or whatever
-        goto(`/user/calculator/${form.plan}`);
+        const qs = params.toString();
+        goto(`/calculator/${form.plan}${qs ? `?${qs}` : ''}`);
     }
 </script>
 
@@ -85,7 +86,7 @@
                 <Label for="amount">Amount</Label>
                 <InputGroup.Root>
                     <InputGroup.Addon>
-                        <InputGroup.Text>£</InputGroup.Text>
+                        <InputGroup.Text>$</InputGroup.Text>
                     </InputGroup.Addon>
                     <InputGroup.Input
                         placeholder="0.00"
@@ -98,7 +99,7 @@
                         disabled={form.plan === null}
                     />
                     <InputGroup.Addon align="inline-end">
-                        <InputGroup.Text>GBP</InputGroup.Text>
+                        <InputGroup.Text>USD</InputGroup.Text>
                     </InputGroup.Addon>
                 </InputGroup.Root>
             </div>

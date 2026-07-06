@@ -3,6 +3,7 @@
 	import { ArrowRight } from 'lucide-svelte';
 	import { animate, splitText, heroParallax } from '$lib/utils/gsap';
 	import LoadingSpinner from '$lib/components/ui/LoadingSpinner.svelte';
+	import { siteSettings } from '$lib/stores/site.svelte';
 
 	let { data, form } = $props();
 
@@ -45,11 +46,11 @@
 				<p class="editorial-label mb-10">Get in Touch</p>
 
 				<div class="space-y-8">
-					{#each [
-						{ label: 'Headquarters', value: '100 Financial District Blvd, Suite 4500, New York, NY 10005', sub: null },
-						{ label: 'Phone', value: '+1 (212) 555-0123', sub: 'Mon–Fri, 9am–6pm EST' },
-						{ label: 'Email', value: 'contact@investify.com', sub: 'We typically reply within 24 hours' },
-					] as item}
+				{#each [
+					{ label: 'Headquarters', value: siteSettings.address, sub: null },
+					{ label: 'Phone', value: siteSettings.phone, sub: 'Mon–Fri, 9am–6pm EST' },
+					{ label: 'Email', value: siteSettings.email, sub: 'We typically reply within 24 hours' },
+				] as item}
 						<div class="border-t border-border/40 pt-5">
 							<p class="text-xs uppercase tracking-[0.15em] text-muted-foreground">{item.label}</p>
 							<p class="mt-2 text-sm text-foreground">{item.value}</p>

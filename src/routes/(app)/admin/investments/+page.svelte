@@ -8,8 +8,8 @@
 
 	let { data }: { data: PageData } = $props();
 
-	let searchTerm = $state(data.search);
-	let statusFilter = $state(data.status);
+	let searchTerm = $state($state.snapshot(data.search));
+	let statusFilter = $state($state.snapshot(data.status));
 
 	function handleSearch() {
 		const params = new URLSearchParams();

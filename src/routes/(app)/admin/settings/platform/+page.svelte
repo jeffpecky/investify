@@ -7,12 +7,12 @@
 
 	let { data }: { data: PageData } = $props();
 
-	let formData = $state({
+	let formData = $state($state.snapshot({
 		tokenMultiplier: data.settings.token_multiplier || '1.0',
 		minWithdrawal: data.settings.min_withdrawal || '10',
 		maxWithdrawal: data.settings.max_withdrawal || '100000',
 		referralBonus: data.settings.referral_bonus || '100'
-	});
+	}));
 </script>
 
 <svelte:head>

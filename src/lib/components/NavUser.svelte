@@ -6,7 +6,7 @@
     import { page } from '$app/stores';
     import { ChevronsUpDown } from 'lucide-svelte';
 
-    const user = $derived($page.props.auth.user);
+    const user = $derived($page.data.user);
 </script>
 
 <SidebarMenu>

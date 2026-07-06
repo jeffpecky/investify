@@ -8,7 +8,7 @@
 
 	let { data }: { data: PageData } = $props();
 
-	let searchTerm = $state(data.search);
+	let searchTerm = $state($state.snapshot(data.search));
 
 	function handleSearch() {
 		const params = new URLSearchParams(window.location.search);

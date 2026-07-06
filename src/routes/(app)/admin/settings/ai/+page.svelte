@@ -7,14 +7,14 @@
 
 	let { data }: { data: PageData } = $props();
 
-	let formData = $state({
+	let formData = $state($state.snapshot({
 		aiProvider: data.settings.ai_provider || 'openai',
 		apiKey: '••••••••••••••••',
 		model: data.settings.ai_model || 'gpt-4',
 		temperature: data.settings.ai_temperature || '0.7',
 		maxTokens: data.settings.ai_max_tokens || '2000',
 		enabled: data.settings.ai_enabled === 'true'
-	});
+	}));
 </script>
 
 <svelte:head>

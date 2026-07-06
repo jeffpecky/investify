@@ -10,7 +10,7 @@ import { lucia } from '$lib/server/auth';
 
 export const load: PageServerLoad = async (event) => {
 	if (event.locals.user) {
-		throw redirect(302, '/user/dashboard');
+		throw redirect(302, '/dashboard');
 	}
 	const token = event.params.token;
 	const userId = await verifyPasswordResetToken(token);

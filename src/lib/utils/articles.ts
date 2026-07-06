@@ -21,7 +21,7 @@ export const articles: Article[] = [
         date: 'Oct 24, 2023',
         readTime: '5 min read',
         author: 'Jonathan Sterling, CFA',
-        author_bio: 'Jonathan Sterling is a Chartered Financial Analyst with over 20 years of experience in global equity and fixed income markets, serving as Head of Investment Strategy at Investify.',
+        author_bio: 'Jonathan Sterling is a Chartered Financial Analyst with over 20 years of experience in global equity and fixed income markets, serving as Head of Investment Strategy at Ethercore.',
         image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800',
         excerpt: 'As we approach year-end, our investment committee analyzes key macroeconomic indicators and identifies resilient sectors for portfolio allocation.',
         content: `<p>As we approach the close of the fiscal year, global markets continue to exhibit heightened volatility driven by persistent inflationary pressures, central bank policy divergence, and geopolitical tensions across multiple regions. Our investment committee has convened to assess key macroeconomic indicators and identify sectors that demonstrate resilience in this complex environment.</p>
@@ -73,7 +73,7 @@ export const articles: Article[] = [
         date: 'Oct 10, 2023',
         readTime: '6 min read',
         author: 'Marcus Thorne',
-        author_bio: 'Marcus Thorne leads Investify\'s ESG Research & Integration team, advising institutional and family office clients on sustainable investing frameworks and impact measurement.',
+        author_bio: 'Marcus Thorne leads Ethercore\'s ESG Research & Integration team, advising institutional and family office clients on sustainable investing frameworks and impact measurement.',
         image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800',
         excerpt: 'Examining how ESG criteria are reshaping private market valuations and creating new opportunities for conscientious investors.',
         content: `<p>The private equity landscape is undergoing a fundamental transformation as environmental, social, and governance considerations move from peripheral checkbox exercises to core investment theses. Leading general partners are discovering that ESG integration is not merely a reputational consideration — it is a driver of value creation, risk mitigation, and competitive differentiation in an increasingly scrutinized market.</p>
@@ -98,7 +98,7 @@ export const articles: Article[] = [
         date: 'Sep 28, 2023',
         readTime: '4 min read',
         author: 'Dr. Elena Rostova',
-        author_bio: 'Dr. Elena Rostova holds a Ph.D. in Computational Finance and serves as Investify\'s Chief Data Scientist, pioneering the application of machine learning to multi-asset portfolio construction.',
+        author_bio: 'Dr. Elena Rostova holds a Ph.D. in Computational Finance and serves as Ethercore\'s Chief Data Scientist, pioneering the application of machine learning to multi-asset portfolio construction.',
         image: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?auto=format&fit=crop&q=80&w=800',
         excerpt: 'How artificial intelligence is enhancing risk assessment models and uncovering non-obvious correlations in global markets.',
         content: `<p>Artificial intelligence is reshaping the analytical infrastructure of modern portfolio management, moving well beyond algorithmic trading into the deeper domains of risk assessment, factor discovery, and behavioral pattern recognition. For institutional investors and family offices, understanding how these tools are being deployed — and their genuine limitations — is increasingly essential to evaluating manager capabilities and future-proofing investment processes.</p>
@@ -113,7 +113,7 @@ export const articles: Article[] = [
 
 <h3>The Human Element Remains Essential</h3>
 
-<p>Despite the power of these tools, experienced investment judgment remains indispensable. AI models are data-dependent and can exhibit significant performance degradation in novel environments. Interpretability challenges — the so-called "black box" problem — also complicate governance and regulatory compliance. The most sophisticated practitioners deploy AI as a powerful augmentation of human expertise, not a replacement for it. At Investify, our investment process combines quantitative signals with fundamental research and experienced portfolio manager oversight, ensuring that technology serves our clients' long-term objectives.</p>`,
+<p>Despite the power of these tools, experienced investment judgment remains indispensable. AI models are data-dependent and can exhibit significant performance degradation in novel environments. Interpretability challenges — the so-called "black box" problem — also complicate governance and regulatory compliance. The most sophisticated practitioners deploy AI as a powerful augmentation of human expertise, not a replacement for it. At Ethercore, our investment process combines quantitative signals with fundamental research and experienced portfolio manager oversight, ensuring that technology serves our clients' long-term objectives.</p>`,
         related_article_ids: [3, 1, 5],
     },
     {
@@ -123,7 +123,7 @@ export const articles: Article[] = [
         date: 'Sep 15, 2023',
         readTime: '7 min read',
         author: 'David Chen',
-        author_bio: 'David Chen is Investify\'s Head of Real Assets, with 18 years of experience advising institutional investors on commercial real estate, infrastructure, and natural resource allocations across North America and Asia.',
+        author_bio: 'David Chen is Ethercore\'s Head of Real Assets, with 18 years of experience advising institutional investors on commercial real estate, infrastructure, and natural resource allocations across North America and Asia.',
         image: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&q=80&w=800',
         excerpt: 'An analysis of cap rates in major metropolitan areas and the shifting landscape of commercial office space investment.',
         content: `<p>The commercial real estate market is navigating one of its most consequential structural shifts in decades. The confluence of elevated interest rates, remote and hybrid work normalization, and evolving tenant preferences is creating significant dislocation in traditional asset classes — particularly office — while simultaneously generating compelling opportunities in sectors with durable secular tailwinds.</p>
@@ -148,7 +148,7 @@ export const articles: Article[] = [
         date: 'Sep 02, 2023',
         readTime: '6 min read',
         author: 'Olivia Vance',
-        author_bio: 'Olivia Vance is Investify\'s Director of Philanthropic Advisory, guiding high-net-worth families in building strategic giving programs that align personal values with financial planning and measurable community impact.',
+        author_bio: 'Olivia Vance is Ethercore\'s Director of Philanthropic Advisory, guiding high-net-worth families in building strategic giving programs that align personal values with financial planning and measurable community impact.',
         image: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&q=80&w=800',
         excerpt: 'Maximizing the impact of your charitable giving through Donor Advised Funds and private foundations.',
         content: `<p>Strategic philanthropy has evolved from simple charitable giving into a sophisticated discipline that integrates personal values, tax planning, impact measurement, and legacy objectives. For high-net-worth individuals and families, the design of a giving program is as consequential as any investment decision — and requires equally rigorous analysis, intentionality, and long-term thinking.</p>

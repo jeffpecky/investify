@@ -19,7 +19,7 @@
 		return initial;
 	}
 
-	let answers = $state<Record<string, any>>(getInitialAnswers(survey.questions));
+	let answers = $state<Record<string, any>>($state.snapshot(getInitialAnswers(survey.questions)));
 	let submitting = $state(false);
 	let submitted = $state(false);
 	let error = $state('');

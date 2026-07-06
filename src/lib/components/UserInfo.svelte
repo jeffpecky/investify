@@ -23,15 +23,15 @@
     // let isAdmin = $derived($page.props.auth.user.role === 'admin');
 </script>
 
-<!-- <Avatar class="h-8 w-8 overflow-hidden rounded-full">
+<Avatar class="h-8 w-8 rounded-lg">
     {#if user.profile_photo_url}
         <AvatarImage src={user.profile_photo_url} alt={user.first_name} />
     {:else}
-        <AvatarFallback class="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
+        <AvatarFallback class="rounded-lg">
             {getInitials(user.first_name + ' ' + user.last_name)}
         </AvatarFallback>
     {/if}
-</Avatar> -->
+</Avatar>
 
 <div class="grid flex-1 text-left text-sm leading-tight">
     <div class="flex items-center gap-2">

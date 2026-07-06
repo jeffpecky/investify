@@ -219,17 +219,17 @@
                 <form class="mt-10 space-y-4">
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs text-primary-foreground/40 mb-1.5">Enter your name</label>
-                            <input type="text" class="w-full border-b border-primary-foreground/20 bg-transparent pb-3 text-sm text-primary-foreground placeholder-primary-foreground/30 focus:border-primary-foreground/60 focus:outline-none transition-colors" placeholder="Full name" />
+                            <label for="contact-name" class="block text-xs text-primary-foreground/40 mb-1.5">Enter your name</label>
+                            <input id="contact-name" type="text" class="w-full border-b border-primary-foreground/20 bg-transparent pb-3 text-sm text-primary-foreground placeholder-primary-foreground/30 focus:border-primary-foreground/60 focus:outline-none transition-colors" placeholder="Full name" />
                         </div>
                         <div>
-                            <label class="block text-xs text-primary-foreground/40 mb-1.5">Enter your email</label>
-                            <input type="email" class="w-full border-b border-primary-foreground/20 bg-transparent pb-3 text-sm text-primary-foreground placeholder-primary-foreground/30 focus:border-primary-foreground/60 focus:outline-none transition-colors" placeholder="Email address" />
+                            <label for="contact-email" class="block text-xs text-primary-foreground/40 mb-1.5">Enter your email</label>
+                            <input id="contact-email" type="email" class="w-full border-b border-primary-foreground/20 bg-transparent pb-3 text-sm text-primary-foreground placeholder-primary-foreground/30 focus:border-primary-foreground/60 focus:outline-none transition-colors" placeholder="Email address" />
                         </div>
                     </div>
                     <div>
-                        <label class="block text-xs text-primary-foreground/40 mb-1.5">Enter no.</label>
-                        <input type="tel" class="w-full border-b border-primary-foreground/20 bg-transparent pb-3 text-sm text-primary-foreground placeholder-primary-foreground/30 focus:border-primary-foreground/60 focus:outline-none transition-colors" placeholder="Phone number (optional)" />
+                        <label for="contact-phone" class="block text-xs text-primary-foreground/40 mb-1.5">Enter no.</label>
+                        <input id="contact-phone" type="tel" class="w-full border-b border-primary-foreground/20 bg-transparent pb-3 text-sm text-primary-foreground placeholder-primary-foreground/30 focus:border-primary-foreground/60 focus:outline-none transition-colors" placeholder="Phone number (optional)" />
                     </div>
                     <div class="pt-2">
                         <button use:magnetic={0.15} type="submit" class="inline-flex items-center gap-2 text-sm font-medium text-primary-foreground underline underline-offset-4 decoration-primary-foreground/40 hover:decoration-primary-foreground transition-all">

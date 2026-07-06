@@ -15,7 +15,7 @@
     } from '$lib/components/ui/sidebar';
     import { type NavItem, type UserMenuItem } from '$lib/types';
     // Link: use native <a> tags
-    import { LayoutGrid, Headset, ArrowDownToLine, Wallet, Users, Newspaper, Calendar, TrendingUp, ArrowLeft, Shield, Sparkles } from 'lucide-svelte';
+    import { LayoutGrid, Headset, ArrowDownToLine, Wallet, Users, Newspaper, Calendar, TrendingUp, Shield, Sparkles, ArrowUpToLine } from 'lucide-svelte';
     import AppLogo from './AppLogo.svelte';
     import { USER } from '$lib/store';
     import Promotionalbanner from './user/Promotionalbanner.svelte';
@@ -30,12 +30,12 @@
             items: [
                 {
                     title: 'Dashboard',
-                    href: '/user/dashboard',
+                    href: '/dashboard',
                     icon: LayoutGrid,
                 },
                 {
                     title: 'Portfolio',
-                    href: '/user/my-investments',
+                    href: '/investments',
                     icon: TrendingUp,
                 },
             ],
@@ -45,12 +45,12 @@
             items: [
                 {
                     title: 'Explore Plans',
-                    href: '/user/plans',
+                    href: '/plans',
                     icon: Sparkles,
                 },
                 {
                     title: 'Invite & Earn',
-                    href: '/user/referrals',
+                    href: '/referrals',
                     icon: Users,
                 },
             ],
@@ -59,14 +59,18 @@
             menuGroup: 'Finance',
             items: [
                 {
+                    title: 'Deposit',
+                    href: '/deposit',
+                    icon: ArrowUpToLine,
+                },
+                {
                     title: 'Withdraw',
-                    href: '/user/withdrawals',
+                    href: '/withdrawals',
                     icon: ArrowDownToLine,
-                    counter: 5,
                 },
                 {
                     title: 'Wallets',
-                    href: '/user/my-wallets',
+                    href: '/wallets',
                     icon: Wallet,
                 },
             ],
@@ -76,12 +80,12 @@
     const footerNavItems: NavItem[] = [
         {
             title: 'News',
-            href: '/user/news',
+            href: '/news',
             icon: Newspaper,
         },
         {
             title: 'Support',
-            href: '/user/help',
+            href: '/help',
             icon: Headset,
         },
     ];
@@ -92,9 +96,9 @@
         <SidebarMenu>
             <SidebarMenuItem>
                 <SidebarMenuButton size="lg">
-                    <Link href={route('user.dashboard')}>
+                    <a href="/dashboard" class="flex items-center gap-2">
                         <AppLogo />
-                    </Link>
+                    </a>
                 </SidebarMenuButton>
             </SidebarMenuItem>
 
@@ -140,18 +144,6 @@
         <NavFooter items={footerNavItems} class="mt-auto" />
 
         <SidebarSeparator />
-        <SidebarMenu>
-            <SidebarMenuItem>
-                <SidebarMenuButton size="sm">
-                    <a href="/" class="flex items-center gap-2">
-                        <ArrowLeft size={16} />
-                        {#if sidebar.state === 'expanded'}
-                            Back to Home
-                        {/if}
-                    </a>
-                </SidebarMenuButton>
-            </SidebarMenuItem>
-        </SidebarMenu>
 
         <NavUser />
     </SidebarFooter>

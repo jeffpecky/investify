@@ -3,9 +3,9 @@ import { writable } from 'svelte/store';
 // System settings store - will be populated from database
 export const SYSTEM = writable({
     tokenSymbol: 'PRTP',
-    siteName: 'Investify',
-    company: 'Investify Wealth Management',
-    email: 'info@investify.com',
+    siteName: 'Ethercore',
+    company: 'Ethercore Wealth Management',
+    email: 'info@ethercore.org',
     phone: '+1 (888) 555-0123',
     address: '123 Main St',
     city: 'New York',

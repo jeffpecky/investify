@@ -15,17 +15,17 @@
     const isCurrentRoute = (url: string) => $page.url.pathname.startsWith(url);
 
     const primaryNav = [
-        { title: 'Dashboard', href: '/user/dashboard', icon: LayoutGrid },
-        { title: 'Portfolio', href: '/user/my-investments', icon: TrendingUp },
-        { title: 'Explore Plans', href: '/user/plans', icon: Compass },
-        { title: 'Wallets', href: '/user/my-wallets', icon: Wallet },
+        { title: 'Dashboard', href: '/dashboard', icon: LayoutGrid },
+        { title: 'Portfolio', href: '/investments', icon: TrendingUp },
+        { title: 'Explore Plans', href: '/plans', icon: Compass },
+        { title: 'Wallets', href: '/wallets', icon: Wallet },
     ];
 
     const secondaryNav = [
-        { title: 'Withdraw', href: '/user/withdrawals', icon: ArrowDownToLine },
-        { title: 'Invite & Earn', href: '/user/referrals', icon: Users },
-        { title: 'News', href: '/user/news', icon: Newspaper },
-        { title: 'Support', href: '/user/help', icon: Headset },
+        { title: 'Withdraw', href: '/withdrawals', icon: ArrowDownToLine },
+        { title: 'Invite & Earn', href: '/referrals', icon: Users },
+        { title: 'News', href: '/news', icon: Newspaper },
+        { title: 'Support', href: '/help', icon: Headset },
     ];
 </script>
 
@@ -92,7 +92,7 @@
         </div>
 
         <!-- Logo -->
-        <a href="/user/dashboard" class="flex items-center gap-2.5">
+        <a href="/dashboard" class="flex items-center gap-2.5">
             <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-sm">
                 <span class="text-sm font-bold">{$SYSTEM.siteName?.charAt(0) ?? 'V'}</span>
             </div>

@@ -1,6 +1,7 @@
 export const siteSettings = $state({
-	siteName: 'Investify',
+	siteName: 'Ethercore',
+	company: 'Ethercore',
 	phone: '+44 20 7123 4567',
-	email: 'hello@investify.com',
+	email: 'hello@ethercore.org',
 	address: '88 Brook Street, London, W1K 5AY'
 });
