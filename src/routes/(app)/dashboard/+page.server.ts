@@ -114,7 +114,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 		'Failed to load recent withdrawals'
 	);
 
-	// Get active plans
+	// Get user's active investment plans (only plans the user is currently invested in)
 	const activePlans = await safeQuery(
 		() =>
 			db
@@ -124,12 +124,17 @@ export const load: PageServerLoad = async ({ locals }) => {
 					category: plans.category,
 					percentMin: plans.percentMin,
 					percentMax: plans.percentMax,
-					minAmount: plans.minAmount,
-					maxAmount: plans.maxAmount
+					investedAmount: sql<string>`COALESCE(SUM(${investments.amount}::numeric), 0)`,
+					investmentCount: sql<number>`COUNT(*)`
 				})
-				.from(plans)
-				.where(eq(plans.status, 'active'))
-				.orderBy(desc(plans.createdAt))
+				.from(investments)
+				.innerJoin(plans, eq(investments.planId, plans.id))
+				.where(and(
+					eq(investments.userId, user.id),
+					eq(investments.status, 'active')
+				))
+				.groupBy(plans.id, plans.name, plans.category, plans.percentMin, plans.percentMax)
+				.orderBy(desc(sql`SUM(${investments.amount}::numeric)`))
 				.limit(5),
 		'Failed to load active plans'
 	);

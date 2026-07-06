@@ -228,44 +228,53 @@
         </Card.Root>
     </div>
 
-    <!-- Middle Row: Chart + Active Plans Table -->
+    <!-- Middle Row: Chart + Recent Activity -->
     <div class="grid gap-3 grid-cols-1 lg:grid-cols-3">
         <!-- Chart (2/3 width) -->
         <div class="lg:col-span-2">
             <Chart />
         </div>
 
-        <!-- Active Plans Table (1/3 width) -->
+        <!-- Recent Activity (1/3 width) -->
         <Card.Root class="p-3">
             <div class="flex items-center justify-between mb-3">
-                <h3 class="text-sm font-semibold text-foreground">Active Plans</h3>
-                <a href="/plans" class="text-xs text-primary hover:underline">View All</a>
+                <h3 class="text-sm font-semibold text-foreground">Recent Activity</h3>
+                <a href="/investments" class="text-xs text-primary hover:underline">View All</a>
             </div>
             <div class="space-y-0">
-                {#if data.activePlans && data.activePlans.length > 0}
-                    {#each data.activePlans as plan}
-                        <div class="flex items-center justify-between py-2.5 border-b border-border/40 last:border-0">
-                            <div>
-                                <div class="text-sm font-medium text-foreground">{plan.name}</div>
-                                <div class="text-xs text-muted-foreground">{plan.category}</div>
+                {#if data.recentActivity && data.recentActivity.length > 0}
+                    {#each data.recentActivity as activity}
+                        <div class="flex items-center justify-between py-2 border-b border-border/40 last:border-0">
+                            <div class="flex items-center gap-2">
+                                <div class="rounded-full px-2 py-0.5 text-xs font-medium
+                                    {activity.status === 'active' || activity.status === 'completed' || activity.status === 'approved' ? 'bg-success/10 text-success' : 
+                                     activity.status === 'pending' ? 'bg-warning/10 text-warning' : 'bg-destructive/10 text-destructive'}">
+                                    {activity.status === 'active' || activity.status === 'completed' || activity.status === 'approved' ? '✓' : '○'}
+                                </div>
+                                <div>
+                                    <div class="text-xs font-medium text-foreground capitalize">{activity.type}</div>
+                                    <div class="text-xs text-muted-foreground truncate max-w-[100px]">{activity.planName}</div>
+                                </div>
                             </div>
                             <div class="text-right">
-                                <div class="text-sm font-semibold tabular-nums text-success">
-                                    {plan.percentMin === plan.percentMax ? `${plan.percentMin}%` : `${plan.percentMin}-${plan.percentMax}%`}
+                                <div class="text-xs font-semibold text-foreground tabular-nums">
+                                    {formatCurrency(parseFloat(activity.amount))}
                                 </div>
+                                <div class="text-xs text-muted-foreground">{timeAgo(activity.createdAt)}</div>
                             </div>
                         </div>
                     {/each}
                 {:else}
-                    <div class="py-8 text-center text-sm text-muted-foreground">
-                        No active plans available
+                    <div class="py-6 text-center">
+                        <Clock class="h-8 w-8 mx-auto mb-2 text-muted-foreground/30" />
+                        <p class="text-sm text-muted-foreground">No recent activity</p>
                     </div>
                 {/if}
             </div>
         </Card.Root>
     </div>
 
-    <!-- Bottom Row: Portfolio + Quick Action + Recent Activity -->
+    <!-- Bottom Row: Portfolio + Quick Action + Active Plans -->
     <div class="grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         <!-- Portfolio Allocation -->
         <Card.Root class="p-3">
@@ -353,39 +362,33 @@
             </div>
         </Card.Root>
 
-        <!-- Recent Activity -->
+        <!-- Active Plans (User's current investments) -->
         <Card.Root class="p-3">
             <div class="flex items-center justify-between mb-3">
-                <h3 class="text-sm font-semibold text-foreground">Recent Activity</h3>
+                <h3 class="text-sm font-semibold text-foreground">Active Plans</h3>
                 <a href="/investments" class="text-xs text-primary hover:underline">View All</a>
             </div>
             <div class="space-y-0">
-                {#if data.recentActivity && data.recentActivity.length > 0}
-                    {#each data.recentActivity as activity}
-                        <div class="flex items-center justify-between py-2 border-b border-border/40 last:border-0">
-                            <div class="flex items-center gap-2">
-                                <div class="rounded-full px-2 py-0.5 text-xs font-medium
-                                    {activity.status === 'active' || activity.status === 'completed' || activity.status === 'approved' ? 'bg-success/10 text-success' : 
-                                     activity.status === 'pending' ? 'bg-warning/10 text-warning' : 'bg-destructive/10 text-destructive'}">
-                                    {activity.status === 'active' || activity.status === 'completed' || activity.status === 'approved' ? '✓' : '○'}
-                                </div>
-                                <div>
-                                    <div class="text-xs font-medium text-foreground capitalize">{activity.type}</div>
-                                    <div class="text-xs text-muted-foreground truncate max-w-[100px]">{activity.planName}</div>
-                                </div>
+                {#if data.activePlans && data.activePlans.length > 0}
+                    {#each data.activePlans as plan}
+                        <div class="flex items-center justify-between py-2.5 border-b border-border/40 last:border-0">
+                            <div>
+                                <div class="text-sm font-medium text-foreground">{plan.name}</div>
+                                <div class="text-xs text-muted-foreground">{plan.investmentCount} investment{plan.investmentCount !== 1 ? 's' : ''}</div>
                             </div>
                             <div class="text-right">
-                                <div class="text-xs font-semibold text-foreground tabular-nums">
-                                    {formatCurrency(parseFloat(activity.amount))}
+                                <div class="text-sm font-semibold tabular-nums text-foreground">
+                                    {formatCurrency(parseFloat(plan.investedAmount))}
                                 </div>
-                                <div class="text-xs text-muted-foreground">{timeAgo(activity.createdAt)}</div>
+                                <div class="text-xs text-success tabular-nums">
+                                    {plan.percentMin === plan.percentMax ? `${plan.percentMin}%` : `${plan.percentMin}-${plan.percentMax}%`}
+                                </div>
                             </div>
                         </div>
                     {/each}
                 {:else}
-                    <div class="py-6 text-center">
-                        <Clock class="h-8 w-8 mx-auto mb-2 text-muted-foreground/30" />
-                        <p class="text-sm text-muted-foreground">No recent activity</p>
+                    <div class="py-8 text-center text-sm text-muted-foreground">
+                        No active investments
                     </div>
                 {/if}
             </div>
