@@ -313,9 +313,11 @@
 				</div>
 
 				<div class="col-span-2 flex justify-end items-center gap-2">
-					<Button variant="outline" onclick={handleClose} disabled={isSubmitting} type="button"
-						>Cancel</Button
-					>
+					<Dialog.Close asChild>
+						<Button variant="outline" disabled={isSubmitting} type="button"
+							>Cancel</Button
+						>
+					</Dialog.Close>
 					<Button
 						type="submit"
 						class="cursor-pointer"
