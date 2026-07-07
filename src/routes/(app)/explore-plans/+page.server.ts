@@ -91,9 +91,10 @@ export const actions: Actions = {
 
 		// Create investment - active for wallet payments (funds already deducted), pending for crypto
 		const investmentStatus = paymentMethod === '2' ? 'active' : 'pending';
-		const startDate = new Date();
-		const endDate = new Date();
-		endDate.setDate(endDate.getDate() + durationDays);
+		const today = new Date().toISOString().split('T')[0];
+		const endDateObj = new Date();
+		endDateObj.setDate(endDateObj.getDate() + durationDays);
+		const endDate = endDateObj.toISOString().split('T')[0];
 
 		const [newInvestment] = await db
 			.insert(investments)
@@ -105,7 +106,7 @@ export const actions: Actions = {
 				totalExpectedProfit: totalExpectedProfit.toString(),
 				status: investmentStatus,
 				payoutOption,
-				startDate,
+				startDate: today,
 				endDate,
 				paymentMethod: paymentMethod === '1' ? 'crypto' : 'wallet',
 				cryptoSymbol: cryptoSymbol || null
