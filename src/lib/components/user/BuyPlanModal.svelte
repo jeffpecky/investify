@@ -47,7 +47,8 @@
         if (!data) return;
         form.plan = activePlan?.id;
         form.amount = isCalculator ? data.amount : data.minAmount || 0;
-        form.payoutOption = data.payoutOption || null;
+        // Auto-select payout option from plan (don't ask user)
+        form.payoutOption = activePlan?.payoutOptions?.[0] || null;
         form.crypto = data.crypto?.symbol || null;
         form.paymentMethod = '1';
 
@@ -246,14 +247,10 @@
                     </div>
                 </RadioGroup.Root>
 
-                <div class="grid grid-cols-2 gap-2">
-                    <div class="grid gap-2">
-                        <Label for="payoutOption">Payout Option</Label>
-                        <ComboBox type="single" options={payoutOptions} bind:value={form.payoutOption} search={false} disabled={form.plan === null} />
-                    </div>
+                <div class="grid gap-2">
                     {#if form.paymentMethod === '1'}
                         <div class="grid gap-2">
-                            <Label for="crypto">Cryptocurrency</Label>
+                            <Label for="crypto">Pay with</Label>
                             <ComboBox
                                 type="single"
                                 options={$SUPPORT_CRYPTOS.map((crypto) => ({ value: crypto.symbol, label: crypto.name }))}
@@ -292,12 +289,12 @@
                     <Button
                         type="submit"
                         class="cursor-pointer"
-                        disabled={form.plan === null || form.payoutOption === null || form.amount <= 0 || isSubmitting}
+                        disabled={form.plan === null || form.amount <= 0 || isSubmitting}
                     >
                         {#if isSubmitting}
-                            <LoaderCircle class="size-4 animate-spin" /> Creating...
+                            <LoaderCircle class="size-4 animate-spin" /> Processing...
                         {:else}
-                            Create Investment
+                            Buy Plan
                         {/if}
                     </Button>
                 </div>

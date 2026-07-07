@@ -26,11 +26,10 @@ export const actions: Actions = {
 		const formData = await request.formData();
 		const planId = formData.get('planId') as string;
 		const amount = formData.get('amount') as string;
-		const payoutOption = formData.get('payoutOption') as string;
 		const paymentMethod = formData.get('paymentMethod') as string;
 		const cryptoSymbol = formData.get('cryptoSymbol') as string;
 
-		if (!planId || !amount || !payoutOption || !paymentMethod) {
+		if (!planId || !amount || !paymentMethod) {
 			return fail(400, { error: 'Missing required fields' });
 		}
 
@@ -53,6 +52,10 @@ export const actions: Actions = {
 				error: `Amount must be between $${minAmount} and $${maxAmount}`
 			});
 		}
+
+		// Auto-select payout option from plan
+		const payoutOptions = plan.payoutOptions as string[];
+		const payoutOption = payoutOptions?.[0] || 'Daily';
 
 		// Calculate duration and expected profit
 		const durationDays = plan.durationDays;
