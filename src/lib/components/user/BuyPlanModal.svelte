@@ -44,6 +44,9 @@
 
 	const isCalculator = $derived(data && 'plan' in data);
 	const activePlan = $derived(isCalculator ? data.plan : data);
+	const planMin = $derived(Number(activePlan?.minAmount || 0));
+	const planMax = $derived(Number(activePlan?.maxAmount || 0));
+	const amountValid = $derived(form.amount >= planMin && form.amount <= planMax);
 
     $effect(() => {
         if (data && !open) {
@@ -302,6 +305,8 @@
 							name="amount"
 							type="number"
 							step="0.01"
+							min={planMin}
+							max={planMax}
 							bind:value={form.amount}
 							required
 							disabled={form.plan === null}
@@ -310,18 +315,22 @@
 							<InputGroup.Text>USD</InputGroup.Text>
 						</InputGroup.Addon>
 					</InputGroup.Root>
+					{#if activePlan}
+						<p class="text-xs text-muted-foreground">
+							Min: ${planMin.toLocaleString()} — Max: ${planMax.toLocaleString()}
+						</p>
+					{/if}
 				</div>
 
 				<div class="col-span-2 flex justify-end items-center gap-2">
-					<Dialog.Close asChild>
-						<Button variant="outline" disabled={isSubmitting} type="button"
-							>Cancel</Button
-						>
-					</Dialog.Close>
+					<Button variant="outline" disabled={isSubmitting} type="button"
+						onclick={(e) => { e.stopPropagation(); e.preventDefault(); handleClose(); }}
+						>Cancel</Button
+					>
 					<Button
 						type="submit"
 						class="cursor-pointer"
-						disabled={form.plan === null || form.amount <= 0 || isSubmitting}
+						disabled={form.plan === null || !amountValid || isSubmitting}
 					>
 						{#if isSubmitting}
 							<LoaderCircle class="size-4 animate-spin" /> Processing...
