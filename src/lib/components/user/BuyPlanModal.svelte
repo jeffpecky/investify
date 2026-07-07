@@ -51,10 +51,6 @@
         }
     });
 
-    $effect(() => {
-        console.log('form.crypto changed:', form.crypto);
-    });
-
     function resetForm() {
         if (!data) return;
         form.plan = activePlan?.id;
@@ -284,7 +280,8 @@
 									value: crypto.symbol,
 									label: crypto.name
 								}))}
-								bind:value={form.crypto}
+								value={form.crypto}
+								onValueChange={(val) => { form.crypto = val || ''; }}
 								search={false}
 								disabled={form.plan === null}
 							/>

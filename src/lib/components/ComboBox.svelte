@@ -4,7 +4,7 @@
     import * as InputGroup from '$lib/components/ui/input-group/index.js';
     import { Search } from 'lucide-svelte';
 
-    let { options, value = $bindable(), placeholder = 'Select option...', type = 'single', search = true, ...props } = $props();
+    let { options, value = $bindable(), placeholder = 'Select option...', type = 'single', search = true, onValueChange, ...props } = $props();
 
     let searchValue = $state('');
 
@@ -24,7 +24,7 @@
     );
 </script>
 
-<Select.Root type={type as any} bind:value allowDeselect={false} disabled={props.disabled}>
+<Select.Root type={type as any} value={value} onValueChange={(val) => { value = val; onValueChange?.(val); }} allowDeselect={false} disabled={props.disabled}>
     <Select.Trigger class="w-full capitalize overflow-hidden">
         {triggerContent}
     </Select.Trigger>
