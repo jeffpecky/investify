@@ -1,0 +1,1 @@
+ALTER TABLE "users" ADD COLUMN "deposited_balance" numeric(18, 2) DEFAULT '0' NOT NULL;

@@ -43,6 +43,13 @@
       "when": 1783305403390,
       "tag": "0005_perfect_gabe_jones",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1783405694163,
+      "tag": "0006_add_deposited_balance",
+      "breakpoints": true
     }
   ]
 }

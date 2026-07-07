@@ -23,6 +23,7 @@ export const lucia = new Lucia(adapter, {
 			avatarPath: attributes.avatarPath,
 			walletBalance: attributes.walletBalance,
 			tokenBalance: attributes.tokenBalance,
+			depositedBalance: attributes.depositedBalance,
 			group: attributes.group,
 			referralCode: attributes.referralCode,
 			kycStatus: attributes.kycStatus,
@@ -48,6 +49,7 @@ interface DatabaseUserAttributes {
 	avatarPath: string | null;
 	walletBalance: string;
 	tokenBalance: string;
+	depositedBalance: string;
 	group: string | null;
 	referralCode: string | null;
 	kycStatus: string;

@@ -1,6 +1,6 @@
 import type { PageServerLoad, Actions } from './$types';
 import { db } from '$lib/server/db';
-import { plans, investments } from '$lib/server/db/schema';
+import { plans, investments, users } from '$lib/server/db/schema';
 import { eq, desc } from 'drizzle-orm';
 import { fail } from '@sveltejs/kit';
 import { safeQuery } from '$lib/server/db/utils';
@@ -64,17 +64,37 @@ export const actions: Actions = {
 		const avgPercent = (percentMin + percentMax) / 2;
 		const totalExpectedProfit = (amountNum * avgPercent * durationDays) / (100 * 365);
 
+		// For wallet balance payments, check sufficient deposited balance
+		if (paymentMethod === '2') {
+			const [currentUser] = await db
+				.select({ depositedBalance: users.depositedBalance })
+				.from(users)
+				.where(eq(users.id, user.id))
+				.limit(1);
+
+			const depositedBalance = Number(currentUser?.depositedBalance || 0);
+			if (depositedBalance < amountNum) {
+				return fail(400, {
+					error: `Insufficient deposited balance. You have $${depositedBalance.toFixed(2)} available.`
+				});
+			}
+
+			// Deduct from deposited balance
+			await db
+				.update(users)
+				.set({
+					depositedBalance: (depositedBalance - amountNum).toString(),
+					updatedAt: new Date()
+				})
+				.where(eq(users.id, user.id));
+		}
+
+		// Create investment - active for wallet payments (funds already deducted), pending for crypto
+		const investmentStatus = paymentMethod === '2' ? 'active' : 'pending';
 		const startDate = new Date();
 		const endDate = new Date();
 		endDate.setDate(endDate.getDate() + durationDays);
 
-		// For wallet balance payments, check sufficient balance
-		if (paymentMethod === '2') {
-			// TODO: Check user wallet balance and deduct
-			// For now, treat all payments as pending crypto verification
-		}
-
-		// Create investment with pending status
 		const [newInvestment] = await db
 			.insert(investments)
 			.values({
@@ -83,7 +103,7 @@ export const actions: Actions = {
 				amount: amount.toString(),
 				profitAccrued: '0',
 				totalExpectedProfit: totalExpectedProfit.toString(),
-				status: 'pending',
+				status: investmentStatus,
 				payoutOption,
 				startDate,
 				endDate,

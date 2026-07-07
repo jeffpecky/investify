@@ -25,6 +25,7 @@ export const USER = writable({
     referralLink: 'https://ethercore.org/register?ref=1234567890',
     walletBalance: 1000,
     tokenBalance: 100,
+    depositedBalance: 1000,
 
 
 });

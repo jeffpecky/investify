@@ -268,7 +268,8 @@ export const load: PageServerLoad = async ({ locals }) => {
 			activeInvestments: statsData.activeCount || 0,
 			pendingWithdrawals: withdrawalData.pending || 0,
 			walletBalance: parseFloat(user.walletBalance),
-			tokenBalance: parseFloat(user.tokenBalance)
+			tokenBalance: parseFloat(user.tokenBalance),
+			depositedBalance: parseFloat(user.depositedBalance || '0')
 		},
 		historical: {
 			sparklineData,

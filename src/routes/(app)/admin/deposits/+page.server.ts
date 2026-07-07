@@ -93,12 +93,14 @@ export const actions: Actions = {
 
 				if (user) {
 					const currentBalance = Number(user.walletBalance);
+					const currentDeposited = Number(user.depositedBalance || 0);
 					const depositAmount = Number(deposit.amount);
 
 					await tx
 						.update(users)
 						.set({
 							walletBalance: (currentBalance + depositAmount).toString(),
+							depositedBalance: (currentDeposited + depositAmount).toString(),
 							updatedAt: new Date()
 						})
 						.where(eq(users.id, deposit.userId));

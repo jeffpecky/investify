@@ -33,6 +33,7 @@ export const users = pgTable('users', {
 	passwordHash: varchar('password_hash', { length: 255 }).notNull(),
 	walletBalance: decimal('wallet_balance', { precision: 18, scale: 2 }).notNull().default('0'),
 	tokenBalance: decimal('token_balance', { precision: 18, scale: 2 }).notNull().default('0'),
+	depositedBalance: decimal('deposited_balance', { precision: 18, scale: 2 }).notNull().default('0'),
 	group: varchar('group', { length: 100 }),
 	referralCode: varchar('referral_code', { length: 50 }).unique(),
 	referredBy: uuid('referred_by').references((): any => users.id, { onDelete: 'set null' }),

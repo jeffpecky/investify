@@ -113,12 +113,22 @@
             sparkline: data.historical?.sparklineData?.invested || []
         },
         {
-            label: 'Available Balance',
-            value: formatCurrency(data.stats.walletBalance),
+            label: 'Deposited Balance',
+            value: formatCurrency(data.stats.depositedBalance),
             icon: WalletCards,
             iconBg: 'bg-info/10',
             iconColor: 'text-info',
-            badge: 'USD Tether',
+            badge: 'Available to invest',
+            badgeNeutral: true,
+            sparkline: data.historical?.sparklineData?.balance || []
+        },
+        {
+            label: 'Total Balance',
+            value: formatCurrency(data.stats.walletBalance),
+            icon: WalletCards,
+            iconBg: 'bg-muted',
+            iconColor: 'text-muted-foreground',
+            badge: 'Including earnings',
             badgeNeutral: true,
             sparkline: data.historical?.sparklineData?.balance || []
         },
