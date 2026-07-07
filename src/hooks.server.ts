@@ -74,6 +74,16 @@ const handleAuthorization: Handle = async ({ event, resolve }) => {
 		}
 	}
 
+	// Logged-in users visiting root go to dashboard
+	if (user && event.url.pathname === '/') {
+		return new Response('Redirect', {
+			status: 303,
+			headers: {
+				Location: '/dashboard'
+			}
+		});
+	}
+
 	return resolve(event);
 };
 
